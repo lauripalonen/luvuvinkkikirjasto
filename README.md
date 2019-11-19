@@ -4,6 +4,6 @@
 
 ## Dokumentaatio
 
-[Product backlog](https://github.com/lauripalonen/lukuvinkkikirjasto/blob/master/documentation/product_backlog.md)
+[Product backlog](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=0)
 
-[Sprint backlogs](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=0)
+[Sprint 1 backlog](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=1301402780)
