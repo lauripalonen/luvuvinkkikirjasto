@@ -2,5 +2,9 @@
 build/
 .gradle
 
+# intelliJ IDEA
+.idea
+stale_outputs_checked
+
 # other
 *.tmp
