@@ -1,17 +1,16 @@
 package lukuvinkkikirjasto;
 
-import java.sql.SQLException;
 import java.util.Scanner;
-import lukuvinkkikirjasto.dao.LinkDao;
+import lukuvinkkikirjasto.domain.Library;
 
 public class Main {
 
     public static void main(String[] args) {
+        System.out.println("Lisää linkki: ");
+        Library library = new Library(); //in memory
+        //Library library = new Library("links.db"); //in sqlite database
         Scanner scanner = new Scanner(System.in);
-        LinkDao linkDao = new LinkDao("links.db");
-        System.out.println("Lisää linkki:");
-        String link = scanner.nextLine();
-        linkDao.addLink(link);
+        library.addLink(scanner.nextLine());
     }
 
 }
