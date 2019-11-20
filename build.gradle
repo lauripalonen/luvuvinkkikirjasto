@@ -40,3 +40,7 @@ jar {
 }
 
 mainClassName = 'lukuvinkkikirjasto.Main'
+
+run {
+    standardInput = System.in
+}
