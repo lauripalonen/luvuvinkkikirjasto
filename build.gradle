@@ -13,10 +13,23 @@ dependencies {
 
 }
 
-mainClassName = 'lukuvinkkikirjasto.Main'
+repositories {
+    jcenter()
+}
+
+dependencies{
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.28.0'
+    testCompile 'junit:junit:4.12'
+}
 
 jar {
     manifest {
         attributes 'Main-Class' : 'lukuvinkkikirjasto.Main'
     }
+}
+
+mainClassName = 'lukuvinkkikirjasto.Main'
+
+run {
+    standardInput = System.in
 }
