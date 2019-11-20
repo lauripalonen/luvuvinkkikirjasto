@@ -57,13 +57,19 @@ public class UserInterface {
         System.out.println();
     }
     
+    /**
+    * User interface for listing links. 
+    * Lists all links with URL and leaves out empty links.
+    */
     public void listLinks() {
         System.out.println("Linkkisi:");
         ArrayList<String> links = library.listLinks();
         int counter = 1;
         for(String link : links) {
-            System.out.println(counter + ": " + link);
-            counter++;
+            if(!link.equals("")) {
+                System.out.println(counter + ": " + link);
+                counter++;
+            }
         }
     }
 }
