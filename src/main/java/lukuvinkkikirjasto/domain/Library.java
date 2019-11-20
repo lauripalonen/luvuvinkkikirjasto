@@ -1,5 +1,6 @@
 package lukuvinkkikirjasto.domain;
 
+import java.util.ArrayList;
 import lukuvinkkikirjasto.dao.DatabaseLinkDao;
 import lukuvinkkikirjasto.dao.InMemoryLinkDao;
 import lukuvinkkikirjasto.dao.LinkDao;
@@ -28,6 +29,10 @@ public class Library {
     
     public boolean containsLink(String link) {
         return dao.listLinks().contains(link);
+    }
+    
+    public ArrayList<String> listLinks() {
+        return dao.listLinks();
     }
 
 }

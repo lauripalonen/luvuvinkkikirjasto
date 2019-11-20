@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -37,8 +38,25 @@ public class DatabaseLinkDao implements LinkDao {
     
     @Override
     public ArrayList<String> listLinks() {
-        // TODO: Implement
-        return null;
+        ArrayList<String> links = new ArrayList<>();
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Links");
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                String link = rs.getString("Link");
+                links.add(link);
+            }
+            stmt.close();
+            rs.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        if(links == null) {
+            return new ArrayList<>();
+        }
+        return links;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package lukuvinkkikirjasto.UI;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import lukuvinkkikirjasto.domain.Library;
 
@@ -31,7 +32,7 @@ public class UserInterface {
     public void mainMenu() {
         while (true) {
             System.out.println("[1] - lisää linkki");
-            //System.out.println("[2] - selaa linkkejä");
+            System.out.println("[2] - selaa linkkejä");
             System.out.println("[x] - lopeta");
 
             String choice = reader.nextLine();
@@ -39,6 +40,7 @@ public class UserInterface {
                 addLink();
             } else if (choice.equals("2")) {
                 // do something...
+                listLinks();
             } else if (choice.equals("x")) {
                 break;
             }
@@ -54,5 +56,14 @@ public class UserInterface {
         library.addLink(link);
         System.out.println();
     }
-
+    
+    public void listLinks() {
+        System.out.println("Linkkisi:");
+        ArrayList<String> links = library.listLinks();
+        int counter = 1;
+        for(String link : links) {
+            System.out.println(counter + ": " + link);
+            counter++;
+        }
+    }
 }
