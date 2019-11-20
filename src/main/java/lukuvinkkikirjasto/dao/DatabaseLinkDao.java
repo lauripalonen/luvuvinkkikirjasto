@@ -1,5 +1,8 @@
 package lukuvinkkikirjasto.dao;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -41,6 +44,16 @@ public class DatabaseLinkDao implements LinkDao {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+    }
+
+    @Override
+    public void clearDao() {
+        try {
+            Files.deleteIfExists(Paths.get(fileName));
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        initializeDao();
     }
 
 }

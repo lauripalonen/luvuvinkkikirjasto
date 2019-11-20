@@ -19,6 +19,11 @@ public class InMemoryLinkDao implements LinkDao {
     public void initializeDao() {
         linkArrayList = new ArrayList<>();
     }
+
+    @Override
+    public void clearDao() {
+        linkArrayList = new ArrayList<>();
+    }
     
 
 }
