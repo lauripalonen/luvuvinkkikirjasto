@@ -5,12 +5,9 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'application'
 
-repositories {
-    jcenter()
-}
-
-dependencies {
-
+project.ext {
+    cucumberVersion = '4.7.4'
+    junitVersion = '4.12'
 }
 
 repositories {
@@ -19,7 +16,9 @@ repositories {
 
 dependencies{
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.28.0'
-    testCompile 'junit:junit:4.12'
+    testCompile 'io.cucumber:cucumber-java:' + cucumberVersion
+    testCompile 'io.cucumber:cucumber-junit:' + cucumberVersion
+    testCompile 'junit:junit:' + junitVersion
 }
 
 jar {
@@ -32,4 +31,9 @@ mainClassName = 'lukuvinkkikirjasto.Main'
 
 run {
     standardInput = System.in
+}
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
 }

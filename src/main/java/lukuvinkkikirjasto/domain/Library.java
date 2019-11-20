@@ -25,5 +25,9 @@ public class Library {
     public void addLink(String link) {
         dao.addLink(link);
     }
+    
+    public boolean containsLink(String link) {
+        return dao.listLinks().contains(link);
+    }
 
 }

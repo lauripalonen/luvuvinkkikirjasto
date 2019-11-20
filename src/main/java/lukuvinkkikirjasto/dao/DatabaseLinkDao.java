@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +33,12 @@ public class DatabaseLinkDao implements LinkDao {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+    }
+    
+    @Override
+    public ArrayList<String> listLinks() {
+        // TODO: Implement
+        return null;
     }
 
     @Override
