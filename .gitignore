@@ -8,3 +8,4 @@ stale_outputs_checked
 
 # other
 *.tmp
+/.nb-gradle/
