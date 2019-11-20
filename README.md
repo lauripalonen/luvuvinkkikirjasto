@@ -1,6 +1,4 @@
-[![CircleCI](https://circleci.com/gh/lauripalonen/lukuvinkkikirjasto.svg?style=svg)](https://circleci.com/gh/lauripalonen/lukuvinkkikirjasto)
-
-[![codecov](https://codecov.io/gh/lauripalonen/lukuvinkkikirjasto/branch/master/graph/badge.svg)](https://codecov.io/gh/lauripalonen/lukuvinkkikirjasto)  
+[![CircleCI](https://circleci.com/gh/lauripalonen/lukuvinkkikirjasto.svg?style=svg)](https://circleci.com/gh/lauripalonen/lukuvinkkikirjasto)  [![codecov](https://codecov.io/gh/lauripalonen/lukuvinkkikirjasto/branch/master/graph/badge.svg)](https://codecov.io/gh/lauripalonen/lukuvinkkikirjasto)  
 
 # Lukuvinkkikirjasto
 
