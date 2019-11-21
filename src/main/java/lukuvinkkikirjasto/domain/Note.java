@@ -1,14 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package lukuvinkkikirjasto.domain;
 
-/**
- *
- * @author kuokanna
- */
-public class Note {
+import java.util.ArrayList;
+
+public abstract class Note {
     
+    private String header;
+    private ArrayList<String> tags;
+    
+    public Note(String header) {
+        this.header = header;
+        this.tags = new ArrayList<>();
+    }
+    
+    public String getHeader() {
+        return this.header;
+    }
+    
+    public ArrayList<String> getTags() {
+        return this.tags;
+    }
+    
+    public void addTag(String tag) {
+        this.tags.add(tag);
+    }
 }

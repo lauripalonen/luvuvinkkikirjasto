@@ -1,14 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package lukuvinkkikirjasto.domain;
 
-/**
- *
- * @author kuokanna
- */
-public class Book {
+public class Book extends Note {
     
+    private String author;
+    private String isbn;
+    
+    public Book(String header, String author, String isbn) {
+        super(header);
+        this.author = author;
+        this.isbn = isbn;
+    }
+    
+    public String getAuthor() {
+        return this.author;
+    }
+    
+    public String getIsbn() {
+        return this.isbn;
+    }
 }
