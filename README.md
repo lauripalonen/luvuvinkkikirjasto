@@ -10,4 +10,4 @@
 
 [Sprint 1 backlog](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=1301402780)
 
-[Burndown chart](https://docs.google.com/spreadsheets/d/1qxU75706dev48oZ1Pb_Bh2usmin2sMvMPUleWzOEzlI/edit#gid=0)
+[Burndown chart](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=1130181346)
