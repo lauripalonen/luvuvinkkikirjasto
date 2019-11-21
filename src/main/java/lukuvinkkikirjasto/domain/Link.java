@@ -1,14 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package lukuvinkkikirjasto.domain;
 
-/**
- *
- * @author kuokanna
- */
-public class Link {
+public class Link extends Note {
     
+    private String link;
+    
+    public Link(String header, String link) {
+        super(header);
+        this.link = link;
+    }
+    
+    public String getLink() {
+        return this.link;
+    }
 }
