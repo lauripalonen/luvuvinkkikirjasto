@@ -11,6 +11,7 @@ public class Library {
     
     /**
      * initializes link Library with a database
+     * @param fileName
      */
     public Library(String fileName) {
         this.dao = new DatabaseLinkDao(fileName);

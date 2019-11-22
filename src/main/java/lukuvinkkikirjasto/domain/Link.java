@@ -1,6 +1,9 @@
 
 package lukuvinkkikirjasto.domain;
 
+/**
+ * First implemention of Note's subclass.
+ */
 public class Link extends Note {
     
     private String link;

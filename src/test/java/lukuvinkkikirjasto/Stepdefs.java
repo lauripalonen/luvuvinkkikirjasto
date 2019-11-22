@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lukuvinkkikirjasto;
 
 import io.cucumber.java.en.Given;
@@ -10,7 +5,6 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import static org.junit.Assert.*;
-
 import lukuvinkkikirjasto.domain.Library;
 
 public class Stepdefs {

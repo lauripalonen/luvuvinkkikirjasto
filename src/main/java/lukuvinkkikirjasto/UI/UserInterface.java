@@ -38,8 +38,7 @@ public class UserInterface {
             String choice = reader.nextLine();
             if (choice.equals("1")) {
                 addLink();
-            } else if (choice.equals("2")) {
-                // do something...
+            } else if (choice.equals("2")) {                
                 listLinks();
             } else if (choice.equals("x")) {
                 break;
@@ -71,5 +70,6 @@ public class UserInterface {
                 counter++;
             }
         }
+        System.out.println();
     }
 }
