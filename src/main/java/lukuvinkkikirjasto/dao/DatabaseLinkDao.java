@@ -26,7 +26,7 @@ public class DatabaseLinkDao implements LinkDao {
     public void addLink(String link) {
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Links (Link) VALUES (?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Links (URL) VALUES (?)");
             stmt.setString(1, link);
             stmt.executeUpdate();
             stmt.close();
@@ -35,7 +35,7 @@ public class DatabaseLinkDao implements LinkDao {
             System.out.println(ex);
         }
     }
-    
+
     @Override
     public ArrayList<String> listLinks() {
         ArrayList<String> links = new ArrayList<>();
@@ -43,8 +43,8 @@ public class DatabaseLinkDao implements LinkDao {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Links");
             ResultSet rs = stmt.executeQuery();
-            while(rs.next()) {
-                String link = rs.getString("Link");
+            while (rs.next()) {
+                String link = rs.getString("URL");
                 links.add(link);
             }
             stmt.close();
@@ -53,7 +53,7 @@ public class DatabaseLinkDao implements LinkDao {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        if(links == null) {
+        if (links == null) {
             return new ArrayList<>();
         }
         return links;
@@ -65,7 +65,12 @@ public class DatabaseLinkDao implements LinkDao {
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
             connection.setAutoCommit(false);
-            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Links (Link varchar(300))");
+            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Links ("
+                    + "Header varchar(300), "
+                    + "URL varchar(300), "
+                    + "Author varchar(48), "
+                    + "ISBN varchar(48)"
+                    + ");");
             stmt.executeUpdate();
             stmt.close();
             connection.commit();
@@ -94,6 +99,23 @@ public class DatabaseLinkDao implements LinkDao {
             System.out.println(ex);
         }
         initializeDao();
+    }
+
+    @Override
+    public void addBook(String header, String url, String author, String isbn) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Links (Header, URL, Author, ISBN) VALUES (?, ?, ?, ?)");
+            stmt.setString(1, header);
+            stmt.setString(2, url);
+            stmt.setString(3, author);
+            stmt.setString(4, isbn);
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 
 }

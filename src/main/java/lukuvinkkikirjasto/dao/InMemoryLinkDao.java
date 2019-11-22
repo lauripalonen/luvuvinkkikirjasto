@@ -1,11 +1,13 @@
 package lukuvinkkikirjasto.dao;
 
 import java.util.ArrayList;
+import lukuvinkkikirjasto.domain.Book;
 
 public class InMemoryLinkDao implements LinkDao {
 
     private ArrayList<String> linkArrayList;
-
+    private ArrayList<Book> bookArrayList;
+    
     public InMemoryLinkDao() {
         initializeDao();
     }
@@ -28,6 +30,11 @@ public class InMemoryLinkDao implements LinkDao {
     @Override
     public void clearDao() {
         linkArrayList = new ArrayList<>();
+    }
+
+    @Override
+    public void addBook(String header, String url, String author, String isbn) {
+        bookArrayList.add(new Book(header, url, author, isbn));
     }
     
 

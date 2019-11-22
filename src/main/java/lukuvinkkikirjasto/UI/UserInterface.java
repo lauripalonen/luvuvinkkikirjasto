@@ -31,6 +31,7 @@ public class UserInterface {
      */
     public void mainMenu() {
         while (true) {
+            System.out.println("Mitä haluat tehdä?");
             System.out.println("[1] - lisää linkki");
             System.out.println("[2] - selaa linkkejä");
             System.out.println("[x] - lopeta");
@@ -38,7 +39,7 @@ public class UserInterface {
             String choice = reader.nextLine();
             if (choice.equals("1")) {
                 addLink();
-            } else if (choice.equals("2")) {                
+            } else if (choice.equals("2")) {
                 listLinks();
             } else if (choice.equals("x")) {
                 break;
@@ -47,25 +48,60 @@ public class UserInterface {
     }
 
     /**
-     * User interface for adding a new link to library. Simply asks URL of the link.
+     * User interface for adding a new link to library. Asks about type of
+     * "bookmark".
      */
     public void addLink() {
+        while (true) {
+            System.out.println("Olet lisäämässä uutta linkkiä, valitse linkin tyyppi:");
+            System.out.println("[1] - kirja");
+            System.out.println("[2] - pelkkä linkki");
+            System.out.println("[x] - palaa päävalikkoon");
+
+            String choice = reader.nextLine();
+            if (choice.equals("1")) {
+                addBook();
+            } else if (choice.equals("2")) {
+                addUrl();
+            } else if (choice.equals("x")) {
+                break;
+            }
+        }
+    }
+
+    public void addBook() {
         System.out.println("Syötä linkin osoite:");
-        String link = reader.nextLine();
-        library.addLink(link);
+        String url = reader.nextLine();
+        System.out.println("Syötä kirjan nimi:");
+        String header = reader.nextLine();
+        System.out.println("Syötä kirjan kirjoittaja:");
+        String author = reader.nextLine();
+        System.out.println("Syötä kirjan ISBN-tunnus:");
+        String isbn = reader.nextLine();
+        library.addBook(header, url, author, isbn);
         System.out.println();
     }
-    
+
     /**
-    * User interface for listing links. 
-    * Lists all links with URL and leaves out empty links.
-    */
+     * MVP implemention for adding links to library, UI.
+     */
+    public void addUrl() {
+        System.out.println("Syötä linkin osoite:");
+        String url = reader.nextLine();
+        library.addLink(url);
+        System.out.println();
+    }
+
+    /**
+     * User interface for listing links. Lists all links with URL and leaves out
+     * empty links.
+     */
     public void listLinks() {
         System.out.println("Linkkisi:");
         ArrayList<String> links = library.listLinks();
         int counter = 1;
-        for(String link : links) {
-            if(!link.equals("")) {
+        for (String link : links) {
+            if (!link.equals("")) {
                 System.out.println(counter + ": " + link);
                 counter++;
             }

@@ -24,6 +24,10 @@ public class Library {
         this.dao = new InMemoryLinkDao();
     }
 
+    public void addBook(String header, String url, String author, String isbn) {
+        dao.addBook(header, url, author, isbn);
+    }
+    
     public void addLink(String link) {
         dao.addLink(link);
     }
