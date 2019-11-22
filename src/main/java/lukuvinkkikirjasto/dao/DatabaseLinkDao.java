@@ -105,7 +105,8 @@ public class DatabaseLinkDao implements LinkDao {
     public void addBook(String header, String url, String author, String isbn) {
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Links (Header, URL, Author, ISBN) VALUES (?, ?, ?, ?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Links (Header, URL, Author, ISBN) "
+                    + "VALUES (?, ?, ?, ?)");
             stmt.setString(1, header);
             stmt.setString(2, url);
             stmt.setString(3, author);
