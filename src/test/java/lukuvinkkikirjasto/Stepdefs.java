@@ -60,5 +60,10 @@ public class Stepdefs {
         assertFalse(outputs.contains(notAdded));
     }
     
+    @When("a book named {string} found on {string} authored by {string} with isbn {string} is added")
+    public void aBookNamedFoundOnAuthoredByWithIsbnIsAdded(String header, String url, String author, String isbn) {
+        library.addBook(header, url, author, isbn);
+    }
+    
     
 }

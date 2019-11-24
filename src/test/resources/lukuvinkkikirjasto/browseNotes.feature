@@ -17,3 +17,9 @@ Feature: As a user I can browse my notes
         Given Library is initialized
         When links are listed
         Then listing does not contain link "sometestlink.link" that was not added
+
+    Scenario: An added book is listed
+        Given Library is initialized
+        When a book named "Muumipappa ja meri" found on "muumilink.link" authored by "Tove Jansson" with isbn "1234" is added
+        And links are listed
+        Then listing contains link "muumilink.link"

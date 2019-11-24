@@ -25,6 +25,7 @@ public class InMemoryLinkDao implements LinkDao {
     @Override
     public void initializeDao() {
         linkArrayList = new ArrayList<>();
+        bookArrayList = new ArrayList<>();
     }
 
     @Override
