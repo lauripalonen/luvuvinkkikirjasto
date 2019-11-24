@@ -25,7 +25,7 @@ public class DatabaseLinkDao implements LinkDao {
     @Override
     public void addLink(String link) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
+            Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Links (URL) VALUES (?)");
             stmt.setString(1, link);
             stmt.executeUpdate();
@@ -40,7 +40,7 @@ public class DatabaseLinkDao implements LinkDao {
     public ArrayList<String> listLinks() {
         ArrayList<String> links = new ArrayList<>();
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
+            Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Links");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -63,7 +63,7 @@ public class DatabaseLinkDao implements LinkDao {
     public void initializeDao() {
         createDbFolder();
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
+            Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Links ("
                     + "Header varchar(300), "
@@ -104,7 +104,7 @@ public class DatabaseLinkDao implements LinkDao {
     @Override
     public void addBook(String header, String url, String author, String isbn) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
+            Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Links (Header, URL, Author, ISBN) "
                     + "VALUES (?, ?, ?, ?)");
             stmt.setString(1, header);
@@ -116,6 +116,15 @@ public class DatabaseLinkDao implements LinkDao {
             connection.close();
         } catch (SQLException ex) {
             System.out.println(ex);
+        }
+    }
+
+    private Connection getConnection() {
+        try {
+            return DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
