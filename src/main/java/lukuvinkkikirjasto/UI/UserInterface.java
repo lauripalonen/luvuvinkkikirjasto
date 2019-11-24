@@ -83,7 +83,7 @@ public class UserInterface {
     }
 
     /**
-     * MVP implemention for adding links to library, UI.
+     * MVP implementation for adding links to library, UI.
      */
     public void addUrl() {
         System.out.println("Syötä linkin osoite:");

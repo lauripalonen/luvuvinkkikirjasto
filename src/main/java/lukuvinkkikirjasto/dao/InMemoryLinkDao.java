@@ -35,6 +35,7 @@ public class InMemoryLinkDao implements LinkDao {
     @Override
     public void addBook(String header, String url, String author, String isbn) {
         bookArrayList.add(new Book(header, url, author, isbn));
+        linkArrayList.add(url);
     }
     
 
