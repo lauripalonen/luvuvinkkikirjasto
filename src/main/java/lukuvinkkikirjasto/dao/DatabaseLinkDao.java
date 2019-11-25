@@ -29,7 +29,8 @@ public class DatabaseLinkDao implements LinkDao {
     public void addLink(String header, String url) {
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
+                    + "VALUES (?, ?, ?, ?, ?)");
             stmt.setString(1, header);
             stmt.setString(2, url);
             stmt.setString(3, "");
@@ -43,7 +44,7 @@ public class DatabaseLinkDao implements LinkDao {
         }
     }
     
-        @Override
+    @Override
     public void addBook(String header, String url, String author, String isbn) {
         try {
             Connection connection = getConnection();
