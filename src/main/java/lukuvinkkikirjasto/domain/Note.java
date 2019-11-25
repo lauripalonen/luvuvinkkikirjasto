@@ -12,7 +12,7 @@ public abstract class Note {
     public Note(String header, String url) {
         this.header = header;
         this.tags = new ArrayList<>();
-        this.url = "";
+        this.url = url;
         //this.language = "";
     }
 
@@ -35,4 +35,10 @@ public abstract class Note {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "header=" + header + ", url=" + url;
+    }
+
 }

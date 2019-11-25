@@ -3,6 +3,7 @@ package lukuvinkkikirjasto.UI;
 import java.util.ArrayList;
 import java.util.Scanner;
 import lukuvinkkikirjasto.domain.Library;
+import lukuvinkkikirjasto.domain.Note;
 
 /**
  * This class handles text based user interface.
@@ -40,7 +41,7 @@ public class UserInterface {
             if (choice.equals("1")) {
                 addLink();
             } else if (choice.equals("2")) {
-                listLinks();
+                listAll();
             } else if (choice.equals("x")) {
                 break;
             }
@@ -88,7 +89,9 @@ public class UserInterface {
     public void addUrl() {
         System.out.println("Syötä linkin osoite:");
         String url = reader.nextLine();
-        library.addLink(url);
+        System.out.println("Syötä linkin otsikko:");
+        String header = reader.nextLine();
+        library.addLink(header, url);
         System.out.println();
     }
 
@@ -96,13 +99,13 @@ public class UserInterface {
      * User interface for listing links. Lists all links with URL and leaves out
      * empty links.
      */
-    public void listLinks() {
+    public void listAll() {
         System.out.println("Linkkisi:");
-        ArrayList<String> links = library.listLinks();
+        ArrayList<Note> notes = library.listAll();
         int counter = 1;
-        for (String link : links) {
-            if (!link.equals("")) {
-                System.out.println(counter + ": " + link);
+        for (Note note : notes) {
+            if (!note.equals("")) {
+                System.out.println(counter + ": " + note);
                 counter++;
             }
         }

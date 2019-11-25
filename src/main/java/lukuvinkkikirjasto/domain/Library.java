@@ -28,15 +28,19 @@ public class Library {
         dao.addBook(header, url, author, isbn);
     }
     
-    public void addLink(String link) {
-        dao.addLink(link);
+    public void addLink(String header, String url) {
+        dao.addLink(header, url);
     }
     
     public boolean containsLink(String link) {
         return dao.listLinks().contains(link);
     }
     
-    public ArrayList<String> listLinks() {
+    public ArrayList<Note> listAll() {
+        return dao.listAll();
+    }    
+    
+    public ArrayList<Link> listLinks() {
         return dao.listLinks();
     }
 

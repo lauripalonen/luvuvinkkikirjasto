@@ -27,4 +27,10 @@ public class Book extends Note {
     public String getIsbn() {
         return this.isbn;
     }
+
+    @Override
+    public String toString() {
+        return "Book: "+ super.toString() + ", author=" + author + ", isbn=" + isbn;
+    }
+    
 }

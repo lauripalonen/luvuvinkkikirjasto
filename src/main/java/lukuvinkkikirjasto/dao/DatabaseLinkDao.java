@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lukuvinkkikirjasto.domain.Link;
+import lukuvinkkikirjasto.domain.Note;
 
 public class DatabaseLinkDao implements LinkDao {
 
@@ -23,11 +25,11 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     @Override
-    public void addLink(String link) {
+    public void addLink(String header, String url) {
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Links (URL) VALUES (?)");
-            stmt.setString(1, link);
+            stmt.setString(1, url);
             stmt.executeUpdate();
             stmt.close();
             connection.close();
@@ -37,7 +39,7 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     @Override
-    public ArrayList<String> listLinks() {
+    public ArrayList<Link> listLinks() {
         ArrayList<String> links = new ArrayList<>();
         try {
             Connection connection = getConnection();
@@ -56,7 +58,8 @@ public class DatabaseLinkDao implements LinkDao {
         if (links == null) {
             return new ArrayList<>();
         }
-        return links;
+        return null;
+//        return links;
     }
 
     @Override
@@ -126,6 +129,11 @@ public class DatabaseLinkDao implements LinkDao {
             Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+
+    @Override
+    public ArrayList<Note> listAll() {
+        return null;
     }
 
 }
