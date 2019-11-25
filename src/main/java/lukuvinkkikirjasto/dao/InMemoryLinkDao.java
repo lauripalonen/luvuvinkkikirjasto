@@ -23,6 +23,11 @@ public class InMemoryLinkDao implements LinkDao {
     public ArrayList<Link> listLinks() {
         return linkArrayList;
     }
+    
+    @Override
+    public ArrayList<Book> listBooks() {
+        return bookArrayList;
+    }
 
     @Override
     public ArrayList<Note> listAll() {

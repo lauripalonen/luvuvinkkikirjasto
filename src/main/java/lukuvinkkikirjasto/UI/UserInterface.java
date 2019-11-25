@@ -104,10 +104,8 @@ public class UserInterface {
         ArrayList<Note> notes = library.listAll();
         int counter = 1;
         for (Note note : notes) {
-            if (!note.equals("")) {
-                System.out.println(counter + ": " + note);
-                counter++;
-            }
+            System.out.println(counter + ": " + note);
+            counter++;
         }
         System.out.println();
     }

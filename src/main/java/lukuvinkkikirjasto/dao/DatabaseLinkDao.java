@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
 
@@ -28,8 +29,29 @@ public class DatabaseLinkDao implements LinkDao {
     public void addLink(String header, String url) {
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Links (URL) VALUES (?)");
-            stmt.setString(1, url);
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Type) VALUES (?, ?, ?)");
+            stmt.setString(1, header);
+            stmt.setString(2, url);
+            stmt.setString(3, "Link");
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+    
+        @Override
+    public void addBook(String header, String url, String author, String isbn) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
+                    + "VALUES (?, ?, ?, ?, ?)");
+            stmt.setString(1, header);
+            stmt.setString(2, url);
+            stmt.setString(3, author);
+            stmt.setString(4, isbn);
+            stmt.setString(5, "Book");
             stmt.executeUpdate();
             stmt.close();
             connection.close();
@@ -40,14 +62,15 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public ArrayList<Link> listLinks() {
-        ArrayList<String> links = new ArrayList<>();
+        ArrayList<Link> links = new ArrayList<>();
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Links");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Notes WHERE Type='Link'");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                String link = rs.getString("URL");
-                links.add(link);
+                String header = rs.getString("Header");
+                String url = rs.getString("URL");
+                links.add(new Link(header, url));
             }
             stmt.close();
             rs.close();
@@ -55,11 +78,30 @@ public class DatabaseLinkDao implements LinkDao {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        if (links == null) {
-            return new ArrayList<>();
+        return links;
+    }
+    
+    @Override
+    public ArrayList<Book> listBooks() {
+        ArrayList<Book> books = new ArrayList<>();
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Notes WHERE Type='Book'");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String header = rs.getString("Header");
+                String url = rs.getString("URL");
+                String author = rs.getString("Author");
+                String isbn = rs.getString("ISBN");
+                books.add(new Book(header, url, author, isbn));
+            }
+            stmt.close();
+            rs.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
         }
-        return null;
-//        return links;
+        return books;
     }
 
     @Override
@@ -68,12 +110,13 @@ public class DatabaseLinkDao implements LinkDao {
         try {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
-            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Links ("
+            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
                     + "Header varchar(300), "
                     + "URL varchar(300), "
                     + "Author varchar(48), "
                     + "ISBN varchar(48)"
-                    + ");");
+                    + "Type varchar(16));"
+            );
             stmt.executeUpdate();
             stmt.close();
             connection.commit();
@@ -104,24 +147,6 @@ public class DatabaseLinkDao implements LinkDao {
         initializeDao();
     }
 
-    @Override
-    public void addBook(String header, String url, String author, String isbn) {
-        try {
-            Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Links (Header, URL, Author, ISBN) "
-                    + "VALUES (?, ?, ?, ?)");
-            stmt.setString(1, header);
-            stmt.setString(2, url);
-            stmt.setString(3, author);
-            stmt.setString(4, isbn);
-            stmt.executeUpdate();
-            stmt.close();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-    }
-
     private Connection getConnection() {
         try {
             return DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
@@ -133,7 +158,30 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public ArrayList<Note> listAll() {
-        return null;
+        ArrayList<Note> notes = new ArrayList<>();
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Notes");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String header = rs.getString("Header");
+                String url = rs.getString("URL");
+                String author = rs.getString("Author");
+                String isbn = rs.getString("ISBN");
+                String type = rs.getString("Type");
+                if (type == "Book") {
+                    notes.add(new Book(header, url, author, isbn));
+                } else if (type == "Link") {
+                    notes.add(new Link(header, url));
+                }
+            }
+            stmt.close();
+            rs.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return notes;
     }
 
 }
