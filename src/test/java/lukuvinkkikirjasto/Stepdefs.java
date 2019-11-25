@@ -5,6 +5,7 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import java.util.*;
+import lukuvinkkikirjasto.domain.Book;
 import static org.junit.Assert.*;
 import lukuvinkkikirjasto.domain.Library;
 import lukuvinkkikirjasto.domain.Link;
@@ -64,8 +65,7 @@ public class Stepdefs {
         Link link1 = new Link(firstname, firsturl);
         assertTrue(outputs.contains(link1));
         Link link2 = new Link(secondname, secondurl);
-        assertTrue(outputs.contains(link2));
-        
+        assertTrue(outputs.contains(link2));   
     }
     
     @Then("listing does not contain link called {string} with url {string} that was not added")
@@ -85,6 +85,10 @@ public class Stepdefs {
         library.addBook(header, url, author, isbn);
     }
     
-//    @Then("Then listing contains book {string} with url {string} with authors {string} with isbn {string}")
+    @Then("listing contains book {string} with url {string} with author {string} with isbn {string}")
+    public void listingContainsBookWithUrlWithAuthorWithIsbn(String string, String string2, String string3, String string4) {
+        Book book1 = new Book(string, string2, string3, string4);
+        assertTrue(outputs.contains(book1));
+    }
     
 }
