@@ -11,3 +11,7 @@ stale_outputs_checked
 /.nb-gradle/
 /db/
 /bin/
+
+.classpath
+.project
+
