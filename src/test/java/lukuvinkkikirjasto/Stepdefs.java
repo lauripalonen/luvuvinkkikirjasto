@@ -7,11 +7,13 @@ import io.cucumber.java.en.Then;
 import java.util.*;
 import static org.junit.Assert.*;
 import lukuvinkkikirjasto.domain.Library;
+import lukuvinkkikirjasto.domain.Link;
+import lukuvinkkikirjasto.domain.Note;
 import org.junit.Before;
 
 public class Stepdefs {
     Library library;
-    List<String> outputs;
+    List<Note> outputs;
     
     @Before
     public void setup() {
@@ -23,41 +25,59 @@ public class Stepdefs {
         library = new Library();
     }
     
-    @When("a link {string} is added")
-    public void linkIsAdded(String name) {
-        library.addLink(name);
+    @When("a link named {string} with url {string} is added")
+    public void aLinkNamedWithUrlIsAdded(String name, String url) {
+        library.addLink(name, url);
     }
     
-    @Then("the library should contain a link named {string}")
-    public void theLibraryShouldContainLink(String name) {
-        assertTrue(library.containsLink(name));
+    @Then("the library should contain a link named {string} with url {string}")
+    public void theLibraryShouldContainLink(String name, String url) {
+        Link link = new Link(name, url);
+        assertTrue(library.containsLink(link));
     }
     
-    @Then("the library should not contain a link named {string}")
-    public void theLibraryShouldNotContainLink(String name) {
-        assertFalse(library.containsLink(name));
+    @Then("the library should not contain a link named {string} with url {string}")
+    public void theLibraryShouldNotContainLink(String name, String url) {
+        Link link = new Link(name, url);
+        assertFalse(library.containsLink(link));
     }
     
     @When("links are listed")
     public void linksAreListed() {
-        outputs = library.listLinks();
+        outputs = library.listAll();
     }
     
-    @Then("listing contains link {string}")
-    public void listingContainsLink(String link) {
-        assertTrue(outputs.contains(link));
+    @Then("listing contains link named {string} with url {string}")
+    public void listingContainsLink(String name, String url) {
+        Note link = new Link(name, url);
+        boolean contained = false;
+        for (Note note : outputs) {
+            if(link.equals(note)) {
+                contained = true;
+            }
+        }
+        assertTrue(contained);
     }
     
-    @Then("listing contains links {string} and {string}")
-    public void listingContainsLinksAnd(String first, String second) {
-        assertTrue(outputs.contains(first));
-        assertTrue(outputs.contains(second));
+    @Then("listing contains links {string} {string} and {string} {string}")
+    public void listingContainsLinksAnd(String firstname, String firsturl, String secondname, String secondurl) {
+        Link link1 = new Link(firstname, firsturl);
+        assertTrue(outputs.contains(link1));
+        Link link2 = new Link(secondname, secondurl);
+        assertTrue(outputs.contains(link2));
         
     }
     
-    @Then("listing does not contain link {string} that was not added")
-    public void listingDoesNotContainLinkThatWasNotAdded(String notAdded) {
-        assertFalse(outputs.contains(notAdded));
+    @Then("listing does not contain link called {string} with url {string} that was not added")
+    public void listingDoesNotContainLinkThatWasNotAdded(String notAdded, String missingUrl) {
+        Note link =new Link(notAdded, missingUrl);
+        boolean contained = false;
+        for (Note note : outputs) {
+            if(link.equals(note)) {
+                contained = true;
+            }
+        }
+        assertFalse(contained);
     }
     
     @When("a book named {string} found on {string} authored by {string} with isbn {string} is added")
@@ -65,5 +85,6 @@ public class Stepdefs {
         library.addBook(header, url, author, isbn);
     }
     
+//    @Then("Then listing contains book {string} with url {string} with authors {string} with isbn {string}")
     
 }

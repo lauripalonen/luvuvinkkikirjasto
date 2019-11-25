@@ -1,6 +1,7 @@
 package lukuvinkkikirjasto.domain;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Note {
 
@@ -39,6 +40,24 @@ public abstract class Note {
     @Override
     public String toString() {
         return "header=" + header + ", url=" + url;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        final Note other = (Note) obj;
+        if (!Objects.equals(this.header, other.header)) {
+            return false;
+        }
+        if (!Objects.equals(this.url, other.url)) {
+            return false;
+        }
+        return true;
     }
 
 }

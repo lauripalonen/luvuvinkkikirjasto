@@ -8,5 +8,5 @@ public class Link extends Note {
     public Link(String header, String url) {
         super(header, url);
     }
-
+    
 }
