@@ -41,12 +41,16 @@ public class Library {
         return false;
     }
     
-    public ArrayList<Note> listAll() {
-        return dao.listAll();
-    }    
-    
     public ArrayList<Link> listLinks() {
         return dao.listLinks();
     }
+    
+    public ArrayList<Book> listBooks() {
+        return dao.listBooks();
+    }
+    
+    public ArrayList<Note> listAll() {
+        return dao.listAll();
+    }    
 
 }
