@@ -32,9 +32,9 @@ public class Library {
         dao.addLink(header, url);
     }
     
-    public boolean containsLink(Link link) {
-        for (Link listed : dao.listLinks()) {
-            if (link.equals(listed)) {
+    public boolean containsNote(Note note) {
+        for (Note notes : dao.listAll()) {
+            if (note.equals(notes)) {
                 return true;
             }
         }

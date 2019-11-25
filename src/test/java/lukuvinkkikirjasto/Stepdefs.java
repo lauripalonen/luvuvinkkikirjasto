@@ -34,13 +34,13 @@ public class Stepdefs {
     @Then("the library should contain a link named {string} with url {string}")
     public void theLibraryShouldContainLink(String name, String url) {
         Link link = new Link(name, url);
-        assertTrue(library.containsLink(link));
+        assertTrue(library.containsNote(link));
     }
     
     @Then("the library should not contain a link named {string} with url {string}")
     public void theLibraryShouldNotContainLink(String name, String url) {
         Link link = new Link(name, url);
-        assertFalse(library.containsLink(link));
+        assertFalse(library.containsNote(link));
     }
     
     @When("links are listed")
