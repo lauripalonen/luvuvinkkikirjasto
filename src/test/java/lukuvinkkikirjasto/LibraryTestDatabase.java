@@ -4,7 +4,7 @@ import lukuvinkkikirjasto.domain.Library;
 import org.junit.After;
 import org.junit.Before;
 
-public class LibraryTestDB extends LibraryTest {
+public class LibraryTestDatabase extends LibraryTest {
     
     @Before
     @Override
