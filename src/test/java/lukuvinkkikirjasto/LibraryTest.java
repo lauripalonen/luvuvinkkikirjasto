@@ -5,10 +5,12 @@
  */
 package lukuvinkkikirjasto;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Library;
 import lukuvinkkikirjasto.domain.Link;
+import lukuvinkkikirjasto.domain.Note;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -35,4 +37,43 @@ public class LibraryTest {
         assertTrue(library.containsNote(link));
     }
     
+    @Test
+    public void notAddedNoteIsNotFoundInLibrary() {
+        Note n = new Book("Header", "url", "Author", "1234567");
+        assertFalse(library.containsNote(n));
+    }
+    
+    @Test
+    public void onlyLinksListed() {
+        Book b = new Book("Header", "url", "Author", "1234567");
+        Link l = new Link("Link", "link.fi");
+        library.addBook("Header", "url", "Author", "1234567");
+        library.addLink("Link", "link.fi");
+        ArrayList<Link> links = new ArrayList<>();
+        links.add(l);
+        assertEquals(links, library.listLinks());
+    }
+    
+    @Test
+    public void onlyBooksListed() {
+        Book b = new Book("Header", "url", "Author", "1234567");
+        Link l = new Link("Link", "link.fi");
+        library.addBook("Header", "url", "Author", "1234567");
+        library.addLink("Link", "link.fi");
+        ArrayList<Book> books = new ArrayList<>();
+        books.add(b);
+        assertEquals(books, library.listBooks());
+    }
+    
+    @Test
+    public void allListed() {
+        Book b = new Book("Header", "url", "Author", "1234567");
+        Link l = new Link("Link", "link.fi");
+        library.addBook("Header", "url", "Author", "1234567");
+        library.addLink("Link", "link.fi");
+        ArrayList<Note> notes = new ArrayList<>();
+        notes.add(l);
+        notes.add(b);
+        assertEquals(notes, library.listAll());
+    }
 }
