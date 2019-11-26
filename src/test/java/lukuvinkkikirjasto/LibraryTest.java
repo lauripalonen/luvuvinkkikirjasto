@@ -35,4 +35,12 @@ public class LibraryTest {
         assertTrue(library.containsNote(link));
     }
     
+    @Test
+    public void linkCanBeAddedToLibraryDB() {
+        library = new Library("testdb.db");
+        Link link = new Link("Dummy link", "dummyurl.zxc");
+        library.addLink("Dummy link", "dummyurl.zxc");
+        assertTrue(library.containsNote(link));
+    }
+    
 }
