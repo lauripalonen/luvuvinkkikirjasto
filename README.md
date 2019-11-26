@@ -22,6 +22,8 @@ Simple library for tips for reading.
 
 ## Information about tests
 
+[Test document](https://github.com/lauripalonen/lukuvinkkikirjasto/blob/master/documentation/test_document.md)
+
 Click badges to browse CircleCI and CodeCov.
 
 [![CircleCI](https://circleci.com/gh/lauripalonen/lukuvinkkikirjasto.svg?style=svg)](https://circleci.com/gh/lauripalonen/lukuvinkkikirjasto)  [![codecov](https://codecov.io/gh/lauripalonen/lukuvinkkikirjasto/branch/master/graph/badge.svg)](https://codecov.io/gh/lauripalonen/lukuvinkkikirjasto)  
