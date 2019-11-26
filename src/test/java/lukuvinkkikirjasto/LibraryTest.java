@@ -6,7 +6,7 @@
 package lukuvinkkikirjasto;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Library;
 import lukuvinkkikirjasto.domain.Link;
@@ -49,8 +49,11 @@ public class LibraryTest {
         library.addBook("Header", "url", "Author", "1234567");
         library.addLink("Link", "link.fi");
         ArrayList<Link> links = new ArrayList<>();
+        ArrayList<Link> linksFromLibrary = library.listLinks();
         links.add(l);
-        assertEquals(links, library.listLinks());
+        Collections.sort(links);
+        Collections.sort(linksFromLibrary);
+        assertEquals(links, linksFromLibrary);
     }
     
     @Test
@@ -60,8 +63,11 @@ public class LibraryTest {
         library.addBook("Header", "url", "Author", "1234567");
         library.addLink("Link", "link.fi");
         ArrayList<Book> books = new ArrayList<>();
+        ArrayList<Book> booksFromLibrary = library.listBooks();
         books.add(b);
-        assertEquals(books, library.listBooks());
+        Collections.sort(books);
+        Collections.sort(booksFromLibrary);
+        assertEquals(books, booksFromLibrary);
     }
     
     @Test
@@ -71,8 +77,11 @@ public class LibraryTest {
         library.addBook("Header", "url", "Author", "1234567");
         library.addLink("Link", "link.fi");
         ArrayList<Note> notes = new ArrayList<>();
+        ArrayList<Note> notesFromLibrary = library.listAll();
         notes.add(l);
         notes.add(b);
-        assertEquals(notes, library.listAll());
+        Collections.sort(notes);
+        Collections.sort(notesFromLibrary);
+        assertEquals(notes, notesFromLibrary);
     }
 }

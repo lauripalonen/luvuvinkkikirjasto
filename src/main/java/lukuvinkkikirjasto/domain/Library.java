@@ -51,6 +51,10 @@ public class Library {
     
     public ArrayList<Note> listAll() {
         return dao.listAll();
-    }    
+    }
+    
+    public void deleteAllRecords() {
+        dao.clearDao();
+    }
 
 }

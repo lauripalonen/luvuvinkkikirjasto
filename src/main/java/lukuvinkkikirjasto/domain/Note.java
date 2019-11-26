@@ -3,7 +3,7 @@ package lukuvinkkikirjasto.domain;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public abstract class Note {
+public abstract class Note implements Comparable {
 
     private String header;
     private ArrayList<String> tags;
@@ -58,6 +58,15 @@ public abstract class Note {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null || o == this) {
+            return 0;
+        }
+        Note otherNote = (Note) o;
+        return this.header.compareToIgnoreCase(otherNote.header);
     }
 
 }
