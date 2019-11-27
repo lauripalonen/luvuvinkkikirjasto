@@ -114,6 +114,7 @@ public class DatabaseLinkDao implements LinkDao {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
+                    + "id integer PRIMARY KEY,"
                     + "Header varchar(300), "
                     + "URL varchar(300), "
                     + "Author varchar(48), "
