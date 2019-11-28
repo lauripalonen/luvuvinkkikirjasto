@@ -1,9 +1,12 @@
 package lukuvinkkikirjasto.dao;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
+import lukuvinkkikirjasto.domain.Tag;
 
 public interface LinkDao {
 
@@ -15,10 +18,18 @@ public interface LinkDao {
     
     ArrayList<Book> listBooks();
 
+    Set<String> getTagsSet(); // will be refactored later from String to Tag
+//    ArrayList<Tag> listTagsByNote();
+//    ArrayList<Tag> listNotesByTag();
+
     void initializeDao();
     
     void clearDao();
     
     public ArrayList<Note> listAll();
+    void joinTagToNote(Note note, Tag tag);
+    public Note getNote(String header, String url);
+    public void createTag(String header);
+    public Tag getTag(String tagHeader);
     
 }
