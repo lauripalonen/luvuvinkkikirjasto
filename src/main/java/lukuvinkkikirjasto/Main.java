@@ -43,14 +43,18 @@ public class Main {
             model.put("template", "templates/index.html");
             ArrayList<Note> notes = library.listAll();
             model.put("noteList", notes);
-            return new ModelAndView(model, layout);
-        }, new VelocityTemplateEngine());
+            return new VelocityTemplateEngine().render(
+                new ModelAndView(model, layout)
+            );
+        });
         
         get("/newlink", (request, response) -> {
             HashMap<String, Object> model = new HashMap();
             model.put("template", "templates/newlink.html");
-            return new ModelAndView(model, layout);
-        }, new VelocityTemplateEngine());
+            return new VelocityTemplateEngine().render(
+                new ModelAndView(model, layout)
+            );
+        });
         
         post("/newlink", (request, response) -> {
             String header = request.queryParams("header");
@@ -65,8 +69,10 @@ public class Main {
         get("/newbook", (request, response) -> {
             HashMap<String, Object> model = new HashMap();
             model.put("template", "templates/newbook.html");
-            return new ModelAndView(model, layout);
-        }, new VelocityTemplateEngine());
+            return new VelocityTemplateEngine().render(
+                new ModelAndView(model, layout)
+            );
+        });
         
         post("/newbook", (request, response) -> {
             String header = request.queryParams("header");
