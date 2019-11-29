@@ -56,3 +56,4 @@ jacocoTestReport {
 
 applicationName = 'lukuvinkkikirjasto'
 task stage(dependsOn: ['clean', 'build'])
+build.mustRunAfter clean
