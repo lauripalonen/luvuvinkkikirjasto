@@ -55,4 +55,4 @@ jacocoTestReport {
 }
 
 applicationName = 'lukuvinkkikirjasto'
-task stage(dependsOn: ['clean', 'installDist'])
+task stage(dependsOn: ['clean', 'shadowJar'])
