@@ -25,7 +25,58 @@ public class DatabaseLinkDao implements LinkDao {
 
     public DatabaseLinkDao(String fileName) {
         this.filePath = "db/" + fileName;
-        initializeDao();
+        createDbFolder();
+        createNoteTable();
+        createTagTable();
+    }
+
+    private void createNoteTable() {
+        try {
+            Connection connection = getConnection();
+            connection.setAutoCommit(false);
+            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
+                    + "id integer PRIMARY KEY,"
+                    + "Header varchar(300), "
+                    + "URL varchar(300), "
+                    + "Author varchar(48), "
+                    + "ISBN varchar(48),"
+                    + "Type varchar(16));"
+            );
+            stmt.executeUpdate();
+            stmt.close();
+            connection.commit();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    private void createTagTable() {
+        try {
+            Connection connection = getConnection();
+            connection.setAutoCommit(false);
+            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tags ("
+                    + "id integer PRIMARY KEY,"
+                    + "Header varchar(300);"
+            );
+            stmt.executeUpdate();
+            stmt.close();
+            connection.commit();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    private void createDbFolder() {
+        Path folderPath = Paths.get("db");
+        if (!Files.exists(folderPath)) {
+            try {
+                Files.createDirectory(folderPath);
+            } catch (IOException ex) {
+                Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
@@ -46,7 +97,7 @@ public class DatabaseLinkDao implements LinkDao {
             System.out.println(ex);
         }
     }
-    
+
     @Override
     public void addBook(String header, String url, String author, String isbn) {
         try {
@@ -86,7 +137,7 @@ public class DatabaseLinkDao implements LinkDao {
         }
         return links;
     }
-    
+
     @Override
     public ArrayList<Book> listBooks() {
         ArrayList<Book> books = new ArrayList<>();
@@ -111,47 +162,12 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     @Override
-    public void initializeDao() {
-        createDbFolder();
-        try {
-            Connection connection = getConnection();
-            connection.setAutoCommit(false);
-            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
-                    + "id integer PRIMARY KEY,"
-                    + "Header varchar(300), "
-                    + "URL varchar(300), "
-                    + "Author varchar(48), "
-                    + "ISBN varchar(48),"
-                    + "Type varchar(16));"
-            );
-            stmt.executeUpdate();
-            stmt.close();
-            connection.commit();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-    }
-
-    public void createDbFolder() {
-        Path folderPath = Paths.get("db");
-        if (!Files.exists(folderPath)) {
-            try {
-                Files.createDirectory(folderPath);
-            } catch (IOException ex) {
-                Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    @Override
     public void clearDao() {
         try {
             Files.deleteIfExists(Paths.get(filePath));
         } catch (IOException ex) {
             System.out.println(ex);
         }
-        initializeDao();
     }
 
     private Connection getConnection() {
@@ -193,27 +209,27 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public Note getNote(String header, String url) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public Set<String> getTagsSet() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Set<Tag> getTagsSet() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void joinTagToNote(Note note, Tag tag) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void createTag(String header) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public Tag getTag(String tagHeader) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

@@ -18,11 +18,10 @@ public interface LinkDao {
     
     ArrayList<Book> listBooks();
 
-    Set<String> getTagsSet(); // will be refactored later from String to Tag
+    Set<Tag> getTagsSet();
 //    ArrayList<Tag> listTagsByNote();
 //    ArrayList<Tag> listNotesByTag();
 
-    void initializeDao();
     
     void clearDao();
     

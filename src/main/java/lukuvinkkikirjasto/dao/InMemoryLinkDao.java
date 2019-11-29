@@ -2,8 +2,8 @@ package lukuvinkkikirjasto.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
@@ -16,21 +16,15 @@ public class InMemoryLinkDao implements LinkDao {
     private HashMap<String, Tag> tagMap;
     private HashMap<Note, ArrayList<Tag>> tagListMap;
     private HashMap<Tag, ArrayList<Note>> noteListMap;
-    
 
     public InMemoryLinkDao() {
-        initializeDao();
-    }
-    
-    @Override
-    public void initializeDao() {
         linkArrayList = new ArrayList<>();
         bookArrayList = new ArrayList<>();
         tagMap = new HashMap<>();
         tagListMap = new HashMap<>();
         noteListMap = new HashMap<>();
     }
-    
+
     @Override
     public void joinTagToNote(Note note, Tag tag) {
         tagListMap.putIfAbsent(note, new ArrayList<Tag>());
@@ -42,15 +36,14 @@ public class InMemoryLinkDao implements LinkDao {
     @Override
     public Note getNote(String header, String url) {
         ArrayList<Note> all = listAll();
-        for(Note note : all) {
+        for (Note note : all) {
             if (note.getHeader().equals(header) && note.getUrl().equals(url)) {
                 return note;
             }
         }
-        
+
         return null;
     }
-    
 
     @Override
     public void addLink(String header, String url) {
@@ -69,13 +62,11 @@ public class InMemoryLinkDao implements LinkDao {
 
     @Override
     public ArrayList<Note> listAll() {
-
         ArrayList<Note> noteArrayList = new ArrayList<>();
         noteArrayList.addAll(linkArrayList);
         noteArrayList.addAll(bookArrayList);
         return noteArrayList;
     }
-
 
     @Override
     public void clearDao() {
@@ -88,13 +79,13 @@ public class InMemoryLinkDao implements LinkDao {
     }
 
     @Override
-    public Set<String> getTagsSet() {
-        return tagMap.keySet();
+    public Set<Tag> getTagsSet() {
+        return tagMap.values().stream().collect(Collectors.toSet());
     }
 
     @Override
     public Tag getTag(String tagHeader) {
-       return tagMap.get(tagHeader);
+        return tagMap.get(tagHeader);
     }
 
     @Override
@@ -102,6 +93,5 @@ public class InMemoryLinkDao implements LinkDao {
         Tag newTag = new Tag(header);
         tagMap.putIfAbsent(header, newTag);
     }
-    
 
 }

@@ -32,7 +32,7 @@ public class Library {
         dao.joinTagToNote(getNote(header, url), dao.getTag(tagHeader));
     }
     
-    public Set<String> getTags(){
+    public Set<Tag> getTags(){
         return dao.getTagsSet();
     }
     
