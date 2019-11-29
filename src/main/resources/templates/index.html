@@ -1,16 +1,10 @@
-<!DOCTYPE html>
 
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <h1>Lukuvinkkikirjasto</h1>
-        <h4>Lukuvinkit:</h4>
-        #foreach ($note in $noteList)
-            <p>Item on: $note.getHeader()</p>
-        #end
-    </body>
-</html>
+
+<body>
+    <h1>Lukuvinkkikirjasto</h1>
+    <h4>Lukuvinkit:</h4>
+    #foreach ($note in $noteList)
+        <p>Item on: $note.getHeader()</p>
+    #end
+    <a href="/newlink">Lisää uusi muistiinpano</a>
+</body>

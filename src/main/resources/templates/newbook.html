@@ -1,0 +1,36 @@
+
+
+<body>
+    <h1>Lukuvinkkikirjasto</h1>
+    <h4>Uuden muistiinpanon lisääminen</h4>
+    <form method="POST" action="/changetype">
+        <label>Vaihda muistiinpanon tyyppiä:</label>
+        <select name="noteType" onChange="this.form.submit()">
+            <option value="1">Linkki</option>
+            <option selected="selected" value="2">Kirja</option>
+        </select>
+    </form>
+    
+    <h5>Lisää kirja:</h5>
+    
+    <form method="POST" action="/newbook">
+        <div class="noteformfield">
+            <label>Kirjan nimi:</label>
+            <input type="text" name="header"/>
+        </div>
+        <div class="noteformfield">
+            <label>URL:</label>
+            <input type="text" name="url" />
+        </div>
+        <div class="noteformfield">
+            <label>Kirjailija:</label>
+            <input type="text" name="author" />
+        </div>
+        <div class="noteformfield">
+            <label>ISBN-tunniste:</label>
+            <input type="text" name="isbn" />
+        </div>
+        
+        <input type="submit" value="Lisää kirja">
+    </form>
+</body>

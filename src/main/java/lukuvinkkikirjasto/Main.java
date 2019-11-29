@@ -35,6 +35,7 @@ public class Main {
 //
 //        ui.startLibrary();
         
+        staticFiles.location("/public");
         port(findOutPort());
         
         get("/", (request, response) -> {
@@ -44,6 +45,50 @@ public class Main {
             model.put("noteList", notes);
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
+        
+        get("/newlink", (request, response) -> {
+            HashMap<String, Object> model = new HashMap();
+            model.put("template", "templates/newlink.html");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+        
+        post("/newlink", (request, response) -> {
+            String header = request.queryParams("header");
+            String url = request.queryParams("url");
+            
+            library.addLink(header, url);
+            
+            response.redirect("/");
+            return null;
+        });
+        
+        get("/newbook", (request, response) -> {
+            HashMap<String, Object> model = new HashMap();
+            model.put("template", "templates/newbook.html");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+        
+        post("/newbook", (request, response) -> {
+            String header = request.queryParams("header");
+            String url = request.queryParams("url");
+            String author = request.queryParams("author");
+            String isbn = request.queryParams("isbn");
+            
+            library.addBook(header, url, author, isbn);
+            
+            response.redirect("/");
+            return null;
+        });
+        
+        post("/changetype", (request, response) -> {
+            int noteType = Integer.parseInt(request.queryParams("noteType"));
+            if (noteType == 1) {
+                response.redirect("/newlink");
+            } else if (noteType == 2) {
+                response.redirect("/newbook");
+            }
+            return null;
+        });
         
     }
 
