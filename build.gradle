@@ -53,3 +53,6 @@ jacocoTestReport {
         }))
     }
 }
+
+applicationName = 'lukuvinkkikirjasto'
+task stage(dependsOn: ['clean', 'installDist'])
