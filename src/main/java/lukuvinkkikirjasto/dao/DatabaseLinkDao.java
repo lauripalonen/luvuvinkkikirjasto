@@ -171,12 +171,17 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     private Connection getConnection() {
-        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+        URI dbUri = new URI(System.getenv("DATABSE_URL"));
+        //String dbUrl = System.getenv("DATABASE_URL");
 
         try {
 
-            if(dbUrl != null){
-                return DriverManager.getConnection(dbUrl);
+            if(URI != null){
+                String username = dbUri.getUserInfo().split(":")[0];
+                String password = dbUri.getUserInfo().split(":")[1];
+                String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
+                return DriverManager.getConnection(dbUrl, username, password);
             }
 
             return DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
