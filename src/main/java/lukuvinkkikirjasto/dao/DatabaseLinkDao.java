@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.net.URI;
+import java.net.URISyntaxException;
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
@@ -171,9 +172,16 @@ public class DatabaseLinkDao implements LinkDao {
         }
     }
 
-    private Connection getConnection() throws URISyntaxException, SQLException {
-        URI dbUri = new URI(System.getenv("DATABASE_URL"));
-        //String dbUrl = System.getenv("DATABASE_URL");
+    private Connection getConnection() {
+        URI dbUri;
+
+        try {
+            dbUri = new URI(System.getenv("DATABASE_URL"));
+            //String dbUrl = System.getenv("DATABASE_URL");
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
 
         try {
 
