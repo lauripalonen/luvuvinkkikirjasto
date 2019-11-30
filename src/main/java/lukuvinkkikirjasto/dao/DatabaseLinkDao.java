@@ -171,8 +171,14 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     private Connection getConnection() {
+        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+
         try {
-            return DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
+            if (dbUrl){
+                return DriverManager.getConnection(dbUrl);
+            }
+
+            //return DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
