@@ -232,4 +232,18 @@ public class DatabaseLinkDao implements LinkDao {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public void removeNote(String id) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Notes WHERE id = ?");
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
 }

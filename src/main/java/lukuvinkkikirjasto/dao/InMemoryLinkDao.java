@@ -94,4 +94,9 @@ public class InMemoryLinkDao implements LinkDao {
         tagMap.putIfAbsent(header, newTag);
     }
 
+    @Override
+    public void removeNote(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

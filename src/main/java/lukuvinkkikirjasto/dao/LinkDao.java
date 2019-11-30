@@ -31,4 +31,6 @@ public interface LinkDao {
     public void createTag(String header);
     public Tag getTag(String tagHeader);
     
+    public void removeNote(String id);
+    
 }

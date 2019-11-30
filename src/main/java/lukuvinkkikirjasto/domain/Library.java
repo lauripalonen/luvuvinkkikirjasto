@@ -40,6 +40,10 @@ public class Library {
         return dao.getNote(header, url);
     }
     
+    public void removeNote(String id) {
+        dao.removeNote(id);
+    }
+    
     public void createTag(String header){
         dao.createTag(header);
     }

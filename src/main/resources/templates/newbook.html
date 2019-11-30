@@ -10,9 +10,9 @@
             <option selected="selected" value="2">Kirja</option>
         </select>
     </form>
-    
+
     <h5>Lisää kirja:</h5>
-    
+
     <form method="POST" action="/newbook">
         <div class="noteformfield">
             <label>Kirjan nimi:</label>
@@ -30,7 +30,12 @@
             <label>ISBN-tunniste:</label>
             <input type="text" name="isbn" />
         </div>
-        
+
         <input type="submit" value="Lisää kirja">
     </form>
+
+    <form action="/">
+        <input type="submit" value="Takaisin">
+    </form>
+
 </body>
