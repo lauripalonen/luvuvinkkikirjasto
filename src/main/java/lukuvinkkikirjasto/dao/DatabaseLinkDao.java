@@ -57,7 +57,7 @@ public class DatabaseLinkDao implements LinkDao {
             connection.setAutoCommit(false);
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tags ("
                     + "id integer PRIMARY KEY,"
-                    + "Header varchar(300);"
+                    + "Header varchar(300));"
             );
             stmt.executeUpdate();
             stmt.close();
