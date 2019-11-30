@@ -171,7 +171,7 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     private Connection getConnection() {
-        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+        String dbUrl = System.getenv("DATABASE_URL");
 
         try {
 
