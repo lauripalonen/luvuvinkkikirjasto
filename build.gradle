@@ -23,6 +23,8 @@ dependencies{
     testCompile 'junit:junit:' + junitVersion
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.7.1'
     compile group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
+    compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
+
 }
 
 jar {
