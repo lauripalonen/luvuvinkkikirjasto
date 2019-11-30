@@ -172,7 +172,7 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     private Connection getConnection() {
-        URI dbUri = new URI(System.getenv("DATABSE_URL"));
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
         //String dbUrl = System.getenv("DATABASE_URL");
 
         try {
