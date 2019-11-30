@@ -171,7 +171,7 @@ public class DatabaseLinkDao implements LinkDao {
         }
     }
 
-    private Connection getConnection() {
+    private Connection getConnection() throws URISyntaxException, SQLException {
         URI dbUri = new URI(System.getenv("DATABASE_URL"));
         //String dbUrl = System.getenv("DATABASE_URL");
 
