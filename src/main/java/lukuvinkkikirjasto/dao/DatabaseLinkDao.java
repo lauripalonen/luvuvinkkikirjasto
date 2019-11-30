@@ -177,7 +177,7 @@ public class DatabaseLinkDao implements LinkDao {
 
         try {
 
-            if(URI != null){
+            if(dbUri != null){
                 String username = dbUri.getUserInfo().split(":")[0];
                 String password = dbUri.getUserInfo().split(":")[1];
                 String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
