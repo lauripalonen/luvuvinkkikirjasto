@@ -37,7 +37,7 @@ public class DatabaseLinkDao implements LinkDao {
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
-                    + "id integer PRIMARY KEY,"
+                    + "id SERIAL PRIMARY KEY,"
                     + "Header varchar(300), "
                     + "URL varchar(300), "
                     + "Author varchar(48), "
@@ -56,7 +56,7 @@ public class DatabaseLinkDao implements LinkDao {
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tags ("
-                    + "id integer PRIMARY KEY,"
+                    + "id SERIAL PRIMARY KEY,"
                     + "Header varchar(300),"
                     + "UNIQUE(Header))"
             );
@@ -72,7 +72,7 @@ public class DatabaseLinkDao implements LinkDao {
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags (note_id integer,"
-                    + " tag_id integer,"
+                    + " tag_id SERIAL,"
                     + " FOREIGN KEY(note_id) REFERENCES Notes(id),"
                     + " FOREIGN KEY(tag_id) REFERENCES Tags(id))"
             );
