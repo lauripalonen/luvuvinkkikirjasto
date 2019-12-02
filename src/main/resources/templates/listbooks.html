@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Lukuvinkkikirjasto</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <h1>Lukuvinkkikirjasto</h1>
+        <h4>Muistiinpanojen tarkastelu</h4>
+
+        <a href="/">Takaisin etusivulle</a> 
+        <br></br>
+
+        <form method="POST" action="/changelist">
+            <label>Valitse näytettävät muistiinpanot:</label>
+            <select name="listType" onChange="this.form.submit()">
+                <option value="1">Kaikki</option>
+                <option value="2">Linkit</option>
+                <option selected="selected" value="3">Kirjat</option>
+            </select>
+        </form>
+
+        <h5>Tallennetut kirjat:</h5>
+        #foreach ($book in $bookList)
+        <p>$book.getHeader() - $book.getUrl() - $book.getAuthor()</p>
+        #end
+
+    </body>
+</html>

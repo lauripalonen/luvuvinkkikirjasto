@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import lukuvinkkikirjasto.UI.UserInterface;
+import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Library;
+import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
 import spark.ModelAndView;
 import static spark.Spark.*;
@@ -92,6 +94,48 @@ public class Main {
                 response.redirect("/newlink");
             } else if (noteType == 2) {
                 response.redirect("/newbook");
+            }
+            return null;
+        });
+
+        get("/listall", (request, response) -> {
+            HashMap<String, Object> model = new HashMap();
+            model.put("template", "templates/listall.html");
+            ArrayList<Note> notes = library.listAll();
+            model.put("noteList", notes);
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
+
+        get("/listlinks", (request, response) -> {
+            HashMap<String, Object> model = new HashMap();
+            model.put("template", "templates/listlinks.html");
+            ArrayList<Link> links = library.listLinks();
+            model.put("linkList", links);
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
+
+        get("/listbooks", (request, response) -> {
+            HashMap<String, Object> model = new HashMap();
+            model.put("template", "templates/listbooks.html");
+            ArrayList<Book> books = library.listBooks();
+            model.put("bookList", books);
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
+
+        post("/changelist", (request, response) -> {
+            int listType = Integer.parseInt(request.queryParams("listType"));
+            if (listType == 1) {
+                response.redirect("/listall");
+            } else if (listType == 2) {
+                response.redirect("/listlinks");
+            } else if (listType == 3) {
+                response.redirect("/listbooks");
             }
             return null;
         });

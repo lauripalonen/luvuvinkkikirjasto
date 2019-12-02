@@ -1,0 +1,23 @@
+
+<body>
+    <h1>Lukuvinkkikirjasto</h1>
+    <h4>Muistiinpanojen tarkastelu</h4>
+
+    <a href="/">Takaisin etusivulle</a> 
+    <br></br>
+
+    <form method="POST" action="/changelist">
+        <label>Valitse näytettävät muistiinpanot:</label>
+        <select name="listType" onChange="this.form.submit()">
+            <option selected="selected" value="1">Kaikki</option>
+            <option value="2">Linkit</option>
+            <option value="3">Kirjat</option>
+        </select>
+    </form>
+
+    <h5>Kaikki lukuvinkkisi:</h5>
+        #foreach ($note in $noteList)
+            <p>$note.getHeader() - $note.getUrl()</p>
+        #end
+
+</body>
