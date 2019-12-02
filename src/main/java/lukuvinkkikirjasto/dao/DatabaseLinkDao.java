@@ -193,7 +193,7 @@ public class DatabaseLinkDao implements LinkDao {
             URI dbUri = new URI(System.getenv("DATABASE_URL"));
             return dbUri;
         } catch (URISyntaxException ex) {
-            Logger.getLogger(DatabseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
