@@ -193,11 +193,10 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public void clearDao() {
-        if(System.getenv("DATABASE_URL" != null)) {
+        if(System.getenv("DATABASE_URL") != null) {
             try {
                 Connection connection = getConnection();
-
-                PreparedStatement stmt = connection.preparedStatement("DELETE FROM Notes");
+                PreparedStatement stmt = connection.prepareStatement("DELETE FROM Notes");
                 stmt.executeUpdate();
             } catch (SQLException ex) {
                 System.out.println(ex);
