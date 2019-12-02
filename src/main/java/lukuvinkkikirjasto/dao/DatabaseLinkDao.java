@@ -172,23 +172,31 @@ public class DatabaseLinkDao implements LinkDao {
         }
     }
 
-    private Connection getConnection() {
-        URI dbUri;
-
+    private URI getDbUri(){
         try {
-            dbUri = new URI(System.getenv("DATABASE_URL"));
-            //String dbUrl = System.getenv("DATABASE_URL");
+            URI dbUri = new URI(System.getenv("DATABASE_URL"));
+            return dbUri;
         } catch (URISyntaxException ex) {
             Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
         }
+
+        return null;
+    }
+
+    private Connection getConnection() {
+
+        URI dbUri = getDbUri();
 
         try {
 
             if(dbUri != null){
                 String username = dbUri.getUserInfo().split(":")[0];
                 String password = dbUri.getUserInfo().split(":")[1];
-                String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+                String dbUrl = "jdbc:postgresql://"
+                        + dbUri.getHost() + ':'
+                        + dbUri.getPort()
+                        + dbUri.getPath()
+                        + "?sslmode=require";
 
                 return DriverManager.getConnection(dbUrl, username, password);
             }
