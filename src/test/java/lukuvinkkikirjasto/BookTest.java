@@ -14,7 +14,7 @@ public class BookTest {
     
     @Before
     public void setUp() {
-        this.book = new Book("Header", "url", "Author", "44556677");
+        this.book = new Book("Header", "url", "Author", "44556677", 0);
     }
     
     @Test

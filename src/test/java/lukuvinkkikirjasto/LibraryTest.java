@@ -11,41 +11,43 @@ import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Library;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class LibraryTest {
+
     Library library;
-    
+
     @Before
     public void setUp() {
-        library = new Library();
+        library = new Library("testdb.db");
     }
-    
+
     @Test
     public void bookCanBeAddedToLibrary() {
-        Book book = new Book("Book header", "dummyurl", "Dummy Author", "9781234567897");
+        Book book = new Book("Book header", "dummyurl", "Dummy Author", "9781234567897", 1);
         library.addBook("Book header", "dummyurl", "Dummy Author", "9781234567897");
         assertTrue(library.containsNote(book));
     }
-    
+
     @Test
     public void linkCanBeAddedToLibrary() {
-        Link link = new Link("Dummy link", "dummyurl.zxc");
+        Link link = new Link("Dummy link", "dummyurl.zxc", 1);
         library.addLink("Dummy link", "dummyurl.zxc");
         assertTrue(library.containsNote(link));
     }
-    
+
     public void notAddedNoteIsNotFoundInLibrary() {
-        Note n = new Book("Header", "url", "Author", "1234567");
+        Note n = new Book("Header", "url", "Author", "1234567", 1);
         assertFalse(library.containsNote(n));
     }
-    
+
     @Test
     public void onlyLinksListed() {
-        Book b = new Book("Header", "url", "Author", "1234567");
-        Link l = new Link("Link", "link.fi");
+        Book b = new Book("Header", "url", "Author", "1234567", 1);
+        Link l = new Link("Link", "link.fi", 2);
         library.addBook("Header", "url", "Author", "1234567");
         library.addLink("Link", "link.fi");
         ArrayList<Link> links = new ArrayList<>();
@@ -55,11 +57,11 @@ public class LibraryTest {
         Collections.sort(linksFromLibrary);
         assertEquals(links, linksFromLibrary);
     }
-    
+
     @Test
     public void onlyBooksListed() {
-        Book b = new Book("Header", "url", "Author", "1234567");
-        Link l = new Link("Link", "link.fi");
+        Book b = new Book("Header", "url", "Author", "1234567", 1);
+        Link l = new Link("Link", "link.fi", 2);
         library.addBook("Header", "url", "Author", "1234567");
         library.addLink("Link", "link.fi");
         ArrayList<Book> books = new ArrayList<>();
@@ -69,11 +71,11 @@ public class LibraryTest {
         Collections.sort(booksFromLibrary);
         assertEquals(books, booksFromLibrary);
     }
-    
+
     @Test
     public void allListed() {
-        Book b = new Book("Header", "url", "Author", "1234567");
-        Link l = new Link("Link", "link.fi");
+        Book b = new Book("Header", "url", "Author", "1234567", 1);
+        Link l = new Link("Link", "link.fi", 2);
         library.addBook("Header", "url", "Author", "1234567");
         library.addLink("Link", "link.fi");
         ArrayList<Note> notes = new ArrayList<>();
@@ -83,5 +85,10 @@ public class LibraryTest {
         Collections.sort(notes);
         Collections.sort(notesFromLibrary);
         assertEquals(notes, notesFromLibrary);
+    }
+
+    @After
+    public void after() {
+        library.deleteAllRecords();
     }
 }

@@ -13,7 +13,7 @@ public class VideoTest {
         
     @Before
     public void setUp() {
-        this.video = new Video("Header", "url");
+        this.video = new Video("Header", "url", 0);
     }
     
     @Test
