@@ -12,9 +12,17 @@ import static org.junit.Assert.*;
 import lukuvinkkikirjasto.domain.Library;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class Stepdefs {
 
+    //WebDriver driver = new FirefoxDriver();
+    WebDriver driver = new HtmlUnitDriver();
+    String baseUrl = "http://localhost:3001";
     Library library;
     List<Note> outputs;
 
@@ -26,6 +34,24 @@ public class Stepdefs {
     @Given("Library is initialized")
     public void libraryIsInitialized() {
         library = new Library("testdb.db");
+
+    }
+
+    @And("lisää uusi muistiinpano is selected")
+    public void addNewNoteThroughWebUi() {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("Lisää uusi muistiinpano"));
+        element.click();
+    }
+
+    @When("a link named {string} with url {string} is added through web UI")
+    public void aLinkNamedWithUrlIsAddedThroughWebUi(String name, String url) {
+        addLink(name, url);
+    }
+
+    @Then("main menu should list item {string}")
+    public void mainMenuListsItem(String name) {
+        pageHasContent(name);
     }
 
     @When("a link named {string} with url {string} is added")
@@ -104,5 +130,20 @@ public class Stepdefs {
     @After
     public void after() {
         library.deleteAllRecords();
+        driver.quit();
+    }
+
+    private void pageHasContent(String content) {
+        assertTrue(driver.getPageSource().contains(content));
+    }
+
+    private void addLink(String header, String url) {
+        pageHasContent("Uuden muistiinpanon lisääminen");
+        WebElement element = driver.findElement(By.name("header"));
+        element.sendKeys(header);
+        element = driver.findElement(By.name("url"));
+        element.sendKeys(url);
+        element = driver.findElement(By.name("add"));
+        element.submit();
     }
 }

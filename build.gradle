@@ -10,10 +10,18 @@ apply plugin: 'jacoco'
 project.ext {
     cucumberVersion = '4.7.4'
     junitVersion = '4.12'
+    seleniumVersion = '3.14.0'
+    fluentleniumVersion = '4.3.0'
 }
 
 repositories {
     jcenter()
+    mavenCentral()
+}
+
+task( browse, dependsOn: jar, type: JavaExec ) {
+    main = 'lukuvinkkikirjasto.Tester'
+    classpath = sourceSets.main.runtimeClasspath
 }
 
 dependencies{
@@ -23,6 +31,14 @@ dependencies{
     testCompile 'junit:junit:' + junitVersion
     compile group: 'com.sparkjava', name: 'spark-core', version: '2.7.1'
     compile group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-core', version: fluentleniumVersion
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-assertj', version: fluentleniumVersion  
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version:seleniumVersion   
+    compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.33.0'
+    compile 'com.google.guava:guava:20.0'
 }
 
 jar {
@@ -49,7 +65,7 @@ jacocoTestReport {
     }
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['lukuvinkkikirjasto/UI/*', 'lukuvinkkikirjasto/Main*'])
-        }))
+                    fileTree(dir: it, exclude: ['lukuvinkkikirjasto/UI/*', 'lukuvinkkikirjasto/Main*'])
+                }))
     }
 }

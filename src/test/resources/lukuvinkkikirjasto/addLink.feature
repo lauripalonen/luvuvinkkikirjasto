@@ -9,3 +9,4 @@ Feature: As a user I want to be able to add a new link to my library
         Given Library is initialized
         When a link named "something" with url "testlink.link" is added
         Then the library should not contain a link named "another" with url "anothertestlink.link"
+
