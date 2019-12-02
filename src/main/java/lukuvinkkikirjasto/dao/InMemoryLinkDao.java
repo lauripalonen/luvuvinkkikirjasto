@@ -35,7 +35,7 @@ public class InMemoryLinkDao implements LinkDao {
 
     @Override
     public Note getNote(String header, String url) {
-        ArrayList<Note> all = listAll();
+        ArrayList<Note> all = listAllNotes();
         for (Note note : all) {
             if (note.getHeader().equals(header) && note.getUrl().equals(url)) {
                 return note;
@@ -61,7 +61,7 @@ public class InMemoryLinkDao implements LinkDao {
     }
 
     @Override
-    public ArrayList<Note> listAll() {
+    public ArrayList<Note> listAllNotes() {
         ArrayList<Note> noteArrayList = new ArrayList<>();
         noteArrayList.addAll(linkArrayList);
         noteArrayList.addAll(bookArrayList);
@@ -79,23 +79,23 @@ public class InMemoryLinkDao implements LinkDao {
     }
 
     @Override
-    public Set<Tag> getTagsSet() {
-        return tagMap.values().stream().collect(Collectors.toSet());
-    }
-
-    @Override
     public Tag getTag(String tagHeader) {
         return tagMap.get(tagHeader);
     }
 
     @Override
-    public void createTag(String header) {
+    public void addTag(String header) {
         Tag newTag = new Tag(header);
         tagMap.putIfAbsent(header, newTag);
     }
 
     @Override
     public void removeNote(String id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public ArrayList<Tag> listTags() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

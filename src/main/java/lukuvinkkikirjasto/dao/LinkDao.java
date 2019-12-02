@@ -17,20 +17,21 @@ public interface LinkDao {
     ArrayList<Link> listLinks();
     
     ArrayList<Book> listBooks();
-
-    Set<Tag> getTagsSet();
+    
 //    ArrayList<Tag> listTagsByNote();
 //    ArrayList<Tag> listNotesByTag();
 
     
     void clearDao();
     
-    public ArrayList<Note> listAll();
+    public ArrayList<Note> listAllNotes();
     void joinTagToNote(Note note, Tag tag);
     public Note getNote(String header, String url);
-    public void createTag(String header);
+    public void addTag(String header);
     public Tag getTag(String tagHeader);
     
     public void removeNote(String id);
+
+    public ArrayList<Tag> listTags();
     
 }

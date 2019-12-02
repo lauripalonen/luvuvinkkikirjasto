@@ -57,7 +57,8 @@ public class DatabaseLinkDao implements LinkDao {
             connection.setAutoCommit(false);
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tags ("
                     + "id integer PRIMARY KEY,"
-                    + "Header varchar(300));"
+                    + "Header varchar(300),"
+                    + "UNIQUE(Header))"
             );
             stmt.executeUpdate();
             stmt.close();
@@ -180,7 +181,7 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     @Override
-    public ArrayList<Note> listAll() {
+    public ArrayList<Note> listAllNotes() {
         ArrayList<Note> notes = new ArrayList<>();
         try {
             Connection connection = getConnection();
@@ -213,18 +214,23 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     @Override
-    public Set<Tag> getTagsSet() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public void joinTagToNote(Note note, Tag tag) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void createTag(String header) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void addTag(String header) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Tags (Header) "
+                    + "VALUES (?)");
+            stmt.setString(1, header);
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Override
@@ -244,6 +250,26 @@ public class DatabaseLinkDao implements LinkDao {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+    }
+
+    @Override
+    public ArrayList<Tag> listTags() {
+        ArrayList<Tag> tags = new ArrayList<>();
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Tags");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String header = rs.getString("Header");
+                tags.add(new Tag(header));
+            }
+            stmt.close();
+            rs.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return tags;
     }
 
 }
