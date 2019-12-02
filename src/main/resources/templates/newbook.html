@@ -3,6 +3,9 @@
 <body>
     <h1>Lukuvinkkikirjasto</h1>
     <h4>Uuden muistiinpanon lisääminen</h4>
+
+    <a href="/">Takaisin etusivulle</a> 
+
     <form method="POST" action="/changetype">
         <label>Vaihda muistiinpanon tyyppiä:</label>
         <select name="noteType" onChange="this.form.submit()">
@@ -32,10 +35,6 @@
         </div>
 
         <input type="submit" value="Lisää kirja">
-    </form>
-
-    <form action="/">
-        <input type="submit" value="Takaisin">
     </form>
 
 </body>
