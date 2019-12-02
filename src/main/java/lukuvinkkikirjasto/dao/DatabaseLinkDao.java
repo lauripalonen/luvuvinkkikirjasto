@@ -20,6 +20,7 @@ import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
 import lukuvinkkikirjasto.domain.Tag;
+import java.util.Random;
 
 public class DatabaseLinkDao implements LinkDao {
 
@@ -95,17 +96,25 @@ public class DatabaseLinkDao implements LinkDao {
         }
     }
 
+    public int generateRandomId(){
+        Random r = new Random();
+        return r.nextInt(1000);
+    }
+
     @Override
     public void addLink(String header, String url) {
+        int id = generateRandomId();
+
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
-                    + "VALUES (?, ?, ?, ?, ?)");
-            stmt.setString(1, header);
-            stmt.setString(2, url);
-            stmt.setString(3, "");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (id, Header, URL, Author, ISBN, Type) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)");
+            stmt.setInt(1, id);
+            stmt.setString(2, header);
+            stmt.setString(3, url);
             stmt.setString(4, "");
-            stmt.setString(5, "Link");
+            stmt.setString(5, "");
+            stmt.setString(6, "Link");
             stmt.executeUpdate();
             stmt.close();
             connection.close();
@@ -116,15 +125,18 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public void addBook(String header, String url, String author, String isbn) {
+        int id = generateRandomId();
+
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
-                    + "VALUES (?, ?, ?, ?, ?)");
-            stmt.setString(1, header);
-            stmt.setString(2, url);
-            stmt.setString(3, author);
-            stmt.setString(4, isbn);
-            stmt.setString(5, "Book");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (id, Header, URL, Author, ISBN, Type) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)");
+            stmt.setInt(1, id);
+            stmt.setString(2, header);
+            stmt.setString(3, url);
+            stmt.setString(4, author);
+            stmt.setString(5, isbn);
+            stmt.setString(6, "Book");
             stmt.executeUpdate();
             stmt.close();
             connection.close();
