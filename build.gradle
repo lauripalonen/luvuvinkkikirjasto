@@ -57,5 +57,5 @@ jacocoTestReport {
 }
 
 applicationName = 'lukuvinkkikirjasto'
-task stage(dependsOn: ['clean', 'shadowJar'])
-shadowJar.mustRunAfter clean
+task stage(dependsOn: ['clean', 'installDist'])
+installDist.mustRunAfter clean
