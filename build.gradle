@@ -56,5 +56,5 @@ jacocoTestReport {
 }
 
 applicationName = 'lukuvinkkikirjasto'
-task stage(dependsOn: ['clean', 'shadowJar'])
+task stage(dependsOn: ['clean', 'build'])
 shadowJar.mustRunAfter clean
