@@ -4,14 +4,14 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.Before;
+import io.cucumber.java.After;
 import java.util.*;
 import lukuvinkkikirjasto.domain.Book;
 import static org.junit.Assert.*;
 import lukuvinkkikirjasto.domain.Library;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
-import org.junit.After;
-import org.junit.Before;
 
 public class Stepdefs {
 
@@ -76,9 +76,14 @@ public class Stepdefs {
         boolean contained = false;
         for (Note note : outputs) {
             if (link.equals(note)) {
+                System.out.println("This is the note:");
+                System.out.println(note);
+                System.out.println("This is the link:");
+                System.out.println(link);
                 contained = true;
             }
         }
+        assertFalse(contained);
     }
 
     @When("a book named {string} found on {string} authored by {string} with isbn {string} is added")
