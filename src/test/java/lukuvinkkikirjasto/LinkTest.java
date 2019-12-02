@@ -14,7 +14,7 @@ public class LinkTest {
     
     @Before
     public void setUp() {
-        this.link = new Link("header", "url");
+        this.link = new Link("header", "url", 0);
     }
     
     @Test

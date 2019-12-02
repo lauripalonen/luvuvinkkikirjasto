@@ -30,12 +30,12 @@ public class DatabaseLinkDao implements LinkDao {
         createDbFolder();
         createNoteTable();
         createTagTable();
+        createTagNoteAssociationTable();
     }
 
     private void createNoteTable() {
         try {
             Connection connection = getConnection();
-            connection.setAutoCommit(false);
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
                     + "id integer PRIMARY KEY,"
                     + "Header varchar(300), "
@@ -46,7 +46,6 @@ public class DatabaseLinkDao implements LinkDao {
             );
             stmt.executeUpdate();
             stmt.close();
-            connection.commit();
             connection.close();
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -56,14 +55,29 @@ public class DatabaseLinkDao implements LinkDao {
     private void createTagTable() {
         try {
             Connection connection = getConnection();
-            connection.setAutoCommit(false);
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tags ("
                     + "id integer PRIMARY KEY,"
-                    + "Header varchar(300);"
+                    + "Header varchar(300),"
+                    + "UNIQUE(Header))"
             );
             stmt.executeUpdate();
             stmt.close();
-            connection.commit();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    private void createTagNoteAssociationTable() {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags (note_id integer,"
+                    + " tag_id integer,"
+                    + " FOREIGN KEY(note_id) REFERENCES Notes(id),"
+                    + " FOREIGN KEY(tag_id) REFERENCES Tags(id))"
+            );
+            stmt.executeUpdate();
+            stmt.close();
             connection.close();
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -129,7 +143,8 @@ public class DatabaseLinkDao implements LinkDao {
             while (rs.next()) {
                 String header = rs.getString("Header");
                 String url = rs.getString("URL");
-                links.add(new Link(header, url));
+                int id = rs.getInt("id");
+                links.add(new Link(header, url, id));
             }
             stmt.close();
             rs.close();
@@ -152,7 +167,8 @@ public class DatabaseLinkDao implements LinkDao {
                 String url = rs.getString("URL");
                 String author = rs.getString("Author");
                 String isbn = rs.getString("ISBN");
-                books.add(new Book(header, url, author, isbn));
+                int id = rs.getInt("id");
+                books.add(new Book(header, url, author, isbn, id));
             }
             stmt.close();
             rs.close();
@@ -209,7 +225,7 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     @Override
-    public ArrayList<Note> listAll() {
+    public ArrayList<Note> listAllNotes() {
         ArrayList<Note> notes = new ArrayList<>();
         try {
             Connection connection = getConnection();
@@ -221,10 +237,11 @@ public class DatabaseLinkDao implements LinkDao {
                 String author = rs.getString("Author");
                 String isbn = rs.getString("ISBN");
                 String type = rs.getString("Type");
+                int id = rs.getInt("id");
                 if (type.equals("Book")) {
-                    notes.add(new Book(header, url, author, isbn));
+                    notes.add(new Book(header, url, author, isbn, id));
                 } else if (type.equals("Link")) {
-                    notes.add(new Link(header, url));
+                    notes.add(new Link(header, url, id));
                 }
             }
             stmt.close();
@@ -242,23 +259,71 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     @Override
-    public Set<Tag> getTagsSet() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public void joinTagToNote(Note note, Tag tag) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Tags_Notes (note_id, tag_id)"
+                    + " VALUES (?, ?)");
+            stmt.setInt(1, note.getId());
+            stmt.setInt(2, tag.getId());
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
-    public void createTag(String header) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void addTag(String header) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Tags (Header) "
+                    + "VALUES (?)");
+            stmt.setString(1, header);
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Override
     public Tag getTag(String tagHeader) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removeNote(String id) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Notes WHERE id = ?");
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public ArrayList<Tag> listTags() {
+        ArrayList<Tag> tags = new ArrayList<>();
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Tags");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String header = rs.getString("Header");
+                int id = rs.getInt("id");
+                tags.add(new Tag(header, id));
+            }
+            stmt.close();
+            rs.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return tags;
     }
 
 }

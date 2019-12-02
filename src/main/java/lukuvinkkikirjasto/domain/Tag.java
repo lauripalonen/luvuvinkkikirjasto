@@ -2,9 +2,10 @@ package lukuvinkkikirjasto.domain;
 
 public class Tag {
 
-    String header;
+    private String header;
+    private int id;
 
-    public Tag(String header) {
+    public Tag(String header, int id) {
         this.header = header;
     }
 
@@ -15,5 +16,10 @@ public class Tag {
     public void setHeader(String header) {
         this.header = header;
     }
+
+    public int getId() {
+        return id;
+    }
+    
 
 }

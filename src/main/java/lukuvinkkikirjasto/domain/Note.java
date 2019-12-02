@@ -9,11 +9,13 @@ public abstract class Note implements Comparable {
     private ArrayList<String> tags;
     private String url;
     //private String language;
+    private int id;
 
-    public Note(String header, String url) {
+    public Note(String header, String url, int id) {
         this.header = header;
         this.tags = new ArrayList<>();
         this.url = url;
+        this.id = id;
         //this.language = "";
     }
 
@@ -40,6 +42,10 @@ public abstract class Note implements Comparable {
     @Override
     public String toString() {
         return "header=" + header + ", url=" + url;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

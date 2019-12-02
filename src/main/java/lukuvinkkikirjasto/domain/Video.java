@@ -5,8 +5,8 @@ package lukuvinkkikirjasto.domain;
  */
 public class Video extends Note {        
     
-    public Video(String header, String url) {
-        super(header, url);
+    public Video(String header, String url, int id) {
+        super(header, url, id);
     }
     
 }
