@@ -39,6 +39,7 @@ dependencies{
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version:seleniumVersion   
     compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.33.0'
     compile 'com.google.guava:guava:20.0'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
 }
 
 jar {
@@ -69,3 +70,7 @@ jacocoTestReport {
                 }))
     }
 }
+
+applicationName = 'lukuvinkkikirjasto'
+task stage(dependsOn: ['clean', 'build'])
+build.mustRunAfter clean
