@@ -188,41 +188,37 @@ public class DatabaseLinkDao implements LinkDao {
         }
     }
 
-    private URI getUri(){
-        try {
-            URI dbUri = new URI(System.getenv("DATABASE_URL"));
-            return dbUri;
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+    private static Connection getConnectionHeroku() throws URISyntaxException, SQLException {
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
+
+        return DriverManager.getConnection(dbUrl, username, password);
     }
 
     private Connection getConnection() {
-        //String dbUrl = System.getenv("JDBC_DATABASE_URL");
-        URI dbUri = getUri();
+        String dbUrl = System.getenv("DATABASE_URL");
+
+        if(dbUrl != null){
+            try {
+                return getConnectionHeroku();
+            } catch (URISyntaxException uriEx){
+                Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, uriEx);
+            } catch (SQLException sqlEx) {
+                Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, sqlEx);
+                return null;
+            }
+        }
+
 
         try {
-            if (dbUri != null) {
-                String username = dbUri.getUserInfo().split(":")[0];
-                String password = dbUri.getUserInfo().split(":")[1];
-                String dbUrl = "jdbc:postgresql://" + dbUri.getHost()
-                        + ':' + dbUri.getPort()
-                        + dbUri.getPath()
-                        + "?sslmode=require";
-                return DriverManager.getConnection(dbUrl, username, password);
-            }
-            /*if (dbUrl != null){
-                return DriverManager.getConnection(dbUrl);
-            }*/
-
             return DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-
-
     }
 
     @Override
