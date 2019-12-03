@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import lukuvinkkikirjasto.UI.UserInterface;
+import lukuvinkkikirjasto.UI.WebUserInterface;
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Library;
 import lukuvinkkikirjasto.domain.Link;
@@ -14,7 +15,7 @@ import spark.template.velocity.VelocityTemplateEngine;
 
 public class Main {
 
-    static String portFromEnv = new ProcessBuilder().environment().get("PORT");
+    /*static String portFromEnv = new ProcessBuilder().environment().get("PORT");
     static String layout = "templates/layout.html";
 
     static void setEnvPort(String port) {
@@ -27,12 +28,14 @@ public class Main {
         }
 
         return 3001;
-    }
+    }*/
 
     public static void main(String[] args) {
+        WebUserInterface ui = new WebUserInterface();
+        ui.start();
 //        Scanner scanner = new Scanner(System.in);
 //        //Library library = new Library(); //in memory
-        Library library = new Library("links.db"); //in sqlite database
+       /* Library library = new Library("links.db"); //in sqlite database
 //        UserInterface ui = new UserInterface(library, scanner);
 //
 //        ui.startLibrary();
@@ -138,7 +141,7 @@ public class Main {
                 response.redirect("/listbooks");
             }
             return null;
-        });
+        });*/
 
     }
 
