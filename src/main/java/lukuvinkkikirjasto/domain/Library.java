@@ -29,8 +29,12 @@ public class Library {
         dao.removeNote(id);
     }
     
-    public void addTag(String header){
+    public void addTag(String header) {
         dao.addTag(header);
+    }
+    
+    public Tag getTag(String header) {
+        return dao.getTag(header);
     }
 
     public void addBook(String header, String url, String author, String isbn) {
@@ -64,6 +68,10 @@ public class Library {
     
     public ArrayList<Tag> listTags(){
         return dao.listTags();
+    }
+    
+    public ArrayList<String> getTagsForNote(int noteId) {
+        return dao.getTagsForNote(noteId);
     }
 
     public void deleteAllRecords() {

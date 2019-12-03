@@ -7,6 +7,7 @@ public class Tag {
 
     public Tag(String header, int id) {
         this.header = header;
+        this.id = id;
     }
 
     public String getHeader() {

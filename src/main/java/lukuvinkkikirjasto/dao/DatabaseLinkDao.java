@@ -72,7 +72,7 @@ public class DatabaseLinkDao implements LinkDao {
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags (note_id integer,"
-                    + " tag_id integer,"
+                    + " tag_id integer PRIMARY KEY,"
                     + " FOREIGN KEY(note_id) REFERENCES Notes(id),"
                     + " FOREIGN KEY(tag_id) REFERENCES Tags(id))"
             );
@@ -230,24 +230,54 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public Note getNote(String header, String url) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Note note = null;
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Notes WHERE Header = ? AND URL = ?");
+            stmt.setString(1, header);
+            stmt.setString(2, url);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String noteHeader = rs.getString("Header");
+                String noteUrl = rs.getString("URL");
+                String noteAuthor = rs.getString("Author");
+                String noteIsbn = rs.getString("ISBN");
+                String type = rs.getString("Type");
+                if (type.equals("Link")) {
+                    note = new Link(noteHeader, noteUrl, id);
+                } else if (type.equals("Book")) {
+                    note = new Book(noteHeader, noteUrl, noteAuthor, noteIsbn, id);
+                }
+            }
+            rs.close();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return note;
     }
 
     @Override
     public void joinTagToNote(Note note, Tag tag) {
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Tags_Notes (note_id, tag_id)"
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO notes_tags (note_id, tag_id)"
                     + " VALUES (?, ?)");
             stmt.setInt(1, note.getId());
             stmt.setInt(2, tag.getId());
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
         } catch (SQLException ex) {
+            System.out.println(ex);
             Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void addTag(String header) {
+    public boolean addTag(String header) {
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Tags (Header) "
@@ -256,14 +286,54 @@ public class DatabaseLinkDao implements LinkDao {
             stmt.executeUpdate();
             stmt.close();
             connection.close();
+            
+            return true;
         } catch (SQLException ex) {
             System.out.println(ex);
+            return false;
         }
     }
 
     @Override
     public Tag getTag(String tagHeader) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Tag tag = null;
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Tags WHERE Header = ?");
+            stmt.setString(1, tagHeader);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String header = rs.getString("Header");
+                tag = new Tag(header, id);
+            }
+            rs.close();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return tag;
+    }
+    
+    public ArrayList<String> getTagsForNote(int noteId) {
+        ArrayList<String> tags = new ArrayList();
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Tags t INNER JOIN notes_tags nt ON t.id = nt.tag_id AND nt.note_id = ?");
+            stmt.setInt(1, noteId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String header = rs.getString("Header");
+                tags.add(header);
+            }
+            rs.close();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return tags;
     }
 
     @Override

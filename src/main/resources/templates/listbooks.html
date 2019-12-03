@@ -25,7 +25,7 @@
 
         <h5>Tallennetut kirjat:</h5>
         #foreach ($book in $bookList)
-        <p>$book.getHeader() - $book.getUrl() - $book.getAuthor()</p>
+        <p>$book.getHeader() - $book.getUrl() - $book.getAuthor() - Tags: $book.getTagsAsString()</p>
         #end
 
     </body>

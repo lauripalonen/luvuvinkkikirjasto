@@ -26,9 +26,17 @@ public abstract class Note implements Comparable {
     public ArrayList<String> getTags() {
         return this.tags;
     }
+    
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
 
     public void addTag(String tag) {
         this.tags.add(tag);
+    }
+    
+    public String getTagsAsString() {
+        return String.join(" ", this.tags);
     }
 
     public String getUrl() {

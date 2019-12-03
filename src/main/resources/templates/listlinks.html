@@ -25,7 +25,7 @@
 
         <h5>Tallennetut linkit:</h5>
         #foreach ($link in $linkList)
-        <p>$link.getHeader() - $link.getUrl()</p>
+        <p>$link.getHeader() - $link.getUrl() - Tags: $link.getTagsAsString()</p>
         #end
 
     </body>
