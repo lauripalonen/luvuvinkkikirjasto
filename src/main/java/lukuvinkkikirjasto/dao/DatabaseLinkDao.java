@@ -39,8 +39,8 @@ public class DatabaseLinkDao implements LinkDao {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
                     + "id SERIAL PRIMARY KEY,"
-                    + "Header varchar(300), "
-                    + "URL varchar(300), "
+                    + "Header varchar(300) NOT NULL, "
+                    + "URL varchar(300) NOT NULL, "
                     + "Author varchar(48), "
                     + "ISBN varchar(48),"
                     + "Type varchar(16));"
@@ -107,14 +107,14 @@ public class DatabaseLinkDao implements LinkDao {
 
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (id, Header, URL, Author, ISBN, Type) "
-                    + "VALUES (?, ?, ?, ?, ?, ?)");
-            stmt.setInt(1, id);
-            stmt.setString(2, header);
-            stmt.setString(3, url);
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
+                    + "VALUES (?, ?, ?, ?, ?)");
+            //stmt.setInt(1, id);
+            stmt.setString(1, header);
+            stmt.setString(2, url);
+            stmt.setString(3, "");
             stmt.setString(4, "");
-            stmt.setString(5, "");
-            stmt.setString(6, "Link");
+            stmt.setString(5, "Link");
             stmt.executeUpdate();
             stmt.close();
             connection.close();
@@ -129,14 +129,14 @@ public class DatabaseLinkDao implements LinkDao {
 
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (id, Header, URL, Author, ISBN, Type) "
-                    + "VALUES (?, ?, ?, ?, ?, ?)");
-            stmt.setInt(1, id);
-            stmt.setString(2, header);
-            stmt.setString(3, url);
-            stmt.setString(4, author);
-            stmt.setString(5, isbn);
-            stmt.setString(6, "Book");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
+                    + "VALUES (?, ?, ?, ?, ?)");
+            //stmt.setInt(1, id);
+            stmt.setString(1, header);
+            stmt.setString(2, url);
+            stmt.setString(3, author);
+            stmt.setString(4, isbn);
+            stmt.setString(5, "Book");
             stmt.executeUpdate();
             stmt.close();
             connection.close();
