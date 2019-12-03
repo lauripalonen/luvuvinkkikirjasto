@@ -20,6 +20,7 @@ import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
 import lukuvinkkikirjasto.domain.Tag;
+import java.util.Random;
 
 public class DatabaseLinkDao implements LinkDao {
 
@@ -37,9 +38,9 @@ public class DatabaseLinkDao implements LinkDao {
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
-                    + "id integer PRIMARY KEY,"
-                    + "Header varchar(300), "
-                    + "URL varchar(300), "
+                    + "id SERIAL PRIMARY KEY,"
+                    + "Header varchar(300) NOT NULL, "
+                    + "URL varchar(300) NOT NULL, "
                     + "Author varchar(48), "
                     + "ISBN varchar(48),"
                     + "Type varchar(16));"
@@ -56,7 +57,7 @@ public class DatabaseLinkDao implements LinkDao {
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tags ("
-                    + "id integer PRIMARY KEY,"
+                    + "id SERIAL PRIMARY KEY,"
                     + "Header varchar(300),"
                     + "UNIQUE(Header))"
             );
@@ -72,7 +73,7 @@ public class DatabaseLinkDao implements LinkDao {
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags (note_id integer,"
-                    + " tag_id integer,"
+                    + " tag_id SERIAL,"
                     + " FOREIGN KEY(note_id) REFERENCES Notes(id),"
                     + " FOREIGN KEY(tag_id) REFERENCES Tags(id))"
             );
@@ -95,12 +96,20 @@ public class DatabaseLinkDao implements LinkDao {
         }
     }
 
+    public int generateRandomId(){
+        Random r = new Random();
+        return r.nextInt(1000);
+    }
+
     @Override
     public void addLink(String header, String url) {
+        int id = generateRandomId();
+
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
                     + "VALUES (?, ?, ?, ?, ?)");
+            //stmt.setInt(1, id);
             stmt.setString(1, header);
             stmt.setString(2, url);
             stmt.setString(3, "");
@@ -116,10 +125,13 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public void addBook(String header, String url, String author, String isbn) {
+        int id = generateRandomId();
+
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
                     + "VALUES (?, ?, ?, ?, ?)");
+            //stmt.setInt(1, id);
             stmt.setString(1, header);
             stmt.setString(2, url);
             stmt.setString(3, author);
@@ -181,22 +193,55 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public void clearDao() {
-        try {
-            Files.deleteIfExists(Paths.get(filePath));
-        } catch (IOException ex) {
-            System.out.println(ex);
+        if(System.getenv("DATABASE_URL") != null) {
+            try {
+                Connection connection = getConnection();
+                PreparedStatement stmt = connection.prepareStatement("DELETE FROM Notes");
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        } else {
+
+            try {
+                Files.deleteIfExists(Paths.get(filePath));
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
         }
     }
 
+    private static Connection getConnectionHeroku() throws URISyntaxException, SQLException {
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
+
+        return DriverManager.getConnection(dbUrl, username, password);
+    }
+
     private Connection getConnection() {
+        String dbUrl = System.getenv("DATABASE_URL");
+
+        if(dbUrl != null){
+            try {
+                return getConnectionHeroku();
+            } catch (URISyntaxException uriEx){
+                Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, uriEx);
+            } catch (SQLException sqlEx) {
+                Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, sqlEx);
+                return null;
+            }
+        }
+
+
         try {
             return DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-
-
     }
 
     @Override
