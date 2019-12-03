@@ -43,21 +43,26 @@ Raportteja voi tarkastella badgeja klikkaamalla
 ## Scrum
 
 [Product Backlog](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=0)
+
 [Definition of done](https://github.com/lauripalonen/lukuvinkkikirjasto/blob/master/documentation/definition_of_done.md)
+
 [Google Drive -folder](https://drive.google.com/open?id=11m9Bp5TtHezIU4JiUWpIKRGA1es3xSzW)
 
 ### Sprintti 1
 
 [Backlog](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=1301402780)
+
 [Burndown chart](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=1130181346)
 
 ### Sprintti 2
 
 [Backlog](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit?usp=sharing)
+
 [Burndown chart](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit?usp=sharing)
 
 ### Sprintti 3
 
 [Backlog](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit?usp=sharing)
+
 [Burndown chart](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit?usp=sharing)
 
