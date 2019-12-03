@@ -1,6 +1,6 @@
 package lukuvinkkikirjasto.domain;
 
-public class Tag {
+public class Tag implements Comparable {
 
     private String header;
     private int id;
@@ -22,5 +22,24 @@ public class Tag {
         return id;
     }
     
-
+    @Override 
+    public boolean equals(Object o) {
+        if(this == o) {
+            return true;
+        }
+        if(!(o instanceof Tag)) {
+            return false;
+        }
+        Tag t = (Tag) o;
+        return this.header.equals(t.getHeader());
+    }
+    
+    @Override
+    public int compareTo(Object o) {
+        if (o == null || o == this) {
+            return 0;
+        }
+        Tag t = (Tag) o;
+        return this.header.compareToIgnoreCase(t.getHeader());
+    }
 }

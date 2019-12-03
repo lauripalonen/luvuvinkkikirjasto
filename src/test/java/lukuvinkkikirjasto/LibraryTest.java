@@ -11,6 +11,7 @@ import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Library;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
+import lukuvinkkikirjasto.domain.Tag;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -86,7 +87,40 @@ public class LibraryTest {
         Collections.sort(notesFromLibrary);
         assertEquals(notes, notesFromLibrary);
     }
+    
+    @Test 
+    public void noteCanBeRemoved() {
+        Book b = new Book("Header", "url", "Author", "1234567", 1);
+        library.addBook("Header", "url", "Author", "1234567");
+        library.removeNote("1");
+        ArrayList<Note> notes = new ArrayList<>();
+        ArrayList<Note> notesFromLibrary = library.listAll();
+        assertEquals(notes, notesFromLibrary);
+    }
+    
+    @Test
+    public void rightNoteIsRemoved() {
+        Book b = new Book("Header", "url", "Author", "1234567", 1);
+        Link l = new Link("Link", "link.fi", 2);
+        library.addBook("Header", "url", "Author", "1234567");
+        library.addLink("Link", "link.fi");
+        library.removeNote("2");
+        ArrayList<Note> notes = new ArrayList<>();
+        ArrayList<Note> notesFromLibrary = library.listAll();
+        notes.add(b);
+        assertEquals(notes, notesFromLibrary);
+    }
 
+    @Test
+    public void tagsAreListed() {
+        Tag t = new Tag("header", 1);
+        library.addTag("header");
+        ArrayList<Tag> tags = new ArrayList<>();
+        ArrayList<Tag> tagsFromLibrary = library.listTags();
+        tags.add(t);
+        assertEquals(tags, tagsFromLibrary);
+    }
+    
     @After
     public void after() {
         library.deleteAllRecords();
