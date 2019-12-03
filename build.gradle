@@ -66,7 +66,7 @@ jacocoTestReport {
     }
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-                    fileTree(dir: it, exclude: ['lukuvinkkikirjasto/UI/*', 'lukuvinkkikirjasto/Main*'])
+                    fileTree(dir: it, exclude: ['lukuvinkkikirjasto/UI/*', 'lukuvinkkikirjasto/Main*', 'lukuvinkkikirjasto/Tester*'])
                 }))
     }
 }
