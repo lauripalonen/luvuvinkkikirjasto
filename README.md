@@ -1,40 +1,40 @@
 # Lukuvinkkikirjasto
 
-Helsingin yliopisto, Ohjelmistotuotanto. Miniprojektin repositorio, ryhmä Rebel Scrum.
+Helsingin yliopisto, Ohjelmistotuotanto-kurssi. Miniprojektin repositorio, ryhmä Rebel Scrum.
 
 ## Ohjelma
 
 Yksinkertainen kirjasto lukuvinkkien tallentamiseen, löytyy osoitteesta [lukuvinkki.herokuapp.com](http://lukuvinkki.herokuapp.com)
 
-## Käyttöohjeet
+### Käyttöohjeet
 
-Pääsivulta voit käyttäjänä valita haluatko tallentaa uuden lukuvinkin vai tarkastella vanhoja. 
+Pääsivulta voit käyttäjänä valita haluatko tarkastella vanhoja muistiinpanoja vai tallentaa uuden muistiinpanon.
 
-### uuden linkin tallentaminen
+#### Tallennettujen lukuvinkkien tarkasteleminen
 
-Lukuvinkin tyypiksi voit valita linkin tai kirjan. Syöttämällä pyydetyt tiedot tarjottuihin kenttiin, ja painamalla "lisää" lukuvinkki tallentuu. Painamalla "takaisin", voit siirtyä takaisin pääsivulle tallentamatta mitään. 
+Ohjelma listaa automaattisesti kaikki aiemmin tallentamasi lukuvinkit. Voit rajata valikosta tarkasteltavaksi pelkät linkit tai kirjat.
 
-### tallennettujen linkkien tarkasteleminen
+#### Uuden lukuvinkin tallentaminen
 
-Ohjelma listaa automaattisesti kaikki aiemmin tallentamasi lukuvinkit. Voit rajata tarkastelun koskemaan myös vain tallennettuja linkkejä tai kirjoja.
+Lukuvinkin tyypiksi voit valita linkin tai kirjan, oletuksena tyyppinä on linkki. Syöttämällä pyydetyt tiedot tarjottuihin kenttiin, ja painamalla "Lisää" lukuvinkki tallentuu. Painamalla "Takaisin etusivulle", voit siirtyä takaisin pääsivulle tallentamatta mitään. 
 
-## Testaus 
+### Testaus 
 
 Ohjelma on testattu automatisoiduilla testeillä sekä manuaalisesti. Automaattiset testit käyttävät JUnitia. Manuaalinen testaus on koskenut lähinnä käyttöliittymää. Hyväksymätestit on toteutettu Cucumberilla. 
 
-### Yksikkötestaus ja integraatiotestaus
+#### Yksikkötestaus ja integraatiotestaus
 
 Luokkien yksikkötestit löytyvät omista kansioistaan [täältä](https://github.com/lauripalonen/lukuvinkkikirjasto/tree/master/src/test/java/lukuvinkkikirjasto).
 
 Testikattavuusraportti nähtävissä: [CodeCov](https://codecov.io/gh/lauripalonen/lukuvinkkikirjasto).
 
-### Hyväksymätestit
+#### Hyväksymätestit
 
 User storyjen [Cucumber-featuret](https://github.com/lauripalonen/lukuvinkkikirjasto/tree/master/src/test/resources/lukuvinkkikirjasto).
 
 User storylla "As a user I can save writer and title of book to note" ei ole omia hyväksymätestejä, koska sen scenaariot on testattu muiden featurejen yhteydessä. 
 
-### Raportit
+#### Raportit
 
 Raportteja voi tarkastella badgeja klikkaamalla
 
