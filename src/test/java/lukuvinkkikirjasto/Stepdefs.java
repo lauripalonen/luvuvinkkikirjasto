@@ -49,8 +49,11 @@ public class Stepdefs {
         addLink(name, url);
     }
 
-    @Then("main menu should list item {string}")
+    @Then("list all menu should list item {string}")
     public void mainMenuListsItem(String name) {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("Tarkastele muistiinpanojasi"));
+        element.click();
         pageHasContent(name);
     }
 

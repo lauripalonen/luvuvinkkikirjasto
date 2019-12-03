@@ -4,4 +4,4 @@ Feature: As a user I want to be able to add a new link to my library through web
         Given Library is initialized
         And lisää uusi muistiinpano is selected
         When a link named "Kuningas" with url "www.litti.fi" is added through web UI
-        Then main menu should list item "Kuningas"
+        Then list all menu should list item "Kuningas"
