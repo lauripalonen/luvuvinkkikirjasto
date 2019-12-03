@@ -1,6 +1,8 @@
 package lukuvinkkikirjasto.domain;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import lukuvinkkikirjasto.dao.DatabaseLinkDao;
 import lukuvinkkikirjasto.dao.LinkDao;
 
@@ -30,7 +32,13 @@ public class Library {
     }
     
     public void addTag(String header) {
-        dao.addTag(header);
+        List<String> existingTags = listTags().stream().map(tag -> tag.getHeader()).collect(Collectors.toList());
+        existingTags.forEach(t -> {
+            System.out.println(t);
+        });
+        if (!existingTags.contains(header)) {
+            dao.addTag(header);
+        }
     }
     
     public Tag getTag(String header) {

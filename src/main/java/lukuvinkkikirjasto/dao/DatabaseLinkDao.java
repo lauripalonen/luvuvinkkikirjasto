@@ -121,10 +121,11 @@ public class DatabaseLinkDao implements LinkDao {
             try {
                 Connection connection = getConnection();
 
-                PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags (note_id integer,"
-                        + " tag_id SERIAL,"
+                PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags (note_id integer NOT NULL,"
+                        + " tag_id SERIAL NOT NULL,"
                         + " FOREIGN KEY(note_id) REFERENCES Notes(id),"
-                        + " FOREIGN KEY(tag_id) REFERENCES Tags(id))"
+                        + " FOREIGN KEY(tag_id) REFERENCES Tags(id),"
+                        + " PRIMARY KEY (note_id, tag_id))"
                 );
                 stmt.executeUpdate();
                 stmt.close();
@@ -138,10 +139,11 @@ public class DatabaseLinkDao implements LinkDao {
         try {
             Connection connection = getConnection();
 
-            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags (note_id integer,"
-                    + " tag_id integer PRIMARY KEY,"
+            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags (note_id integer NOT NULL,"
+                    + " tag_id integer NOT NULL,"
                     + " FOREIGN KEY(note_id) REFERENCES Notes(id),"
-                    + " FOREIGN KEY(tag_id) REFERENCES Tags(id))"
+                    + " FOREIGN KEY(tag_id) REFERENCES Tags(id),"
+                    + " PRIMARY KEY (note_id, tag_id))"
             );
             stmt.executeUpdate();
             stmt.close();
