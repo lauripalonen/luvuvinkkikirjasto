@@ -4,7 +4,7 @@ Helsingin yliopisto, Ohjelmistotuotanto. Miniprojektin repositorio, ryhmä Rebel
 
 ## Ohjelma
 
-Yksinkertainen kirjasto lukuvinkkien tallentamiseen, löytyy osoitteesta [lukuvinkki.herokuapp.com]
+Yksinkertainen kirjasto lukuvinkkien tallentamiseen, löytyy osoitteesta [lukuvinkki.herokuapp.com](lukuvinkki.herokuapp.com)
 
 ## Käyttöohjeet
 
@@ -12,7 +12,7 @@ Pääsivulta voit käyttäjänä valita haluatko tallentaa uuden lukuvinkin vai 
 
 ### uuden linkin tallentaminen
 
-Lukuvinkin tyypiksi voit valita linkin tai kirjan. Syöttämällä pyydetyt tiedot tarjottuihin kenttiin, ja painamalla "lisää", lukuvinkki tallentuu. Painamalla "takaisin", voit siirtyä takaisin pääsivulle tallentamatta mitään. 
+Lukuvinkin tyypiksi voit valita linkin tai kirjan. Syöttämällä pyydetyt tiedot tarjottuihin kenttiin, ja painamalla "lisää" lukuvinkki tallentuu. Painamalla "takaisin", voit siirtyä takaisin pääsivulle tallentamatta mitään. 
 
 ### tallennettujen linkkien tarkasteleminen
 

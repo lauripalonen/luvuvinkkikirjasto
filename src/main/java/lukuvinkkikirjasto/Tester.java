@@ -6,11 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * Test class to explore Selenium tests.
- * 
+ *
  * @author hanihani
  */
 public class Tester {
@@ -32,10 +32,21 @@ public class Tester {
 
         sleep(2);
 
+        element = driver.findElement(By.name("noteType"));
+        Select noteType = new Select(element);
+        noteType.selectByValue("2");
+
+        //sleep(2);
+
         element = driver.findElement(By.name("header"));
         element.sendKeys("Google");
         element = driver.findElement(By.name("url"));
         element.sendKeys("www.google.com");
+
+        element = driver.findElement(By.name("author"));
+        element.sendKeys("Goo");
+        element = driver.findElement(By.name("isbn"));
+        element.sendKeys("2321");
         element = driver.findElement(By.name("add"));
 
         sleep(2);

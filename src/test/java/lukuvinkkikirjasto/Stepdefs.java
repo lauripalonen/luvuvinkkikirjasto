@@ -17,6 +17,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Stepdefs {
 
@@ -49,12 +52,28 @@ public class Stepdefs {
         addLink(name, url);
     }
 
+//    @When("a book named {string} found on {string} authored by {string} with isbn {string} is added through web UI")
+//    public void aBookNamedFoundOnAuthoredByWithIsbnIsAddedThroughWebUi(String name, String url, String author, String isbn) {
+//        addBookThroughWebUi(name, url, author, isbn);
+//    }
+
+    @Then("list books menu should list item {string}")
+    public void booksMenuListsItem(String name) {
+        browseBooks();
+        pageHasContent(name);
+    }
+
     @Then("list all menu should list item {string}")
     public void mainMenuListsItem(String name) {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("Tarkastele muistiinpanojasi"));
         element.click();
         pageHasContent(name);
+    }
+
+    @Then("list books menu should not list item {string}")
+    public void listBooksMenuShouldNotListItem(String name) {
+        pageHasNoContent(name);
     }
 
     @When("a link named {string} with url {string} is added")
@@ -148,5 +167,36 @@ public class Stepdefs {
         element.sendKeys(url);
         element = driver.findElement(By.name("add"));
         element.submit();
+    }
+
+//    private void addBookThroughWebUi(String name, String url, String author, String isbn) {
+//        pageHasContent("Uuden muistiinpanon lisääminen");
+//        WebElement element = driver.findElement(By.name("noteType"));
+//        Select noteType = new Select(element);
+//        noteType.selectByValue("2");
+//        
+//        element = driver.findElement(By.name("header"));
+//        element.sendKeys(name);
+//        element = driver.findElement(By.name("url"));
+//        element.sendKeys(url);
+//        element = driver.findElement(By.name("author"));
+//        element.sendKeys(author);
+//        element = driver.findElement(By.name("isbn"));
+//        element.sendKeys(isbn);
+//        element = driver.findElement(By.name("add"));
+//        element.submit();
+//    }
+
+    private void browseBooks() {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("Tarkastele muistiinpanojasi"));
+        element.click();
+        element = driver.findElement(By.name("listType"));
+        Select listType = new Select(element);
+        listType.selectByValue("3");
+    }
+
+    private void pageHasNoContent(String name) {
+        assertFalse(driver.getPageSource().contains(name));
     }
 }
