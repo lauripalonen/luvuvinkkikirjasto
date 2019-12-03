@@ -65,4 +65,3 @@ Raportteja voi tarkastella badgeja klikkaamalla
 [Backlog](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=1248805260)
 
 [Burndown chart](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=1273086550)
-
