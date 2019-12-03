@@ -4,7 +4,7 @@ Helsingin yliopisto, Ohjelmistotuotanto. Miniprojektin repositorio, ryhmä Rebel
 
 ## Ohjelma
 
-Yksinkertainen kirjasto lukuvinkkien tallentamiseen, löytyy osoitteesta [lukuvinkki.herokuapp.com]
+Yksinkertainen kirjasto lukuvinkkien tallentamiseen, löytyy osoitteesta [lukuvinkki.herokuapp.com](lukuvinkki.herokuapp.com)
 
 ## Käyttöohjeet
 
