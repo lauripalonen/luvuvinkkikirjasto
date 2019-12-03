@@ -98,8 +98,6 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public void addLink(String header, String url) {
-        int id = generateRandomId();
-
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
@@ -119,8 +117,6 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public void addBook(String header, String url, String author, String isbn) {
-        int id = generateRandomId();
-
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
