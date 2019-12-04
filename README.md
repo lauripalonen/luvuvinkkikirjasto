@@ -16,7 +16,7 @@ Ohjelma listaa automaattisesti kaikki aiemmin tallentamasi lukuvinkit. Voit raja
 
 #### Uuden lukuvinkin tallentaminen
 
-Lukuvinkin tyypiksi voit valita linkin tai kirjan, oletuksena tyyppinä on linkki. Syöttämällä pyydetyt tiedot tarjottuihin kenttiin, ja painamalla "Lisää" lukuvinkki tallentuu. Painamalla "Takaisin etusivulle", voit siirtyä takaisin pääsivulle tallentamatta mitään. 
+Lukuvinkin tyypiksi voit valita linkin tai kirjan, oletuksena tyyppinä on linkki. Syöttämällä tiedot tarjottuihin kenttiin, ja painamalla "Lisää" lukuvinkki tallentuu. Kenttään "Tags" voit halutessasi syöttää tunnisteen, välilyönnillä erotettuna voit syöttää useamman tagin. Painamalla "Takaisin etusivulle", voit siirtyä takaisin pääsivulle tallentamatta mitään. 
 
 ### Testaus 
 
