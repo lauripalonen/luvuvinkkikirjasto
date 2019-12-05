@@ -43,7 +43,8 @@ public class DatabaseLinkDao implements LinkDao {
                         + "URL varchar(300) NOT NULL, "
                         + "Author varchar(48), "
                         + "ISBN varchar(48),"
-                        + "Type varchar(16));"
+                        + "Type varchar(16),"
+                        + "Info varchar(600));"
                 );
                 stmt.executeUpdate();
                 stmt.close();
@@ -62,7 +63,8 @@ public class DatabaseLinkDao implements LinkDao {
                         + "URL varchar(300) NOT NULL, "
                         + "Author varchar(48), "
                         + "ISBN varchar(48),"
-                        + "Type varchar(16));"
+                        + "Type varchar(16),"
+                        + "Info varchar(600));"
                 );
 
 
@@ -167,16 +169,17 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     @Override
-    public void addLink(String header, String url) {
+    public void addLink(String header, String url, String info) {
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
-                    + "VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type, Info) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)");
             stmt.setString(1, header);
             stmt.setString(2, url);
             stmt.setString(3, "");
             stmt.setString(4, "");
             stmt.setString(5, "Link");
+            stmt.setString(6, info);
             stmt.executeUpdate();
             stmt.close();
             connection.close();
@@ -186,16 +189,17 @@ public class DatabaseLinkDao implements LinkDao {
     }
 
     @Override
-    public void addBook(String header, String url, String author, String isbn) {
+    public void addBook(String header, String url, String author, String isbn, String info) {
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type) "
-                    + "VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type, Info) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)");
             stmt.setString(1, header);
             stmt.setString(2, url);
             stmt.setString(3, author);
             stmt.setString(4, isbn);
             stmt.setString(5, "Book");
+            stmt.setString(6, info);
             stmt.executeUpdate();
             stmt.close();
             connection.close();
@@ -215,7 +219,8 @@ public class DatabaseLinkDao implements LinkDao {
                 String header = rs.getString("Header");
                 String url = rs.getString("URL");
                 int id = rs.getInt("id");
-                links.add(new Link(header, url, id));
+                String info = rs.getString("Info");
+                links.add(new Link(header, url, id, info));
             }
             stmt.close();
             rs.close();
@@ -239,7 +244,8 @@ public class DatabaseLinkDao implements LinkDao {
                 String author = rs.getString("Author");
                 String isbn = rs.getString("ISBN");
                 int id = rs.getInt("id");
-                books.add(new Book(header, url, author, isbn, id));
+                String info = rs.getString("Info");
+                books.add(new Book(header, url, author, isbn, id, info));
             }
             stmt.close();
             rs.close();
@@ -316,10 +322,11 @@ public class DatabaseLinkDao implements LinkDao {
                 String isbn = rs.getString("ISBN");
                 String type = rs.getString("Type");
                 int id = rs.getInt("id");
+                String info = rs.getString("Info");
                 if (type.equals("Book")) {
-                    notes.add(new Book(header, url, author, isbn, id));
+                    notes.add(new Book(header, url, author, isbn, id, info));
                 } else if (type.equals("Link")) {
-                    notes.add(new Link(header, url, id));
+                    notes.add(new Link(header, url, id, info));
                 }
             }
             stmt.close();
@@ -347,10 +354,11 @@ public class DatabaseLinkDao implements LinkDao {
                 String noteAuthor = rs.getString("Author");
                 String noteIsbn = rs.getString("ISBN");
                 String type = rs.getString("Type");
+                String info = rs.getString("Info");
                 if (type.equals("Link")) {
-                    note = new Link(noteHeader, noteUrl, id);
+                    note = new Link(noteHeader, noteUrl, id, info);
                 } else if (type.equals("Book")) {
-                    note = new Book(noteHeader, noteUrl, noteAuthor, noteIsbn, id);
+                    note = new Book(noteHeader, noteUrl, noteAuthor, noteIsbn, id, info);
                 }
             }
             rs.close();

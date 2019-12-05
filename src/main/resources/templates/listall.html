@@ -17,7 +17,7 @@
 
     <h5>Kaikki lukuvinkkisi:</h5>
         #foreach ($note in $noteList)
-            <p>$note.getHeader() - $note.getUrl() - Tags: $note.getTagsAsString()</p>
+            <p>$note.getHeader() - $note.getUrl() - Lisätiedot: $note.getInfo() - Tagit: $note.getTagsAsString()</p>
         #end
 
 </body>

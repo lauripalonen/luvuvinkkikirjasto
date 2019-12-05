@@ -81,7 +81,9 @@ public class UserInterface {
         String author = reader.nextLine();
         System.out.println("Syötä kirjan ISBN-tunnus:");
         String isbn = reader.nextLine();
-        library.addBook(header, url, author, isbn);
+        System.out.println("Syötä lisäinfoa:");
+        String info = reader.nextLine();
+        library.addBook(header, url, author, isbn, info);
         System.out.println();
     }
 
@@ -93,7 +95,9 @@ public class UserInterface {
         String url = reader.nextLine();
         System.out.println("Syötä linkin otsikko:");
         String header = reader.nextLine();
-        library.addLink(header, url);
+        System.out.println("Syötä lisäinfoa:");
+        String info = reader.nextLine();
+        library.addLink(header, url, info);
         System.out.println();
     }
     

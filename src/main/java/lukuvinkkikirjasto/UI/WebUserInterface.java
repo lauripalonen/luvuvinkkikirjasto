@@ -58,9 +58,10 @@ public class WebUserInterface {
         post("/newlink", (request, response) -> {
             String header = request.queryParams("header");
             String url = request.queryParams("url");
+            String info = request.queryParams("info");
             String tags = request.queryParams("tags");
 
-            library.addLink(header, url);
+            library.addLink(header, url, info);
             
             Note note = library.getNote(header, url);
             List<String> tagList = Arrays.asList(tags.split(" "));
@@ -87,9 +88,10 @@ public class WebUserInterface {
             String url = request.queryParams("url");
             String author = request.queryParams("author");
             String isbn = request.queryParams("isbn");
+            String info = request.queryParams("info");
             String tags = request.queryParams("tags");
 
-            library.addBook(header, url, author, isbn);
+            library.addBook(header, url, author, isbn, info);
             
             Note note = library.getNote(header, url);
             List<String> tagList = Arrays.asList(tags.split(" "));

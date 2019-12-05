@@ -6,8 +6,8 @@ public class Book extends Note {
     private String author;
     private String isbn;
     
-    public Book(String header, String url, String author, String isbn, int id) {
-        super(header, url, id);
+    public Book(String header, String url, String author, String isbn, int id, String info) {
+        super(header, url, id, info);
         this.author = author;
         this.isbn = isbn;
     }
