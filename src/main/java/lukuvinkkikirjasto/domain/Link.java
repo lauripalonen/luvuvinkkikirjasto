@@ -5,8 +5,8 @@ package lukuvinkkikirjasto.domain;
  */
 public class Link extends Note {
 
-    public Link(String header, String url, int id) {
-        super(header, url, id);
+    public Link(String header, String url, int id, String info) {
+        super(header, url, id, info);
     }
     
 }

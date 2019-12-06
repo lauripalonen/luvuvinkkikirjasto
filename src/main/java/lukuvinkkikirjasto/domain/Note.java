@@ -10,33 +10,19 @@ public abstract class Note implements Comparable {
     private String url;
     //private String language;
     private int id;
+    private String info;
 
-    public Note(String header, String url, int id) {
+    public Note(String header, String url, int id, String info) {
         this.header = header;
         this.tags = new ArrayList<>();
         this.url = url;
         this.id = id;
+        this.info = info;
         //this.language = "";
     }
 
     public String getHeader() {
         return this.header;
-    }
-
-    public ArrayList<String> getTags() {
-        return this.tags;
-    }
-    
-    public void setTags(ArrayList<String> tags) {
-        this.tags = tags;
-    }
-
-    public void addTag(String tag) {
-        this.tags.add(tag);
-    }
-    
-    public String getTagsAsString() {
-        return String.join(" ", this.tags);
     }
 
     public String getUrl() {
@@ -47,13 +33,37 @@ public abstract class Note implements Comparable {
         this.url = url;
     }
 
-    @Override
-    public String toString() {
-        return "header=" + header + ", url=" + url;
-    }
-
     public int getId() {
         return id;
+    }
+
+    public String getInfo() {
+        return this.info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+    
+    public void addTag(String tag) {
+        this.tags.add(tag);
+    }
+    
+    public String getTagsAsString() {
+        return String.join(" ", this.tags);
+    }
+    
+    public ArrayList<String> getTags() {
+        return this.tags;
+    }
+    
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
+    
+        @Override
+    public String toString() {
+        return "header=" + header + ", url=" + url + ", info=" + info;
     }
 
     @Override

@@ -10,9 +10,9 @@ import lukuvinkkikirjasto.domain.Tag;
 
 public interface LinkDao {
 
-    public void addLink(String header, String url);
+    public void addLink(String header, String url, String info);
     
-    public void addBook(String header, String url, String author, String isbn);
+    public void addBook(String header, String url, String author, String isbn, String info);
     
     public ArrayList<Link> listLinks();
     

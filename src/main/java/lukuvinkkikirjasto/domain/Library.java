@@ -45,12 +45,12 @@ public class Library {
         return dao.getTag(header);
     }
 
-    public void addBook(String header, String url, String author, String isbn) {
-        dao.addBook(header, url, author, isbn);
+    public void addBook(String header, String url, String author, String isbn, String info) {
+        dao.addBook(header, url, author, isbn, info);
     }
     
-    public void addLink(String header, String url) {
-        dao.addLink(header, url);
+    public void addLink(String header, String url, String info) {
+        dao.addLink(header, url, info);
     }
 
     public boolean containsNote(Note note) {

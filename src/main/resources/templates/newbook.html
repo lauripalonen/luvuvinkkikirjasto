@@ -33,18 +33,21 @@
         <div class="noteformfield">
             <label>ISBN-tunniste:</label>
             <input type="text" name="isbn" id="bookISBN" />
+            <button onClick=getBookInfo()>Hae ISBN-numerolla</button>
             <small id="ISBNInfo"></small>
         </div>
         <div class="noteformfield">
-            <label>Tags:</label>
-            <input type="text" name="tags" id="bookTags" />
+            <label>Lisätietoja:</label>
+            <textarea name="info" rows="3" cols="30">
+            </textarea>
+        </div>
+        <div class="noteformfield">
+            <label>Tagit:</label>
+            <input type="text" name="tags" />
         </div>
 
         <input name="add" type="submit" value="Lisää kirja">
     </form>
-    
-    <button onClick=getBookInfo("0451526538")>hae</button>
-    <div id="TEST"></div>
 
 </body>
 
