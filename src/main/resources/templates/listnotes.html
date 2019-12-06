@@ -6,13 +6,26 @@
     <a href="/">Takaisin etusivulle</a> 
     <br></br>
 
-    <form method="POST" action="/changelist">
+    <form method="GET" action="/listnotes">
         <label>Valitse näytettävät muistiinpanot:</label>
-        <select name="listType" onChange="this.form.submit()">
+        <select name="type_filter">
             <option selected="selected" value="1">Kaikki</option>
             <option value="2">Linkit</option>
             <option value="3">Kirjat</option>
         </select>
+        <label for="tag_filters">Lisää uusia tageja:</label>
+        <input name="tag_filters" type="text" value="">
+        
+        #if (!$tag_filters.isEmpty())
+        <p>Aktiiviset tagit: </p>
+            <div class="filter-form-tags">
+                #foreach ($tag in $tag_filters)
+                <a href="#">$tag</a>
+                #end
+            </div>
+        #end
+        
+        <input type="submit" value="Filter">
     </form>
 
     <h5>Kaikki lukuvinkkisi:</h5>

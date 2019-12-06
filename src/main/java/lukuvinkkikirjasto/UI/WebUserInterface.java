@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Library;
 import lukuvinkkikirjasto.domain.Link;
@@ -113,49 +114,29 @@ public class WebUserInterface {
             return null;
         });
 
-        get("/listall", (request, response) -> {
+        get("/listnotes", (request, response) -> {
+            int typeFilter = request.queryParams("type_filter") != null ? Integer.parseInt(request.queryParams("type_filter")) : 1;
+            String queryTags = request.queryParams("tag_filters");
+            List<String> tagFilters = queryTags != null && !queryTags.trim().equals("") 
+                    ? Arrays.asList(queryTags.trim().split(" ")) 
+                    : new ArrayList<>();
             HashMap<String, Object> model = new HashMap();
-            model.put("template", "templates/listall.html");
+            model.put("template", "templates/listnotes.html");
             ArrayList<Note> notes = library.listAll();
             notes.forEach(note -> note.setTags(library.getTagsForNote(note.getId())));
-            model.put("noteList", notes);
+            List<Note> filteredNotes = notes.stream().filter(note -> {
+               boolean passesTypeFilter = (typeFilter == 1 ||
+                     (typeFilter == 2 && note instanceof Link) ||
+                     (typeFilter == 3 && note instanceof Book));
+               boolean passesTagFilter = tagFilters.isEmpty() || note.getTags().stream().anyMatch(tag -> tagFilters.contains(tag));
+               return passesTypeFilter && passesTagFilter;
+            }).collect(Collectors.toList());
+            model.put("noteList", filteredNotes);
+            model.put("type_filter", typeFilter);
+            model.put("tag_filters", tagFilters);
             return new VelocityTemplateEngine().render(
                     new ModelAndView(model, layout)
             );
-        });
-        
-        get("/listlinks", (request, response) -> {
-            HashMap<String, Object> model = new HashMap();
-            model.put("template", "templates/listlinks.html");
-            ArrayList<Link> links = library.listLinks();
-            links.forEach(link -> link.setTags(library.getTagsForNote(link.getId())));
-            model.put("linkList", links);
-            return new VelocityTemplateEngine().render(
-                    new ModelAndView(model, layout)
-            );
-        });
-
-        get("/listbooks", (request, response) -> {
-            HashMap<String, Object> model = new HashMap();
-            model.put("template", "templates/listbooks.html");
-            ArrayList<Book> books = library.listBooks();
-            books.forEach(book -> book.setTags(library.getTagsForNote(book.getId())));
-            model.put("bookList", books);
-            return new VelocityTemplateEngine().render(
-                    new ModelAndView(model, layout)
-            );
-        });
-
-        post("/changelist", (request, response) -> {
-            int listType = Integer.parseInt(request.queryParams("listType"));
-            if (listType == 1) {
-                response.redirect("/listall");
-            } else if (listType == 2) {
-                response.redirect("/listlinks");
-            } else if (listType == 3) {
-                response.redirect("/listbooks");
-            }
-            return null;
         });
     }
 }
