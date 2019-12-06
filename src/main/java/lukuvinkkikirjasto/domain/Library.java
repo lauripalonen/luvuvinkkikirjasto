@@ -33,9 +33,6 @@ public class Library {
     
     public void addTag(String header) {
         List<String> existingTags = listTags().stream().map(tag -> tag.getHeader()).collect(Collectors.toList());
-        existingTags.forEach(t -> {
-            System.out.println(t);
-        });
         if (!existingTags.contains(header)) {
             dao.addTag(header);
         }

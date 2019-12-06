@@ -33,7 +33,7 @@
         <div class="noteformfield">
             <label>ISBN-tunniste:</label>
             <input type="text" name="isbn" id="bookISBN" />
-            <button onClick=getBookInfo()>Hae ISBN-numerolla</button>
+            <button type="button" onClick=getBookInfo()>Hae ISBN-numerolla</button>
             <small id="ISBNInfo"></small>
         </div>
         <div class="noteformfield">
@@ -55,26 +55,28 @@
   function getBookInfo() {
     const ISBN = document.getElementById("bookISBN").value.replace("-", "")
     document.getElementById("bookISBN").value = ISBN
-    bookname = fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`)
-            .then(res => res.json())
-            .then(data => {
-                data = data[`ISBN:${ISBN}`]
-                if (data == null) {
-                    document.getElementById("ISBNInfo").innerHTML = "Could not find any records with that ISBN number."
-                    return
-                }
-                document.getElementById("ISBNInfo").innerHTML = ""
-                document.getElementById("bookHeader").value = data.title
-                authorsStr = ""
-                data.authors.forEach(author => {
-                    authorsStr = authorsStr.concat(author["name"])
-                    if (data.authors[data.authors.length-1] !== author) {
-                        authorsStr = authorsStr.concat(", ")
-                    }
-                })
-                document.getElementById("bookAuthor").value = authorsStr
-                document.getElementById("bookUrl").value = data.url
+    fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`)
+        .then(res => res.json())
+        .then(data => {
+            data = data[`ISBN:${ISBN}`]
+            if (data == null) {
+                document.getElementById("ISBNInfo").innerHTML = "ISBN-numerolla ei löytynyt teoksia."
+                return
             }
-    )
+            document.getElementById("ISBNInfo").innerHTML = ""
+            document.getElementById("bookHeader").value = data.title
+            authorsStr = ""
+            data.authors.forEach(author => {
+                authorsStr = authorsStr.concat(author["name"])
+                if (data.authors[data.authors.length-1] !== author) {
+                    authorsStr = authorsStr.concat(", ")
+                }
+            })
+            document.getElementById("bookAuthor").value = authorsStr
+            document.getElementById("bookUrl").value = data.url
+        })
+        .catch(err => {
+            console.log(err)
+        })
   }
   </script>
