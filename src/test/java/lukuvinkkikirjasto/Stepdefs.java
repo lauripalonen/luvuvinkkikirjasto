@@ -99,8 +99,8 @@ public class Stepdefs {
     }
 
     @Then("listing contains link named {string} with url {string}")
-    public void listingContainsLink(String name, String url, String info) {
-        Note link = new Link(name, url, 0, info);
+    public void listingContainsLink(String name, String url) {
+        Note link = new Link(name, url, 0, "");
         boolean contained = false;
         for (Note note : outputs) {
             if (link.equals(note)) {
@@ -111,16 +111,16 @@ public class Stepdefs {
     }
 
     @Then("listing contains links {string} {string} and {string} {string}")
-    public void listingContainsLinksAnd(String firstname, String firsturl, String secondname, String secondurl, String firstinfo, String secondinfo) {
-        Link link1 = new Link(firstname, firsturl, 0, firstinfo);
+    public void listingContainsLinksAnd(String firstname, String firsturl, String secondname, String secondurl) {
+        Link link1 = new Link(firstname, firsturl, 0, "");
         assertTrue(outputs.contains(link1));
-        Link link2 = new Link(secondname, secondurl, 1, secondinfo);
+        Link link2 = new Link(secondname, secondurl, 1, "");
         assertTrue(outputs.contains(link2));
     }
 
     @Then("listing does not contain link called {string} with url {string} that was not added")
-    public void listingDoesNotContainLinkThatWasNotAdded(String notAdded, String missingUrl, String info) {
-        Note link = new Link(notAdded, missingUrl, 1, info);
+    public void listingDoesNotContainLinkThatWasNotAdded(String notAdded, String missingUrl) {
+        Note link = new Link(notAdded, missingUrl, 1, "");
         boolean contained = false;
         for (Note note : outputs) {
             if (link.equals(note)) {
@@ -136,16 +136,14 @@ public class Stepdefs {
 
     @When("a book named {string} found on {string} authored by {string} with isbn {string} is added")
     public void aBookNamedFoundOnAuthoredByWithIsbnIsAdded(String header, String url,
-            String author, String isbn, String info
+            String author, String isbn
     ) {
-        library.addBook(header, url, author, isbn, info);
+        library.addBook(header, url, author, isbn, "");
     }
 
     @Then("listing contains book {string} with url {string} with author {string} with isbn {string}")
-    public void listingContainsBookWithUrlWithAuthorWithIsbn(String string, String string2,
-            String string3, String string4, String string5
-    ) {
-        Book book1 = new Book(string, string2, string3, string4, 0, string5);
+    public void listingContainsBookWithUrlWithAuthorWithIsbn(String header, String url, String author, String isbn) {
+        Book book1 = new Book(header, url, author, isbn, 0, "");
         assertTrue(outputs.contains(book1));
     }
     
