@@ -3,15 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lukuvinkkikirjasto;
+package lukuvinkkikirjasto.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import lukuvinkkikirjasto.domain.Book;
-import lukuvinkkikirjasto.domain.Library;
-import lukuvinkkikirjasto.domain.Link;
-import lukuvinkkikirjasto.domain.Note;
-import lukuvinkkikirjasto.domain.Tag;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,29 +23,29 @@ public class LibraryTest {
 
     @Test
     public void bookCanBeAddedToLibrary() {
-        Book book = new Book("Book header", "dummyurl", "Dummy Author", "9781234567897", 1);
-        library.addBook("Book header", "dummyurl", "Dummy Author", "9781234567897");
+        Book book = new Book("Book header", "dummyurl", "Dummy Author", "9781234567897", 1, "info book");
+        library.addBook("Book header", "dummyurl", "Dummy Author", "9781234567897", "info book");
         assertTrue(library.containsNote(book));
     }
 
     @Test
     public void linkCanBeAddedToLibrary() {
-        Link link = new Link("Dummy link", "dummyurl.zxc", 1);
-        library.addLink("Dummy link", "dummyurl.zxc");
+        Link link = new Link("Dummy link", "dummyurl.zxc", 1, "info link");
+        library.addLink("Dummy link", "dummyurl.zxc", "info link");
         assertTrue(library.containsNote(link));
     }
 
     public void notAddedNoteIsNotFoundInLibrary() {
-        Note n = new Book("Header", "url", "Author", "1234567", 1);
+        Note n = new Book("Header", "url", "Author", "1234567", 1, "info book");
         assertFalse(library.containsNote(n));
     }
 
     @Test
     public void onlyLinksListed() {
-        Book b = new Book("Header", "url", "Author", "1234567", 1);
-        Link l = new Link("Link", "link.fi", 2);
-        library.addBook("Header", "url", "Author", "1234567");
-        library.addLink("Link", "link.fi");
+        Book b = new Book("Header", "url", "Author", "1234567", 1, "info book");
+        Link l = new Link("Link", "link.fi", 2, "info link");
+        library.addBook("Header", "url", "Author", "1234567", "info book");
+        library.addLink("Link", "link.fi", "info link");
         ArrayList<Link> links = new ArrayList<>();
         ArrayList<Link> linksFromLibrary = library.listLinks();
         links.add(l);
@@ -61,10 +56,10 @@ public class LibraryTest {
 
     @Test
     public void onlyBooksListed() {
-        Book b = new Book("Header", "url", "Author", "1234567", 1);
-        Link l = new Link("Link", "link.fi", 2);
-        library.addBook("Header", "url", "Author", "1234567");
-        library.addLink("Link", "link.fi");
+        Book b = new Book("Header", "url", "Author", "1234567", 1, "info book");
+        Link l = new Link("Link", "link.fi", 2, "info link");
+        library.addBook("Header", "url", "Author", "1234567", "info book");
+        library.addLink("Link", "link.fi", "info link");
         ArrayList<Book> books = new ArrayList<>();
         ArrayList<Book> booksFromLibrary = library.listBooks();
         books.add(b);
@@ -75,10 +70,10 @@ public class LibraryTest {
 
     @Test
     public void allListed() {
-        Book b = new Book("Header", "url", "Author", "1234567", 1);
-        Link l = new Link("Link", "link.fi", 2);
-        library.addBook("Header", "url", "Author", "1234567");
-        library.addLink("Link", "link.fi");
+        Book b = new Book("Header", "url", "Author", "1234567", 1, "info book");
+        Link l = new Link("Link", "link.fi", 2, "info link");
+        library.addBook("Header", "url", "Author", "1234567", "info book");
+        library.addLink("Link", "link.fi", "info link");
         ArrayList<Note> notes = new ArrayList<>();
         ArrayList<Note> notesFromLibrary = library.listAll();
         notes.add(l);
@@ -90,8 +85,8 @@ public class LibraryTest {
     
     @Test 
     public void noteCanBeRemoved() {
-        Book b = new Book("Header", "url", "Author", "1234567", 1);
-        library.addBook("Header", "url", "Author", "1234567");
+        Book b = new Book("Header", "url", "Author", "1234567", 1, "info book");
+        library.addBook("Header", "url", "Author", "1234567", "info book");
         library.removeNote("1");
         ArrayList<Note> notes = new ArrayList<>();
         ArrayList<Note> notesFromLibrary = library.listAll();
@@ -100,10 +95,10 @@ public class LibraryTest {
     
     @Test
     public void rightNoteIsRemoved() {
-        Book b = new Book("Header", "url", "Author", "1234567", 1);
-        Link l = new Link("Link", "link.fi", 2);
-        library.addBook("Header", "url", "Author", "1234567");
-        library.addLink("Link", "link.fi");
+        Book b = new Book("Header", "url", "Author", "1234567", 1, "info book");
+        Link l = new Link("Link", "link.fi", 2, "info link");
+        library.addBook("Header", "url", "Author", "1234567", "info book");
+        library.addLink("Link", "link.fi", "info link");
         library.removeNote("2");
         ArrayList<Note> notes = new ArrayList<>();
         ArrayList<Note> notesFromLibrary = library.listAll();

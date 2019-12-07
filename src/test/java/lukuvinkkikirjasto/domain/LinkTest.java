@@ -1,9 +1,7 @@
 
-package lukuvinkkikirjasto;
+package lukuvinkkikirjasto.domain;
 
 import java.util.ArrayList;
-import lukuvinkkikirjasto.domain.Link;
-import lukuvinkkikirjasto.domain.Note;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +12,7 @@ public class LinkTest {
     
     @Before
     public void setUp() {
-        this.link = new Link("header", "url", 0);
+        this.link = new Link("header", "url", 0, "link info");
     }
     
     @Test
