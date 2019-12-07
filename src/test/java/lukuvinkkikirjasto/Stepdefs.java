@@ -78,18 +78,18 @@ public class Stepdefs {
 
     @When("a link named {string} with url {string} is added")
     public void aLinkNamedWithUrlIsAdded(String name, String url) {
-        library.addLink(name, url);
+        library.addLink(name, url, "");
     }
 
     @Then("the library should contain a link named {string} with url {string}")
     public void theLibraryShouldContainLink(String name, String url) {
-        Link link = new Link(name, url, 0);
+        Link link = new Link(name, url, 0, "");
         assertTrue(library.containsNote(link));
     }
 
     @Then("the library should not contain a link named {string} with url {string}")
     public void theLibraryShouldNotContainLink(String name, String url) {
-        Link link = new Link(name, url, 0);
+        Link link = new Link(name, url, 0, "");
         assertFalse(library.listAll().contains((link)));
     }
 
@@ -99,8 +99,8 @@ public class Stepdefs {
     }
 
     @Then("listing contains link named {string} with url {string}")
-    public void listingContainsLink(String name, String url) {
-        Note link = new Link(name, url, 0);
+    public void listingContainsLink(String name, String url, String info) {
+        Note link = new Link(name, url, 0, info);
         boolean contained = false;
         for (Note note : outputs) {
             if (link.equals(note)) {
@@ -111,16 +111,16 @@ public class Stepdefs {
     }
 
     @Then("listing contains links {string} {string} and {string} {string}")
-    public void listingContainsLinksAnd(String firstname, String firsturl, String secondname, String secondurl) {
-        Link link1 = new Link(firstname, firsturl, 0);
+    public void listingContainsLinksAnd(String firstname, String firsturl, String secondname, String secondurl, String firstinfo, String secondinfo) {
+        Link link1 = new Link(firstname, firsturl, 0, firstinfo);
         assertTrue(outputs.contains(link1));
-        Link link2 = new Link(secondname, secondurl, 1);
+        Link link2 = new Link(secondname, secondurl, 1, secondinfo);
         assertTrue(outputs.contains(link2));
     }
 
     @Then("listing does not contain link called {string} with url {string} that was not added")
-    public void listingDoesNotContainLinkThatWasNotAdded(String notAdded, String missingUrl) {
-        Note link = new Link(notAdded, missingUrl, 1);
+    public void listingDoesNotContainLinkThatWasNotAdded(String notAdded, String missingUrl, String info) {
+        Note link = new Link(notAdded, missingUrl, 1, info);
         boolean contained = false;
         for (Note note : outputs) {
             if (link.equals(note)) {
@@ -136,16 +136,16 @@ public class Stepdefs {
 
     @When("a book named {string} found on {string} authored by {string} with isbn {string} is added")
     public void aBookNamedFoundOnAuthoredByWithIsbnIsAdded(String header, String url,
-            String author, String isbn
+            String author, String isbn, String info
     ) {
-        library.addBook(header, url, author, isbn);
+        library.addBook(header, url, author, isbn, info);
     }
 
     @Then("listing contains book {string} with url {string} with author {string} with isbn {string}")
     public void listingContainsBookWithUrlWithAuthorWithIsbn(String string, String string2,
-            String string3, String string4
+            String string3, String string4, String string5
     ) {
-        Book book1 = new Book(string, string2, string3, string4, 0);
+        Book book1 = new Book(string, string2, string3, string4, 0, string5);
         assertTrue(outputs.contains(book1));
     }
     

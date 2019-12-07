@@ -39,6 +39,20 @@ public class LibraryTest {
         Note n = new Book("Header", "url", "Author", "1234567", 1, "info book");
         assertFalse(library.containsNote(n));
     }
+    
+    @Test
+    public void sameNoteCannotBeAddedTwice() {
+        Book b = new Book("Header", "url", "Author", "1234567", 1, "info book");
+        library.addBook("Header", "url", "Author", "1234567", "info book");
+        library.addBook("Header", "url", "Author", "1234567", "info book");
+        int counter = 0;
+        for(Book book : library.listBooks()) {
+            if(book.equals(b)) {
+                counter++;
+            }
+        }
+        assertEquals(counter, 1);
+    }
 
     @Test
     public void onlyLinksListed() {

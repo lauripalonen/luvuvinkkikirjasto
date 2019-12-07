@@ -43,11 +43,17 @@ public class Library {
     }
 
     public void addBook(String header, String url, String author, String isbn, String info) {
-        dao.addBook(header, url, author, isbn, info);
+        Book b = new Book(header, url, author, isbn, 1, info);
+        if(!containsNote(b)) {
+            dao.addBook(header, url, author, isbn, info);
+        }
     }
     
     public void addLink(String header, String url, String info) {
-        dao.addLink(header, url, info);
+        Link l = new Link(header, url, 1, info);
+        if(!containsNote(l)) {
+            dao.addLink(header, url, info);
+        }
     }
 
     public boolean containsNote(Note note) {
