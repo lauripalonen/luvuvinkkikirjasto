@@ -33,7 +33,9 @@ public class Library {
         return dao.getNote(header, url);
     }
 
-    public Note getNoteById(int id) { return dao.getNoteById(id); }
+    public Note getNoteById(int id) {
+        return dao.getNoteById(id);
+    }
 
     public void removeNote(String id) {
         dao.removeNote(id);
