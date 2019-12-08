@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lukuvinkkikirjasto.dao.DatabaseLinkDao;
+import lukuvinkkikirjasto.dao.DatabaseLinkDaoHeroku;
 import lukuvinkkikirjasto.dao.LinkDao;
 
 public class Library {
@@ -16,7 +17,13 @@ public class Library {
      * @param fileName
      */
     public Library(String fileName) {
-        this.dao = new DatabaseLinkDao(fileName);
+
+        if(System.getenv("DATABASE_URL") != null){
+            this.dao = new DatabaseLinkDaoHeroku();
+        } else {
+            this.dao = new DatabaseLinkDao(fileName);
+        }
+
     }
 
     public void joinTagToNote(Note note, Tag tag) {

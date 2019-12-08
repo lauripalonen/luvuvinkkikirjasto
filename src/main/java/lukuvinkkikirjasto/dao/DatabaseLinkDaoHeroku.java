@@ -14,28 +14,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
 import lukuvinkkikirjasto.domain.Tag;
 
-public class DatabaseLinkDao implements LinkDao {
+public class DatabaseLinkDaoHeroku implements LinkDao {
 
-    private String filePath;
-
-    public DatabaseLinkDao(String fileName) {
-        this.filePath = "db/" + fileName;
-        createDbFolder();
+    public DatabaseLinkDaoHeroku() {
         createNoteTable();
         createTagTable();
         createTagNoteAssociationTable();
     }
 
     private void createNoteTable() {
+
         try {
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
-                    + "id integer PRIMARY KEY,"
+                    + "id SERIAL PRIMARY KEY,"
                     + "Header varchar(300) NOT NULL, "
                     + "URL varchar(300) NOT NULL, "
                     + "Author varchar(48), "
@@ -49,15 +47,15 @@ public class DatabaseLinkDao implements LinkDao {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-
     }
 
     private void createTagTable() {
+
         try {
             Connection connection = getConnection();
 
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tags ("
-                    + "id integer PRIMARY KEY,"
+                    + "id SERIAL PRIMARY KEY,"
                     + "Header varchar(300),"
                     + "UNIQUE(Header))"
             );
@@ -68,15 +66,17 @@ public class DatabaseLinkDao implements LinkDao {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+
     }
 
     private void createTagNoteAssociationTable() {
+
         try {
             Connection connection = getConnection();
 
             PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags ("
                     + " note_id integer NOT NULL,"
-                    + " tag_id integer NOT NULL,"
+                    + " tag_id SERIAL NOT NULL,"
                     + " FOREIGN KEY(note_id) REFERENCES Notes(id),"
                     + " FOREIGN KEY(tag_id) REFERENCES Tags(id),"
                     + " PRIMARY KEY (note_id, tag_id))"
@@ -86,17 +86,6 @@ public class DatabaseLinkDao implements LinkDao {
             connection.close();
         } catch (SQLException ex) {
             System.out.println(ex);
-        }
-    }
-
-    private void createDbFolder() {
-        Path folderPath = Paths.get("db");
-        if (!Files.exists(folderPath)) {
-            try {
-                Files.createDirectory(folderPath);
-            } catch (IOException ex) {
-                Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
@@ -202,8 +191,9 @@ public class DatabaseLinkDao implements LinkDao {
             if (type.equals("Book")) {
                 //update book
                 Book book = (Book) updatedNote;
-                PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET Header=?, URL=?, Author=?, ISBN=?, Type=?, Info=? "
-                        + "WHERE id = ?");
+                PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET (Header, URL, Author, ISBN, Type, Info) "
+                        + "WHERE id = ? "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?)");
                 stmtBook.setString(1, book.getHeader());
                 stmtBook.setString(2, book.getUrl());
                 stmtBook.setString(3, book.getAuthor());
@@ -213,11 +203,12 @@ public class DatabaseLinkDao implements LinkDao {
                 stmtBook.setInt(7, id);
                 stmtBook.executeUpdate();
                 stmtBook.close();
-                updateTagsOfNote(oldNote, updatedNote);
+                // update notes_tags table??
             } else if (type.equals("Link")) {
                 //update link
                 Link link = (Link) updatedNote;
-                PreparedStatement stmtLink = connection.prepareStatement("Update Notes SET Header=?, URL=?, Type=?, Info=? WHERE id = ?");
+                PreparedStatement stmtLink = connection.prepareStatement("Update Notes SET (Header, URL, Type, Info) WHERE id = ?"
+                        + "VALUES (?, ?, ?, ?, ?)");
                 stmtLink.setString(1, link.getHeader());
                 stmtLink.setString(2, link.getUrl());
                 stmtLink.setString(3, "Link");
@@ -225,6 +216,7 @@ public class DatabaseLinkDao implements LinkDao {
                 stmtLink.setInt(5, id);
                 stmtLink.executeUpdate();
                 stmtLink.close();
+                // update notes_tags table??
             }
             connection.close();
         } catch (SQLException ex) {
@@ -236,31 +228,32 @@ public class DatabaseLinkDao implements LinkDao {
     @Override
     public void clearDao() {
         try {
-            Files.deleteIfExists(Paths.get(filePath));
-        } catch (IOException ex) {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Notes");
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
     }
 
-    private static Connection getConnectionHeroku() throws URISyntaxException, SQLException {
-        URI dbUri = new URI(System.getenv("DATABASE_URL"));
-
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
-
-        return DriverManager.getConnection(dbUrl, username, password);
-    }
-
     private Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseLinkDao.class
-                    .getName()).log(Level.SEVERE, null, ex);
+        try {
+            URI dbUri = new URI(System.getenv("DATABASE_URL"));
+
+            String username = dbUri.getUserInfo().split(":")[0];
+            String password = dbUri.getUserInfo().split(":")[1];
+            String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
+
+            return DriverManager.getConnection(dbUrl, username, password);
+        } catch (URISyntaxException uriEx) {
+            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, uriEx);
+            return null;
+        } catch (SQLException sqlEx) {
+            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, sqlEx);
             return null;
         }
+
     }
 
     @Override
@@ -438,35 +431,6 @@ public class DatabaseLinkDao implements LinkDao {
             System.out.println(ex);
         }
         return tags;
-    }
-
-    private void updateTagsOfNote(Note oldNote, Note updatedNote) {
-        try {
-            Connection connection = getConnection();
-            connection.setAutoCommit(false);
-            PreparedStatement stmtDelete = connection.prepareStatement("DELETE FROM notes_tags WHERE note_id = ?");
-            stmtDelete.setInt(1, oldNote.getId());
-            stmtDelete.executeUpdate();
-            stmtDelete.close();
-            for (String tagString : updatedNote.getTags()) {
-                Tag tag = getTag(tagString);
-                if (tag != null) {
-                    PreparedStatement stmt = connection.prepareStatement("INSERT INTO notes_tags (note_id, tag_id)"
-                            + " VALUES (?, ?)");
-                    stmt.setInt(1, oldNote.getId());
-                    stmt.setInt(2, tag.getId());
-                    stmt.executeUpdate();
-                    stmt.close();
-                }
-            }
-            connection.commit();
-            connection.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseLinkDao.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
 }
