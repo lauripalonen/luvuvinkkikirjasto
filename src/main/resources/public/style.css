@@ -7,3 +7,17 @@ label {
 .noteformfield {
     margin-bottom: 7px;
 }
+
+
+th {
+    font-size: 25px;
+    padding-left:5px;
+    padding-right: 30px;
+}
+
+td {
+    padding-left: 5px;
+     padding-right: 30px;
+     padding-top: 5px;
+     padding-bottom: 5px;
+}
