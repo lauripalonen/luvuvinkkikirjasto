@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
@@ -33,44 +34,44 @@ public class DatabaseLinkDao implements LinkDao {
 
     private void createNoteTable() {
 
-            try {
-                Connection connection = getConnection();
-                PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
-                        + "id integer PRIMARY KEY,"
-                        + "Header varchar(300) NOT NULL, "
-                        + "URL varchar(300) NOT NULL, "
-                        + "Author varchar(48), "
-                        + "ISBN varchar(48),"
-                        + "Type varchar(16),"
-                        + "Info varchar(600));"
-                );
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
+                    + "id integer PRIMARY KEY,"
+                    + "Header varchar(300) NOT NULL, "
+                    + "URL varchar(300) NOT NULL, "
+                    + "Author varchar(48), "
+                    + "ISBN varchar(48),"
+                    + "Type varchar(16),"
+                    + "Info varchar(600));"
+            );
 
-                stmt.executeUpdate();
-                stmt.close();
-                connection.close();
-            } catch (SQLException ex) {
-                System.out.println(ex);
-            }
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
 
     }
 
     private void createTagTable() {
 
-            try {
-                Connection connection = getConnection();
+        try {
+            Connection connection = getConnection();
 
-                PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tags ("
-                        + "id integer PRIMARY KEY,"
-                        + "Header varchar(300),"
-                        + "UNIQUE(Header))"
-                );
+            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tags ("
+                    + "id integer PRIMARY KEY,"
+                    + "Header varchar(300),"
+                    + "UNIQUE(Header))"
+            );
 
-                stmt.executeUpdate();
-                stmt.close();
-                connection.close();
-            } catch (SQLException ex) {
-                System.out.println(ex);
-            }
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 
     private void createTagNoteAssociationTable() {
@@ -191,7 +192,7 @@ public class DatabaseLinkDao implements LinkDao {
         }
         return books;
     }
-    
+
     @Override
     public void modifyNote(Note oldNote, Note updatedNote) {
         int id = oldNote.getId();
@@ -204,11 +205,11 @@ public class DatabaseLinkDao implements LinkDao {
             stmt.close();
             rs.close();
             if (type.equals("Book")) {
-                    //update book
-                Book book = (Book)updatedNote;
+                //update book
+                Book book = (Book) updatedNote;
                 PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET (Header, URL, Author, ISBN, Type, Info) "
-                    + "WHERE id = ? "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)");
+                        + "WHERE id = ? "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?)");
                 stmtBook.setString(1, book.getHeader());
                 stmtBook.setString(2, book.getUrl());
                 stmtBook.setString(3, book.getAuthor());
@@ -218,12 +219,12 @@ public class DatabaseLinkDao implements LinkDao {
                 stmtBook.setInt(7, id);
                 stmtBook.executeUpdate();
                 stmtBook.close();
-                    // update notes_tags table??
+                // update notes_tags table??
             } else if (type.equals("Link")) {
-                    //update link
-                Link link = (Link)updatedNote;
+                //update link
+                Link link = (Link) updatedNote;
                 PreparedStatement stmtLink = connection.prepareStatement("Update Notes SET (Header, URL, Type, Info) WHERE id = ?"
-                    + "VALUES (?, ?, ?, ?, ?)");
+                        + "VALUES (?, ?, ?, ?, ?)");
                 stmtLink.setString(1, link.getHeader());
                 stmtLink.setString(2, link.getUrl());
                 stmtLink.setString(3, "Link");
@@ -231,23 +232,23 @@ public class DatabaseLinkDao implements LinkDao {
                 stmtLink.setInt(5, id);
                 stmtLink.executeUpdate();
                 stmtLink.close();
-                    // update notes_tags table??
+                // update notes_tags table??
             }
             connection.close();
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        
+
     }
 
     @Override
     public void clearDao() {
 
-            try {
-                Files.deleteIfExists(Paths.get(filePath));
-            } catch (IOException ex) {
-                System.out.println(ex);
-            }
+        try {
+            Files.deleteIfExists(Paths.get(filePath));
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
     }
 
 
@@ -350,7 +351,7 @@ public class DatabaseLinkDao implements LinkDao {
             stmt.executeUpdate();
             stmt.close();
             connection.close();
-            
+
             return true;
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -379,7 +380,7 @@ public class DatabaseLinkDao implements LinkDao {
         }
         return tag;
     }
-    
+
     @Override
     public ArrayList<String> getTagsForNote(int noteId) {
         ArrayList<String> tags = new ArrayList();
