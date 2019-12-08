@@ -19,13 +19,13 @@ import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
 import lukuvinkkikirjasto.domain.Tag;
 
-public class DatabaseLinkDao implements LinkDao {
+public class DatabaseLinkDaoHeroku implements LinkDao {
 
-    private String filePath;
+    //private String filePath;
 
-    public DatabaseLinkDao(String fileName) {
-        this.filePath = "db/" + fileName;
-        createDbFolder();
+    public DatabaseLinkDaoHeroku() {
+        //this.filePath = "db/" + fileName;
+        //createDbFolder();
         createNoteTable();
         createTagTable();
         createTagNoteAssociationTable();
@@ -35,8 +35,8 @@ public class DatabaseLinkDao implements LinkDao {
 
             try {
                 Connection connection = getConnection();
-                PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
-                        + "id integer PRIMARY KEY,"
+                PreparedStatement stmt  = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
+                        + "id SERIAL PRIMARY KEY,"
                         + "Header varchar(300) NOT NULL, "
                         + "URL varchar(300) NOT NULL, "
                         + "Author varchar(48), "
@@ -44,14 +44,12 @@ public class DatabaseLinkDao implements LinkDao {
                         + "Type varchar(16),"
                         + "Info varchar(600));"
                 );
-
                 stmt.executeUpdate();
                 stmt.close();
                 connection.close();
             } catch (SQLException ex) {
                 System.out.println(ex);
             }
-
     }
 
     private void createTagTable() {
@@ -60,7 +58,7 @@ public class DatabaseLinkDao implements LinkDao {
                 Connection connection = getConnection();
 
                 PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tags ("
-                        + "id integer PRIMARY KEY,"
+                        + "id SERIAL PRIMARY KEY,"
                         + "Header varchar(300),"
                         + "UNIQUE(Header))"
                 );
@@ -71,29 +69,30 @@ public class DatabaseLinkDao implements LinkDao {
             } catch (SQLException ex) {
                 System.out.println(ex);
             }
+
     }
 
     private void createTagNoteAssociationTable() {
 
-        try {
-            Connection connection = getConnection();
+            try {
+                Connection connection = getConnection();
 
-            PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags ("
-                    + " note_id integer NOT NULL,"
-                    + " tag_id integer NOT NULL,"
-                    + " FOREIGN KEY(note_id) REFERENCES Notes(id),"
-                    + " FOREIGN KEY(tag_id) REFERENCES Tags(id),"
-                    + " PRIMARY KEY (note_id, tag_id))"
-            );
-            stmt.executeUpdate();
-            stmt.close();
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+                PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS notes_tags ("
+                        + " note_id integer NOT NULL,"
+                        + " tag_id SERIAL NOT NULL,"
+                        + " FOREIGN KEY(note_id) REFERENCES Notes(id),"
+                        + " FOREIGN KEY(tag_id) REFERENCES Tags(id),"
+                        + " PRIMARY KEY (note_id, tag_id))"
+                );
+                stmt.executeUpdate();
+                stmt.close();
+                connection.close();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
     }
 
-    private void createDbFolder() {
+  /*  private void createDbFolder() {
         Path folderPath = Paths.get("db");
         if (!Files.exists(folderPath)) {
             try {
@@ -102,7 +101,7 @@ public class DatabaseLinkDao implements LinkDao {
                 Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
+    }*/
 
     @Override
     public void addLink(String header, String url, String info) {
@@ -242,23 +241,41 @@ public class DatabaseLinkDao implements LinkDao {
 
     @Override
     public void clearDao() {
+            try {
+                Connection connection = getConnection();
+                PreparedStatement stmt = connection.prepareStatement("DELETE FROM Notes");
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        /*} else {
 
             try {
                 Files.deleteIfExists(Paths.get(filePath));
             } catch (IOException ex) {
                 System.out.println(ex);
             }
+        }*/
     }
-
 
     private Connection getConnection() {
 
         try {
-            return DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
+            URI dbUri = new URI(System.getenv("DATABASE_URL"));
+
+            String username = dbUri.getUserInfo().split(":")[0];
+            String password = dbUri.getUserInfo().split(":")[1];
+            String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
+
+            return DriverManager.getConnection(dbUrl, username, password);
+        } catch (URISyntaxException uriEx){
+            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, uriEx);
+            return null;
+        } catch (SQLException sqlEx) {
+            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, sqlEx);
             return null;
         }
+
     }
 
     @Override
