@@ -1,9 +1,51 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+
+    background: #eee;
+    padding: 20px;
+}
+
+body {
+    background: white;
+    padding: 5% 10%;
+    margin: 0 auto;
+
+    width: 100%;
+    max-width: 60em;
+    min-height: 80vh;
+}
+
+form {
+    width: 25em;
+}
 
 label {
     display: block;
-    min-width: 200px;
+    width: 100%;
+    margin: .5em 0;
 }
 
-.noteformfield {
-    margin-bottom: 7px;
+input:not([type="submit"]), select, textarea {
+    font-family: inherit;
+    font-size: 14px;
+
+    padding: 6px 10px;
+    width: 100%;
+}
+
+input[type="submit"] {
+    font-size: 14px;
+
+    padding: 6px 10px;
+    margin: .5em 0;
+}
+
+.input_group {
+    margin: .5em 0;
 }
