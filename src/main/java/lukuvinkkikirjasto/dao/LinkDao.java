@@ -27,6 +27,7 @@ public interface LinkDao {
     public ArrayList<Note> listAllNotes();
     public void joinTagToNote(Note note, Tag tag);
     public Note getNote(String header, String url);
+    public Note getNoteById(int id);
     public boolean addTag(String header);
     public Tag getTag(String tagHeader);
     

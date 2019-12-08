@@ -292,6 +292,36 @@ public class DatabaseLinkDao implements LinkDao {
         return notes;
     }
 
+    public Note getNoteById(int id){
+        Note note = null;
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Notes WHERE id = ?");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String noteHeader = rs.getString("Header");
+                String noteUrl = rs.getString("URL");
+                String noteAuthor = rs.getString("Author");
+                String noteIsbn = rs.getString("ISBN");
+                String type = rs.getString("Type");
+                String info = rs.getString("Info");
+                if (type.equals("Link")) {
+                    note = new Link(noteHeader, noteUrl, id, info);
+                } else if (type.equals("Book")) {
+                    note = new Book(noteHeader, noteUrl, noteAuthor, noteIsbn, id, info);
+                }
+            }
+            rs.close();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return note;
+    }
+
     @Override
     public Note getNote(String header, String url) {
         Note note = null;
