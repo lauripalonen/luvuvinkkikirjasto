@@ -29,8 +29,20 @@
     </form>
 
     <h5>Kaikki lukuvinkkisi:</h5>
+<!--
+    <table id="note_list">
+        <tr>
+            <th>Muistiinpano</th>
+            <th>Osoite</th>
+        </tr>
         #foreach ($note in $noteList)
-            <p>$note.getHeader() - $note.getUrl() - Lisätiedot: $note.getInfo() - Tagit: $note.getTagsAsString()</p>
+        <tr>
+            <td><a href="/notes/$note.getId()">$note.getHeader()</a></td>
+            <td><a href="$note.getUrl()">$note.getUrl()</a></td>
+        </tr>
         #end
-
+    </table>!-->
+        #foreach ($note in $noteList)
+        <p>$note.getHeader() - $note.getUrl() - Lisätiedot: $note.getInfo() - Tagit: $note.getTagsAsString() - <a href="/notes/$note.getId()">Vinkkisivu</a></p>
+        #end
 </body>
