@@ -31,6 +31,10 @@ public class Library {
         dao.removeNote(id);
     }
     
+    public void modifyNote(Note old, Note updated) {
+        dao.modifyNote(old, updated);
+    }
+    
     public void addTag(String header) {
         List<String> existingTags = listTags().stream().map(tag -> tag.getHeader()).collect(Collectors.toList());
         if (!existingTags.contains(header)) {

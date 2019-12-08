@@ -31,6 +31,7 @@ public interface LinkDao {
     public Tag getTag(String tagHeader);
     
     public void removeNote(String id);
+    public void modifyNote(Note oldNote, Note newNote);
 
     public ArrayList<Tag> listTags();
     public ArrayList<String> getTagsForNote(int noteId);
