@@ -34,7 +34,9 @@ public abstract class Dao {
     public void addLink(String header, String url, String info) {
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type, Info) " + "VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes "
+                    + "(Header, URL, Author, ISBN, Type, Info) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)");
             stmt.setString(1, header);
             stmt.setString(2, url);
             stmt.setString(3, "");
@@ -52,7 +54,9 @@ public abstract class Dao {
     public void addBook(String header, String url, String author, String isbn, String info) {
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes (Header, URL, Author, ISBN, Type, Info) " + "VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Notes "
+                    + "(Header, URL, Author, ISBN, Type, Info) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)");
             stmt.setString(1, header);
             stmt.setString(2, url);
             stmt.setString(3, author);
@@ -126,7 +130,9 @@ public abstract class Dao {
             if (type.equals("Book")) {
                 //update book
                 Book book = (Book) updatedNote;
-                PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET Header=?, URL=?, Author=?, ISBN=?, Type=?, Info=? " + "WHERE id = ?");
+                PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET "
+                        + "Header=?, URL=?, Author=?, ISBN=?, Type=?, Info=? "
+                        + "WHERE id = ?");
                 stmtBook.setString(1, book.getHeader());
                 stmtBook.setString(2, book.getUrl());
                 stmtBook.setString(3, book.getAuthor());
@@ -140,7 +146,8 @@ public abstract class Dao {
             } else if (type.equals("Link")) {
                 //update link
                 Link link = (Link) updatedNote;
-                PreparedStatement stmtLink = connection.prepareStatement("Update Notes SET Header=?, URL=?, Type=?, Info=? WHERE id = ?");
+                PreparedStatement stmtLink = connection.prepareStatement("Update Notes SET "
+                        + "Header=?, URL=?, Type=?, Info=? WHERE id = ?");
                 stmtLink.setString(1, link.getHeader());
                 stmtLink.setString(2, link.getUrl());
                 stmtLink.setString(3, "Link");
@@ -218,7 +225,8 @@ public abstract class Dao {
     public void joinTagToNote(Note note, Tag tag) {
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO notes_tags (note_id, tag_id)" + " VALUES (?, ?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO notes_tags (note_id, tag_id)"
+                    + " VALUES (?, ?)");
             stmt.setInt(1, note.getId());
             stmt.setInt(2, tag.getId());
             stmt.executeUpdate();
@@ -270,7 +278,9 @@ public abstract class Dao {
         ArrayList<String> tags = new ArrayList();
         try {
             Connection connection = getConnection();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Tags t " + "INNER JOIN notes_tags nt " + "ON t.id = nt.tag_id AND nt.note_id = ?");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Tags t "
+                    + "INNER JOIN notes_tags nt "
+                    + "ON t.id = nt.tag_id AND nt.note_id = ?");
             stmt.setInt(1, noteId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -330,7 +340,8 @@ public abstract class Dao {
             for (String tagString : updatedNote.getTags()) {
                 Tag tag = getTag(tagString);
                 if (tag != null) {
-                    PreparedStatement stmt = connection.prepareStatement("INSERT INTO notes_tags (note_id, tag_id)" + " VALUES (?, ?)");
+                    PreparedStatement stmt = connection.prepareStatement("INSERT INTO notes_tags (note_id, tag_id)"
+                            + " VALUES (?, ?)");
                     stmt.setInt(1, oldNote.getId());
                     stmt.setInt(2, tag.getId());
                     stmt.executeUpdate();
