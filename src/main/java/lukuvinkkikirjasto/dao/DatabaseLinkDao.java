@@ -270,7 +270,8 @@ public class DatabaseLinkDao implements LinkDao {
             if (type.equals("Book")) {
                     //update book
                 Book book = (Book)updatedNote;
-                PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET (Header, URL, Author, ISBN, Type, Info) WHERE id = ? "
+                PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET (Header, URL, Author, ISBN, Type, Info) "
+                    + "WHERE id = ? "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?)");
                 stmtBook.setString(1, book.getHeader());
                 stmtBook.setString(2, book.getUrl());
