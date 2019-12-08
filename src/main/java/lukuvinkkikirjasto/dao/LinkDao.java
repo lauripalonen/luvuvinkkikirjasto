@@ -35,5 +35,4 @@ public interface LinkDao {
 
     public ArrayList<Tag> listTags();
     public ArrayList<String> getTagsForNote(int noteId);
-    
 }

@@ -34,10 +34,10 @@ public class DatabaseLinkDao implements LinkDao {
     private void createNoteTable() {
 
         //HEROKU
-        if(System.getenv("DATABASE_URL") != null){
+        if (System.getenv("DATABASE_URL") != null) {
             try {
                 Connection connection = getConnection();
-                PreparedStatement stmt  = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
+                PreparedStatement stmt = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Notes ("
                         + "id SERIAL PRIMARY KEY,"
                         + "Header varchar(300) NOT NULL, "
                         + "URL varchar(300) NOT NULL, "
@@ -53,7 +53,7 @@ public class DatabaseLinkDao implements LinkDao {
                 System.out.println(ex);
             }
 
-        //LOCAL
+            //LOCAL
         } else {
             try {
                 Connection connection = getConnection();
@@ -67,7 +67,6 @@ public class DatabaseLinkDao implements LinkDao {
                         + "Info varchar(600));"
                 );
 
-
                 stmt.executeUpdate();
                 stmt.close();
                 connection.close();
@@ -80,7 +79,7 @@ public class DatabaseLinkDao implements LinkDao {
 
     private void createTagTable() {
         //HEROKU
-        if(System.getenv("DATABASE_URL") != null){
+        if (System.getenv("DATABASE_URL") != null) {
             try {
                 Connection connection = getConnection();
 
@@ -97,7 +96,7 @@ public class DatabaseLinkDao implements LinkDao {
                 System.out.println(ex);
             }
 
-        //LOCAL
+            //LOCAL
         } else {
             try {
                 Connection connection = getConnection();
@@ -119,7 +118,7 @@ public class DatabaseLinkDao implements LinkDao {
 
     private void createTagNoteAssociationTable() {
         //HEROKU
-        if(System.getenv("DATABASE_URL") != null){
+        if (System.getenv("DATABASE_URL") != null) {
             try {
                 Connection connection = getConnection();
 
@@ -255,7 +254,7 @@ public class DatabaseLinkDao implements LinkDao {
         }
         return books;
     }
-    
+
     @Override
     public void modifyNote(Note oldNote, Note updatedNote) {
         int id = oldNote.getId();
@@ -268,11 +267,10 @@ public class DatabaseLinkDao implements LinkDao {
             stmt.close();
             rs.close();
             if (type.equals("Book")) {
-                    //update book
-                Book book = (Book)updatedNote;
-                PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET (Header, URL, Author, ISBN, Type, Info) "
-                    + "WHERE id = ? "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)");
+                //update book
+                Book book = (Book) updatedNote;
+                PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET Header=?, URL=?, Author=?, ISBN=?, Type=?, Info=? "
+                        + "WHERE id = ?");
                 stmtBook.setString(1, book.getHeader());
                 stmtBook.setString(2, book.getUrl());
                 stmtBook.setString(3, book.getAuthor());
@@ -282,12 +280,11 @@ public class DatabaseLinkDao implements LinkDao {
                 stmtBook.setInt(7, id);
                 stmtBook.executeUpdate();
                 stmtBook.close();
-                    // update notes_tags table??
+                updateTagsOfNote(oldNote, updatedNote);
             } else if (type.equals("Link")) {
-                    //update link
-                Link link = (Link)updatedNote;
-                PreparedStatement stmtLink = connection.prepareStatement("Update Notes SET (Header, URL, Type, Info) WHERE id = ?"
-                    + "VALUES (?, ?, ?, ?, ?)");
+                //update link
+                Link link = (Link) updatedNote;
+                PreparedStatement stmtLink = connection.prepareStatement("Update Notes SET Header=?, URL=?, Type=?, Info=? WHERE id = ?");
                 stmtLink.setString(1, link.getHeader());
                 stmtLink.setString(2, link.getUrl());
                 stmtLink.setString(3, "Link");
@@ -295,18 +292,20 @@ public class DatabaseLinkDao implements LinkDao {
                 stmtLink.setInt(5, id);
                 stmtLink.executeUpdate();
                 stmtLink.close();
-                    // update notes_tags table??
+                updateTagsOfNote(oldNote, updatedNote);
             }
             connection.close();
         } catch (SQLException ex) {
+            System.out.println("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+
             System.out.println(ex);
         }
-        
+
     }
 
     @Override
     public void clearDao() {
-        if(System.getenv("DATABASE_URL") != null) {
+        if (System.getenv("DATABASE_URL") != null) {
             try {
                 Connection connection = getConnection();
                 PreparedStatement stmt = connection.prepareStatement("DELETE FROM Notes");
@@ -326,7 +325,7 @@ public class DatabaseLinkDao implements LinkDao {
 
     private static Connection getConnectionHeroku() throws URISyntaxException, SQLException {
         URI dbUri = new URI(System.getenv("DATABASE_URL"));
-    
+
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
         String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
@@ -337,10 +336,10 @@ public class DatabaseLinkDao implements LinkDao {
     private Connection getConnection() {
         String dbUrl = System.getenv("DATABASE_URL");
 
-        if(dbUrl != null){
+        if (dbUrl != null) {
             try {
                 return getConnectionHeroku();
-            } catch (URISyntaxException uriEx){
+            } catch (URISyntaxException uriEx) {
                 Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, uriEx);
             } catch (SQLException sqlEx) {
                 Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, sqlEx);
@@ -445,7 +444,7 @@ public class DatabaseLinkDao implements LinkDao {
             stmt.executeUpdate();
             stmt.close();
             connection.close();
-            
+
             return true;
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -474,7 +473,7 @@ public class DatabaseLinkDao implements LinkDao {
         }
         return tag;
     }
-    
+
     @Override
     public ArrayList<String> getTagsForNote(int noteId) {
         ArrayList<String> tags = new ArrayList();
@@ -531,6 +530,33 @@ public class DatabaseLinkDao implements LinkDao {
             System.out.println(ex);
         }
         return tags;
+    }
+
+    private void updateTagsOfNote(Note oldNote, Note updatedNote) {
+        try {
+            Connection connection = getConnection();
+            connection.setAutoCommit(false);
+            PreparedStatement stmtDelete = connection.prepareStatement("DELETE FROM notes_tags WHERE note_id = ?");
+            stmtDelete.setInt(1, oldNote.getId());
+            stmtDelete.executeUpdate();
+            stmtDelete.close();
+            for (String tagString : updatedNote.getTags()) {
+                Tag tag = getTag(tagString);
+                if (tag != null) {
+                    PreparedStatement stmt = connection.prepareStatement("INSERT INTO notes_tags (note_id, tag_id)"
+                            + " VALUES (?, ?)");
+                    stmt.setInt(1, oldNote.getId());
+                    stmt.setInt(2, tag.getId());
+                    stmt.executeUpdate();
+                    stmt.close();
+                }
+            }
+            connection.commit();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

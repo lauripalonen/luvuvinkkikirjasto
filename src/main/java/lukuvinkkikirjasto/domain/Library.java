@@ -18,44 +18,44 @@ public class Library {
     public Library(String fileName) {
         this.dao = new DatabaseLinkDao(fileName);
     }
-    
-    public void joinTagToNote(Note note, Tag tag){
+
+    public void joinTagToNote(Note note, Tag tag) {
         dao.joinTagToNote(note, tag);
     }
-    
-    public Note getNote(String header, String url){
+
+    public Note getNote(String header, String url) {
         return dao.getNote(header, url);
     }
-    
+
     public void removeNote(String id) {
         dao.removeNote(id);
     }
-    
+
     public void modifyNote(Note old, Note updated) {
         dao.modifyNote(old, updated);
     }
-    
+
     public void addTag(String header) {
         List<String> existingTags = listTags().stream().map(tag -> tag.getHeader()).collect(Collectors.toList());
         if (!existingTags.contains(header)) {
             dao.addTag(header);
         }
     }
-    
+
     public Tag getTag(String header) {
         return dao.getTag(header);
     }
 
     public void addBook(String header, String url, String author, String isbn, String info) {
         Book b = new Book(header, url, author, isbn, 1, info);
-        if(!containsNote(b)) {
+        if (!containsNote(b)) {
             dao.addBook(header, url, author, isbn, info);
         }
     }
-    
+
     public void addLink(String header, String url, String info) {
         Link l = new Link(header, url, 1, info);
-        if(!containsNote(l)) {
+        if (!containsNote(l)) {
             dao.addLink(header, url, info);
         }
     }
@@ -80,17 +80,25 @@ public class Library {
     public ArrayList<Note> listAll() {
         return dao.listAllNotes();
     }
-    
-    public ArrayList<Tag> listTags(){
+
+    public ArrayList<Tag> listTags() {
         return dao.listTags();
     }
-    
+
     public ArrayList<String> getTagsForNote(int noteId) {
         return dao.getTagsForNote(noteId);
     }
 
     public void deleteAllRecords() {
         dao.clearDao();
+    }
+
+    public void addTagsToNote(String header, String url, List<String> tagList) {
+        tagList.forEach(tagHeader -> {
+            addTag(tagHeader);
+            Tag tag = getTag(tagHeader);
+            joinTagToNote(getNote(header, url), tag);
+        });
     }
 
 }
