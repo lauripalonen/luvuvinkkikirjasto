@@ -267,35 +267,35 @@ public class DatabaseLinkDao implements LinkDao {
             String type = rs.getString("Type");
             stmt.close();
             rs.close();
-                if (type.equals("Book")) {
+            if (type.equals("Book")) {
                     //update book
-                    Book book = (Book)updatedNote;
-                    PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET (Header, URL, Author, ISBN, Type, Info) WHERE id = ? "
-                        + "VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    stmtBook.setString(1, book.getHeader());
-                    stmtBook.setString(2, book.getUrl());
-                    stmtBook.setString(3, book.getAuthor());
-                    stmtBook.setString(4, book.getIsbn());
-                    stmtBook.setString(5, "Book");
-                    stmtBook.setString(6, book.getInfo());
-                    stmtBook.setInt(7, id);
-                    stmtBook.executeUpdate();
-                    stmtBook.close();
+                Book book = (Book)updatedNote;
+                PreparedStatement stmtBook = connection.prepareStatement("UPDATE Notes SET (Header, URL, Author, ISBN, Type, Info) WHERE id = ? "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)");
+                stmtBook.setString(1, book.getHeader());
+                stmtBook.setString(2, book.getUrl());
+                stmtBook.setString(3, book.getAuthor());
+                stmtBook.setString(4, book.getIsbn());
+                stmtBook.setString(5, "Book");
+                stmtBook.setString(6, book.getInfo());
+                stmtBook.setInt(7, id);
+                stmtBook.executeUpdate();
+                stmtBook.close();
                     // update notes_tags table??
-                } else if (type.equals("Link")) {
+            } else if (type.equals("Link")) {
                     //update link
-                    Link link = (Link)updatedNote;
-                    PreparedStatement stmtLink = connection.prepareStatement("Update Notes SET (Header, URL, Type, Info) WHERE id = ?"
-                        + "VALUES (?, ?, ?, ?, ?)");
-                    stmtLink.setString(1, link.getHeader());
-                    stmtLink.setString(2, link.getUrl());
-                    stmtLink.setString(3, "Link");
-                    stmtLink.setString(4, link.getInfo());
-                    stmtLink.setInt(5, id);
-                    stmtLink.executeUpdate();
-                    stmtLink.close();
+                Link link = (Link)updatedNote;
+                PreparedStatement stmtLink = connection.prepareStatement("Update Notes SET (Header, URL, Type, Info) WHERE id = ?"
+                    + "VALUES (?, ?, ?, ?, ?)");
+                stmtLink.setString(1, link.getHeader());
+                stmtLink.setString(2, link.getUrl());
+                stmtLink.setString(3, "Link");
+                stmtLink.setString(4, link.getInfo());
+                stmtLink.setInt(5, id);
+                stmtLink.executeUpdate();
+                stmtLink.close();
                     // update notes_tags table??
-                }
+            }
             connection.close();
         } catch (SQLException ex) {
             System.out.println(ex);

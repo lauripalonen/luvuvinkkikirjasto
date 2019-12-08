@@ -61,7 +61,7 @@ public abstract class Note implements Comparable {
         this.tags = tags;
     }
     
-        @Override
+    @Override
     public String toString() {
         return "header=" + header + ", url=" + url + ", info=" + info;
     }

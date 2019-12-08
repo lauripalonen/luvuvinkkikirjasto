@@ -127,11 +127,11 @@ public class WebUserInterface {
             ArrayList<Note> notes = library.listAll();
             notes.forEach(note -> note.setTags(library.getTagsForNote(note.getId())));
             List<Note> filteredNotes = notes.stream().filter(note -> {
-               boolean passesTypeFilter = (typeFilter == 1 ||
+                boolean passesTypeFilter = (typeFilter == 1 ||
                      (typeFilter == 2 && note instanceof Link) ||
                      (typeFilter == 3 && note instanceof Book));
-               boolean passesTagFilter = tagFilters.isEmpty() || note.getTags().stream().anyMatch(tag -> tagFilters.contains(tag));
-               return passesTypeFilter && passesTagFilter;
+                boolean passesTagFilter = tagFilters.isEmpty() || note.getTags().stream().anyMatch(tag -> tagFilters.contains(tag));
+                return passesTypeFilter && passesTagFilter;
             }).collect(Collectors.toList());
             model.put("noteList", filteredNotes);
             model.put("type_filter", typeFilter);
