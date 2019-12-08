@@ -3,13 +3,13 @@ package lukuvinkkikirjasto.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import lukuvinkkikirjasto.dao.Dao;
 import lukuvinkkikirjasto.dao.DatabaseLinkDao;
 import lukuvinkkikirjasto.dao.DatabaseLinkDaoHeroku;
-import lukuvinkkikirjasto.dao.LinkDao;
 
 public class Library {
 
-    LinkDao dao;
+    Dao dao;
 
     /**
      * initializes link Library with a database
@@ -17,8 +17,7 @@ public class Library {
      * @param fileName
      */
     public Library(String fileName) {
-
-        if(System.getenv("DATABASE_URL") != null){
+        if (System.getenv("DATABASE_URL") != null) {
             this.dao = new DatabaseLinkDaoHeroku();
         } else {
             this.dao = new DatabaseLinkDao(fileName);
