@@ -15,5 +15,5 @@ Feature: As a user I want to be able to add a new link to my library through web
     Scenario: Added tag is listed 
         Given Library is initialized
         And lisää uusi muistiinpano is selected 
-        When a note named "Google" with url "www.google.fi" and tag "google" is added through web UI
-        Then list all menu should list item "Google" with url "www.google.fi" and tag "google"
+        When a note named "Google" with url "www.google.fi" and info "search engine" and tag "google" is added through web UI
+        Then list all menu should list item "Google" with url "www.google.fi" and info "search engine" and tag "google"

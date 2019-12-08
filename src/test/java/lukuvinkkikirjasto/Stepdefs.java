@@ -147,17 +147,17 @@ public class Stepdefs {
         assertTrue(outputs.contains(book1));
     }
     
-    @When("a note named {string} with url {string} and tag {string} is added through web UI")
-    public void noteWithTagIsadded(String header, String url, String tag) {
-        addNote(header, url, tag);
+    @When("a note named {string} with url {string} and info {string} and tag {string} is added through web UI")
+    public void noteWithTagIsadded(String header, String url, String info, String tag) {
+        addNote(header, url, info, tag);
     }
     
-    @Then("list all menu should list item {string} with url {string} and tag {string}")
-    public void listingContainsNoteWithTag(String header, String url, String tag) {
+    @Then("list all menu should list item {string} with url {string} and info {string} and tag {string}")
+    public void listingContainsNoteWithTag(String header, String url, String info, String tag) {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("Tarkastele muistiinpanojasi"));
         element.click();
-        pageHasContent(header + " - " + url + " - Tags: " + tag);
+        pageHasContent(header + " - " + url + " - Lisätiedot: " + info + " - Tagit: " + tag);
     }
 
     @After
@@ -180,12 +180,15 @@ public class Stepdefs {
         element.submit();
     }
     
-    private void addNote(String header, String url, String tag) {
+    private void addNote(String header, String url, String info, String tag) {
         pageHasContent("Uuden muistiinpanon lisääminen");
         WebElement element = driver.findElement(By.name("header"));
         element.sendKeys(header);
         element = driver.findElement(By.name("url"));
         element.sendKeys(url);
+//        driver.findElement(By.name("info")).click();
+        element = driver.findElement(By.name("info"));
+        element.sendKeys(info);
         element = driver.findElement(By.name("tags"));
         element.sendKeys(tag);
         element = driver.findElement(By.name("add"));

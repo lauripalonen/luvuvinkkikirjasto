@@ -26,7 +26,7 @@ public class BookTest {
     
     @Test
     public void toStringIsWorking() {
-        assertEquals("Book: header=Header, url=url, author=Author, isbn=44556677", book.toString());
+        assertEquals("Book: header=Header, url=url, info=book info, author=Author, isbn=44556677", book.toString());
     }
     
     @Test
