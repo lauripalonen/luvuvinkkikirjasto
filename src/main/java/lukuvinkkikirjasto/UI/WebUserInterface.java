@@ -140,5 +140,21 @@ public class WebUserInterface {
                     new ModelAndView(model, layout)
             );
         });
+
+        get("/notes/:id", (request, response) -> {
+            int note_id = Integer.parseInt(request.params(":id"));
+            Note note = library.getNoteById(note_id);
+            String note_type = note.getClass().getSimpleName();
+            ArrayList<String> tags = library.getTagsForNote(note_id);
+            HashMap<String, Object> model = new HashMap();
+            model.put("template", "templates/noteinfo.html");
+            model.put("note_id", note_id);
+            model.put("note", note);
+            model.put("tags", tags);
+            model.put("note_type", note_type);
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout)
+            );
+        });
     }
 }
