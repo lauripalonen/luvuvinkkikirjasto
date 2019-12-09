@@ -173,7 +173,7 @@ public class Stepdefs {
     }
 
     private void addLink(String header, String url) {
-        pageHasContent("Uuden muistiinpanon lisääminen");
+        pageHasContent("Uuden lukuvinkin lisääminen");
         WebElement element = driver.findElement(By.name("header"));
         element.sendKeys(header);
         element = driver.findElement(By.name("url"));
@@ -183,7 +183,7 @@ public class Stepdefs {
     }
     
     private void addNote(String header, String url, String info, String tag) {
-        pageHasContent("Uuden muistiinpanon lisääminen");
+        pageHasContent("Uuden lukuvinkin lisääminen");
         WebElement element = driver.findElement(By.name("header"));
         element.sendKeys(header);
         element = driver.findElement(By.name("url"));
