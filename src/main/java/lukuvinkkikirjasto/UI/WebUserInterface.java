@@ -124,9 +124,11 @@ public class WebUserInterface {
                 boolean passesTagFilter = tagFilters.isEmpty() || note.getTags().stream().anyMatch(tag -> tagFilters.contains(tag));
                 return passesTypeFilter && passesTagFilter;
             }).collect(Collectors.toList());
+            List<String> allTags = library.listTags().stream().map(tag -> tag.getHeader()).collect(Collectors.toList());
             model.put("noteList", filteredNotes);
             model.put("type_filter", typeFilter);
             model.put("tag_filters", tagFilters);
+            model.put("all_tags", allTags);
             return new VelocityTemplateEngine().render(
                     new ModelAndView(model, layout)
             );

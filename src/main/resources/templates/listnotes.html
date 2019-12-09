@@ -14,7 +14,12 @@
             <option value="3">Kirjat</option>
         </select>
         <label for="tag_filters">Lisää uusia tageja:</label>
-        <input name="tag_filters" type="text" value="">
+        <div name="all-tags">
+            #foreach ($tag in $all_tags)
+            <a href="#" onClick=tagToFilterField("${tag}")>$tag</a>
+            #end
+        </div>
+        <input id="tag_filters" name="tag_filters" type="text" value="">
         
         #if (!$tag_filters.isEmpty())
         <p>Aktiiviset tagit: </p>
@@ -46,3 +51,21 @@
         <p>$note.getHeader() - $note.getUrl() - Lisätiedot: $note.getInfo() - Tagit: $note.getTagsAsString() - <a href="/notes/$note.getId()">Vinkkisivu</a></p>
         #end
 </body>
+
+
+<script>
+    
+    function tagToFilterField(tag) {
+        tagsString = document.getElementById("tag_filters").value
+        tagsArr = tagsString.split(" ")
+        tagsArr.forEach(exTag => {
+            if (exTag === tag) {
+                document.getElementById("tag_filters").value = tagsString;
+                return
+            }
+        })
+        tagsString = tagsString.concat(" " + tag)
+        document.getElementById("tag_filters").value = tagsString
+    }
+    
+</script>
