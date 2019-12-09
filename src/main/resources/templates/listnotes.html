@@ -73,12 +73,14 @@
     function tagToFilterField(tag) {
         tagsString = document.getElementById("tag_filters").value
         tagsArr = tagsString.split(" ")
+        willBreak = false
         tagsArr.forEach(exTag => {
             if (exTag === tag) {
                 document.getElementById("tag_filters").value = tagsString;
-                return
+                willBreak = true
             }
         })
+        if (willBreak) return
         tagsString = tagsString.concat(" " + tag)
         document.getElementById("tag_filters").value = tagsString
     }
