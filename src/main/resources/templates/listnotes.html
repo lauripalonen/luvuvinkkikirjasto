@@ -1,9 +1,7 @@
 
 <body>
-    <h1>Lukuvinkkikirjasto</h1>
-    <h4>Muistiinpanojen tarkastelu</h4>
-
-    <a href="/">Takaisin etusivulle</a> 
+    <h1>Tallennetut lukuvinkit</h1>    
+    
     <br></br>
 
     <form method="GET" action="/listnotes">
@@ -13,7 +11,7 @@
             <option value="2">Linkit</option>
             <option value="3">Kirjat</option>
         </select>
-        <label for="tag_filters">Lisää uusia tageja:</label>
+        <label for="tag_filters">Suodata tagien perusteella:</label>
         <input name="tag_filters" type="text" value="">
         
         #if (!$tag_filters.isEmpty())
