@@ -1,18 +1,13 @@
 
 
 <body>    
-    <h1>Uuden muistiinpanon lisääminen</h1>
+    <h1>Uuden linkkivinkin lisääminen</h1>
 
-    <form method="POST" action="/changetype">
-        <label>Vaihda muistiinpanon tyyppiä:</label>
-        <select name="noteType" onChange="this.form.submit()">
-            <option selected="selected" value="1">Linkki</option>
-            <option value="2">Kirja</option>
-        </select>
-    </form>
-
-    <br></br>   
-    <h5>Lisää linkki:</h5>
+    <a type="button" class="btn btn-outline-primary" href="/newbook">Uusi kirja</a>
+    <a type="button" class="btn btn-primary" href="#">Uusi linkki</a>
+    <br></br>
+    
+    <h4>Lisää linkki:</h4>
 
     <form method="POST" action="/newlink">
         <div class="noteformfield">
