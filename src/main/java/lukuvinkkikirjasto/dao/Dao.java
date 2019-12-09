@@ -124,7 +124,10 @@ public abstract class Dao {
             PreparedStatement stmt = connection.prepareStatement("SELECT Type FROM Notes WHERE id = ?");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            String type = rs.getString("Type");
+            String type = "";
+            if (rs.next()) {
+                type = rs.getString("Type");
+            }
             stmt.close();
             rs.close();
             if (type.equals("Book")) {
