@@ -1,21 +1,25 @@
 
 <body>
-    <h1>Lukuvinkkikirjasto</h1>
-    <h4>Muistiinpanojen tarkastelu</h4>
-
-    <a href="/">Takaisin etusivulle</a> 
-    <br></br>
+    <h1>Tallennetut lukuvinkit</h1>        
 
     <form method="GET" action="/listnotes">
-        <label>Valitse näytettävät muistiinpanot:</label>
+        <label>Valitse näytettävien lukuvinkkien tyyppi...</label>
         <select name="type_filter">
             <option selected="selected" value="1">Kaikki</option>
             <option value="2">Linkit</option>
             <option value="3">Kirjat</option>
         </select>
-        <label for="tag_filters">Lisää uusia tageja:</label>
-        <input name="tag_filters" type="text" value="">
         
+        
+        <br></br>
+        <div name="all-tags">
+            #foreach ($tag in $all_tags)
+            <a href="#" onClick=tagToFilterField("${tag}")>$tag</a>
+            #end
+        </div>
+        <label for="tag_filters">...ja suodata halutessasi tagien perusteella:</label>
+        <input id="tag_filters" name="tag_filters" type="text" value="">
+            
         #if (!$tag_filters.isEmpty())
         <p>Aktiiviset tagit: </p>
             <div class="filter-form-tags">
@@ -25,9 +29,11 @@
             </div>
         #end
         
-        <input type="submit" value="Filter">
+        <input type="submit" value="Hae">
     </form>
 
+    
+    
     <h5>Kaikki lukuvinkkisi:</h5>
 <!--
     <table id="note_list">
@@ -46,3 +52,21 @@
         <p>$note.getHeader() - $note.getUrl() - Lisätiedot: $note.getInfo() - Tagit: $note.getTagsAsString() - <a href="/notes/$note.getId()">Vinkkisivu</a></p>
         #end
 </body>
+
+
+<script>
+    
+    function tagToFilterField(tag) {
+        tagsString = document.getElementById("tag_filters").value
+        tagsArr = tagsString.split(" ")
+        tagsArr.forEach(exTag => {
+            if (exTag === tag) {
+                document.getElementById("tag_filters").value = tagsString;
+                return
+            }
+        })
+        tagsString = tagsString.concat(" " + tag)
+        document.getElementById("tag_filters").value = tagsString
+    }
+    
+</script>
