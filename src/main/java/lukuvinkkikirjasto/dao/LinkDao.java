@@ -2,6 +2,7 @@ package lukuvinkkikirjasto.dao;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Link;

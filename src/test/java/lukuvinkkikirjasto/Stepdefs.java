@@ -157,7 +157,9 @@ public class Stepdefs {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("Tallennetut lukuvinkit"));
         element.click();
-        pageHasContent(header + " - " + url + " - Lisätiedot: " + info + " - Tagit: " + tag + " - ");
+        pageHasContent(header);
+        pageHasContent(url);
+        pageHasContent(tag);
     }
 
     @After

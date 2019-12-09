@@ -1,0 +1,37 @@
+<body>
+    <h1>Kirjan tietojen muokkaus</h1>
+
+    <br></br>
+    <h5>Muokkaa tietoja:</h5>
+
+    <form method="POST" action="/editbook/$note.getId()">
+        <div class="noteformfield">
+            <label>Kirjan nimi:</label>
+            <input type="text" name="header" id="bookHeader" value="$note.getHeader()" />
+        </div>
+        <div class="noteformfield">
+            <label>URL:</label>
+            <input type="text" name="url" id="bookUrl" value="$note.getUrl()" />
+        </div>
+        <div class="noteformfield">
+            <label>Kirjailija:</label>
+            <input type="text" name="author" id="bookAuthor" value="$note.getAuthor()" />
+        </div>
+        <div class="noteformfield">
+            <label>ISBN-tunniste:</label>
+            <input type="text" name="isbn" id="bookISBN" value="$note.getIsbn()" />
+            <small id="ISBNInfo"></small>
+        </div>
+        <div class="noteformfield">
+            <label>Lisätietoja:</label>
+            <textarea name="info" rows="3" cols="30">$note.getInfo()</textarea>
+        </div>
+        <div class="noteformfield">
+            <label>Tagit:</label>
+            <input type="text" name="tags" value="#foreach ($tag in $tags) $tag #end" />
+        </div>
+
+        <input name="add" type="submit" value="Tallenna tiedot">
+    </form>
+
+</body>

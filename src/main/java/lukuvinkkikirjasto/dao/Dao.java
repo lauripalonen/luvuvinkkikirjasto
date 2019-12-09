@@ -326,16 +326,16 @@ public abstract class Dao {
         return tags;
     }
 
-    public void removeNote(String id) {
+    public void removeNote(int note_id) {
         try {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM Notes WHERE id = ?");
-            stmt.setString(1, id);
+            stmt.setInt(1, note_id);
             stmt.executeUpdate();
             stmt.close();
             PreparedStatement joinstmt = connection.prepareStatement("DELETE FROM notes_tags WHERE note_id = ?");
-            joinstmt.setString(1, id);
+            joinstmt.setInt(1, note_id);
             joinstmt.executeUpdate();
             joinstmt.close();
             connection.commit();
@@ -388,6 +388,19 @@ public abstract class Dao {
             connection.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void removeAllTagsForNote(int note_id) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM notes_tags WHERE note_id = ?");
+            stmt.setInt(1, note_id);
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
+        } catch (SQLException ex) {
+           Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

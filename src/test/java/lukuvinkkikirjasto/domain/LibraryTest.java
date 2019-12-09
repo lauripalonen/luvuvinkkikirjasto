@@ -101,7 +101,7 @@ public class LibraryTest {
     public void noteCanBeRemoved() {
         Book b = new Book("Header", "url", "Author", "1234567", 1, "info book");
         library.addBook("Header", "url", "Author", "1234567", "info book");
-        library.removeNote("1");
+        library.removeNote(1);
         ArrayList<Note> notes = new ArrayList<>();
         ArrayList<Note> notesFromLibrary = library.listAll();
         assertEquals(notes, notesFromLibrary);
@@ -113,7 +113,7 @@ public class LibraryTest {
         Link l = new Link("Link", "link.fi", 2, "info link");
         library.addBook("Header", "url", "Author", "1234567", "info book");
         library.addLink("Link", "link.fi", "info link");
-        library.removeNote("2");
+        library.removeNote(2);
         ArrayList<Note> notes = new ArrayList<>();
         ArrayList<Note> notesFromLibrary = library.listAll();
         notes.add(b);

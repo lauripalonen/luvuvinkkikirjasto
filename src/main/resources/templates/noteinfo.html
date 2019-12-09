@@ -6,7 +6,7 @@
     <div class="card mb-3">
         <h3 class="card-header">$note.getHeader()</h3>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item"><a href="https://$note.getUrl()" class="card-link">$note.getUrl()</a></li>
+            <li class="list-group-item"><a href="//$note.getUrl()" class="card-link">$note.getUrl()</a></li>
             #if ($note_type.equals("Book"))
             <li class="list-group-item">Kirjoittaja: $note.getAuthor()</li>
             <li class="list-group-item">ISBN: $note.getIsbn()</li>
@@ -18,8 +18,9 @@
             <p>Lisätiedot: $note.getInfo()</p>
         </div>
         <div class="card-footer">
-            <a type="button" class="btn btn-info" href="#">Muokkaa tietoja</a>
-            <a type="button" class="btn btn-danger" href="#">Poista lukuvinkki</a>
+            <a type="button" class="btn btn-info" href=$edit_route>Muokkaa tietoja</a>
+            <a type="button" class="btn btn-danger" href="/removenote/$note.getId()" 
+               onClick='return confirm("Oletko varma että haluat poistaa muistiinpanon?")'>Poista lukuvinkki</a>
         </div>
     </div>
 

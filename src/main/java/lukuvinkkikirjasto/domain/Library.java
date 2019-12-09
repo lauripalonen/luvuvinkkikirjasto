@@ -37,7 +37,7 @@ public class Library {
         return dao.getNoteById(id);
     }
 
-    public void removeNote(String id) {
+    public void removeNote(int id) {
         dao.removeNote(id);
     }
 
@@ -101,6 +101,10 @@ public class Library {
 
     public void deleteAllRecords() {
         dao.clearDao();
+    }
+    
+    public void removeAllTagsForNote(int note_id) {
+        dao.removeAllTagsForNote(note_id);
     }
 
     public void addTagsToNote(String header, String url, List<String> tagList) {

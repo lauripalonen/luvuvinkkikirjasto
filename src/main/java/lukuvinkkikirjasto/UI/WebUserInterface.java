@@ -70,6 +70,38 @@ public class WebUserInterface {
             response.redirect("/");
             return null;
         });
+        
+        get("/editlink/:id", (request, response) -> {
+            HashMap<String, Object> model = new HashMap();
+            int note_id = Integer.parseInt(request.params(":id"));
+            Note note = library.getNoteById(note_id);
+            ArrayList<String> tags = library.getTagsForNote(note_id);
+            model.put("note", note);
+            model.put("tags", tags);
+            model.put("template", "templates/editlink.html");
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout));
+        });
+        
+        post("/editlink/:id", (request, response) -> {
+            int note_id = Integer.parseInt(request.params(":id"));
+            Link oldLink = (Link) library.getNoteById(note_id);
+            
+            String header = request.queryParams("header");
+            String url = request.queryParams("url");
+            String info = request.queryParams("info");
+            String tags = request.queryParams("tags");
+            
+            Link updatedLink = new Link(header, url, note_id, info);
+            library.modifyNote(oldLink, updatedLink);
+            
+            library.removeAllTagsForNote(note_id);
+            List<String> tagList = Arrays.asList(tags.split(" "));
+            library.addTagsToNote(header, url, tagList);
+            
+            response.redirect("/notes/" + note_id);
+            return null;
+        });
 
         get("/newbook", (request, response) -> {
             HashMap<String, Object> model = new HashMap();
@@ -94,6 +126,49 @@ public class WebUserInterface {
             library.addTagsToNote(header, url, tagList);
 
             response.redirect("/");
+            return null;
+        });
+        
+        get("/editbook/:id", (request, response) -> {
+            HashMap<String, Object> model = new HashMap();
+            int note_id = Integer.parseInt(request.params(":id"));
+            Note note = library.getNoteById(note_id);
+            ArrayList<String> tags = library.getTagsForNote(note_id);
+            model.put("note", note);
+            model.put("tags", tags);
+            model.put("template", "templates/editbook.html");
+            return new VelocityTemplateEngine().render(
+                    new ModelAndView(model, layout));
+        });
+        
+        post("/editbook/:id", (request, response) -> {
+            int note_id = Integer.parseInt(request.params(":id"));
+            Book oldBook = (Book) library.getNoteById(note_id);
+            
+            String header = request.queryParams("header");
+            String url = request.queryParams("url");
+            String author = request.queryParams("author");
+            String isbn = request.queryParams("isbn");
+            String info = request.queryParams("info");
+            String tags = request.queryParams("tags");
+            
+            Book updatedBook = new Book(header, url, author, isbn, note_id, info);
+            
+            library.modifyNote(oldBook, updatedBook);
+            
+            library.removeAllTagsForNote(note_id);
+            List<String> tagList = Arrays.asList(tags.split(" "));
+            library.addTagsToNote(header, url, tagList);
+            
+            response.redirect("/notes/" + note_id);
+            return null;
+        });
+        
+        get("/removenote/:id", (request, response) -> {
+            int note_id = Integer.parseInt(request.params(":id"));
+            library.removeNote(note_id);
+            
+            response.redirect("/listnotes");
             return null;
         });
 
@@ -140,11 +215,13 @@ public class WebUserInterface {
             String note_type = note.getClass().getSimpleName();
             ArrayList<String> tags = library.getTagsForNote(note_id);
             HashMap<String, Object> model = new HashMap();
+            String editRoute = note instanceof Link ? "/editlink/" + note_id : "/editbook/" + note_id;
             model.put("template", "templates/noteinfo.html");
             model.put("note_id", note_id);
             model.put("note", note);
             model.put("tags", tags);
             model.put("note_type", note_type);
+            model.put("edit_route", editRoute);
             return new VelocityTemplateEngine().render(
                     new ModelAndView(model, layout)
             );
