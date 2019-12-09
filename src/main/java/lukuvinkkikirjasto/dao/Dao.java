@@ -125,6 +125,10 @@ public abstract class Dao {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             String type = rs.getString("Type");
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println("-------TYPE OUT PRINTED:------");
+            System.out.println(type);
+            System.out.println("SEE????????");
             stmt.close();
             rs.close();
             if (type.equals("Book")) {
