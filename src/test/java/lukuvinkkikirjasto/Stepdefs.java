@@ -43,7 +43,7 @@ public class Stepdefs {
     @And("lisää uusi muistiinpano is selected")
     public void addNewNoteThroughWebUi() {
         driver.get(baseUrl);
-        WebElement element = driver.findElement(By.linkText("Lisää uusi muistiinpano"));
+        WebElement element = driver.findElement(By.linkText("Lisää uusi"));
         element.click();
     }
 
@@ -66,7 +66,7 @@ public class Stepdefs {
     @Then("list all menu should list item {string}")
     public void mainMenuListsItem(String name) {
         driver.get(baseUrl);
-        WebElement element = driver.findElement(By.linkText("Tarkastele muistiinpanojasi"));
+        WebElement element = driver.findElement(By.linkText("Tallennetut lukuvinkit"));
         element.click();
         pageHasContent(name);
     }
@@ -155,9 +155,9 @@ public class Stepdefs {
     @Then("list all menu should list item {string} with url {string} and info {string} and tag {string}")
     public void listingContainsNoteWithTag(String header, String url, String info, String tag) {
         driver.get(baseUrl);
-        WebElement element = driver.findElement(By.linkText("Tarkastele muistiinpanojasi"));
+        WebElement element = driver.findElement(By.linkText("Tallennetut lukuvinkit"));
         element.click();
-        pageHasContent(header + " - " + url + " - Lisätiedot: " + info + " - Tagit: " + tag);
+        pageHasContent(header + " - " + url + " - Lisätiedot: " + info + " - Tagit: " + tag + " - ");
     }
 
     @After
@@ -215,7 +215,7 @@ public class Stepdefs {
 
     private void browseBooks() {
         driver.get(baseUrl);
-        WebElement element = driver.findElement(By.linkText("Tarkastele muistiinpanojasi"));
+        WebElement element = driver.findElement(By.linkText("Tallennetut lukuvinkit"));
         element.click();
         element = driver.findElement(By.name("listType"));
         Select listType = new Select(element);
