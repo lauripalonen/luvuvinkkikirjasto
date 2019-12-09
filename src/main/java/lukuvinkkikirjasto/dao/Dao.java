@@ -329,10 +329,16 @@ public abstract class Dao {
     public void removeNote(String id) {
         try {
             Connection connection = getConnection();
+            connection.setAutoCommit(false);
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM Notes WHERE id = ?");
             stmt.setString(1, id);
             stmt.executeUpdate();
             stmt.close();
+            PreparedStatement joinstmt = connection.prepareStatement("DELETE FROM notes_tags WHERE note_id = ?");
+            joinstmt.setString(1, id);
+            joinstmt.executeUpdate();
+            joinstmt.close();
+            connection.commit();
             connection.close();
         } catch (SQLException ex) {
             System.out.println(ex);
