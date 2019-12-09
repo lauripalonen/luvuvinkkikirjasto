@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import lukuvinkkikirjasto.domain.Book;
 import lukuvinkkikirjasto.domain.Link;
 import lukuvinkkikirjasto.domain.Note;
@@ -225,7 +226,7 @@ public abstract class Dao {
         return note;
     }
 
-    public Note getNoteById(int id){
+    public Note getNoteById(int id) {
         Note note = null;
         try {
             Connection connection = getConnection();
@@ -393,7 +394,7 @@ public abstract class Dao {
             Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void removeAllTagsForNote(int note_id) {
         try {
             Connection connection = getConnection();
@@ -403,7 +404,7 @@ public abstract class Dao {
             stmt.close();
             connection.close();
         } catch (SQLException ex) {
-           Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseLinkDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
