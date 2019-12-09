@@ -1,11 +1,7 @@
 
 
 <body>
-    <h1>Lukuvinkkikirjasto</h1>
-    <h4>Uuden muistiinpanon lisääminen</h4>
-
-    <a href="/">Takaisin etusivulle</a> 
-    <br></br>
+    <h1>Uuden muistiinpanon lisääminen</h1>
 
     <form method="POST" action="/changetype">
         <label>Vaihda muistiinpanon tyyppiä:</label>
@@ -15,6 +11,7 @@
         </select>
     </form>
 
+    <br></br>
     <h5>Lisää kirja:</h5>
 
     <form method="POST" action="/newbook">
@@ -51,31 +48,31 @@
 </body>
 
 <script type="text/javascript">
-  function getBookInfo() {
-    const ISBN = document.getElementById("bookISBN").value.replace("-", "")
-    document.getElementById("bookISBN").value = ISBN
-    fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`)
-        .then(res => res.json())
-        .then(data => {
-            data = data[`ISBN:${ISBN}`]
-            if (data == null) {
-                document.getElementById("ISBNInfo").innerHTML = "ISBN-numerolla ei löytynyt teoksia."
-                return
-            }
-            document.getElementById("ISBNInfo").innerHTML = ""
-            document.getElementById("bookHeader").value = data.title
-            authorsStr = ""
-            data.authors.forEach(author => {
-                authorsStr = authorsStr.concat(author["name"])
-                if (data.authors[data.authors.length-1] !== author) {
-                    authorsStr = authorsStr.concat(", ")
-                }
-            })
-            document.getElementById("bookAuthor").value = authorsStr
-            document.getElementById("bookUrl").value = data.url
-        })
-        .catch(err => {
-            console.log(err)
-        })
-  }
-  </script>
+    function getBookInfo() {
+        const ISBN = document.getElementById("bookISBN").value.replace("-", "")
+        document.getElementById("bookISBN").value = ISBN
+        fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`)
+                .then(res => res.json())
+                .then(data => {
+                    data = data[`ISBN:${ISBN}`]
+                    if (data == null) {
+                        document.getElementById("ISBNInfo").innerHTML = "ISBN-numerolla ei löytynyt teoksia."
+                        return
+                    }
+                    document.getElementById("ISBNInfo").innerHTML = ""
+                    document.getElementById("bookHeader").value = data.title
+                    authorsStr = ""
+                    data.authors.forEach(author => {
+                        authorsStr = authorsStr.concat(author["name"])
+                        if (data.authors[data.authors.length - 1] !== author) {
+                            authorsStr = authorsStr.concat(", ")
+                        }
+                    })
+                    document.getElementById("bookAuthor").value = authorsStr
+                    document.getElementById("bookUrl").value = data.url
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+    }
+</script>

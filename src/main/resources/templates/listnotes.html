@@ -9,17 +9,24 @@
             <option value="2">Linkit</option>
             <option value="3">Kirjat</option>
         </select>
-        
-        
+
+
+        <br></br>
+
+        <label for="tag_filters">...ja suodata halutessasi tagien perusteella:</label>
+        <input id="tag_filters" name="tag_filters" type="text" value="">
+        <input type="submit" value="Hae">
+
         <br></br>
         <div name="all-tags">
+            <p>Voit valita tagin myös klikkaamalla näistä:</p>
             #foreach ($tag in $all_tags)
             <a href="#" onClick=tagToFilterField("${tag}")>$tag</a>
             #end
         </div>
-        <label for="tag_filters">...ja suodata halutessasi tagien perusteella:</label>
-        <input id="tag_filters" name="tag_filters" type="text" value="">
-            
+
+        <!--
+        <br></br>
         #if (!$tag_filters.isEmpty())
         <p>Aktiiviset tagit: </p>
             <div class="filter-form-tags">
@@ -28,34 +35,41 @@
                 #end
             </div>
         #end
-        
-        <input type="submit" value="Hae">
+        <-->
+
     </form>
 
-    
-    
-    <h5>Kaikki lukuvinkkisi:</h5>
-<!--
-    <table id="note_list">
-        <tr>
-            <th>Muistiinpano</th>
-            <th>Osoite</th>
-        </tr>
-        #foreach ($note in $noteList)
-        <tr>
-            <td><a href="/notes/$note.getId()">$note.getHeader()</a></td>
-            <td><a href="$note.getUrl()">$note.getUrl()</a></td>
-        </tr>
-        #end
-    </table>!-->
-        #foreach ($note in $noteList)
-        <p>$note.getHeader() - $note.getUrl() - Lisätiedot: $note.getInfo() - Tagit: $note.getTagsAsString() - <a href="/notes/$note.getId()">Vinkkisivu</a></p>
-        #end
+
+    <br></br>
+    <h4>Lukuvinkkisi:</h4>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Otsikko</th>
+                <th scope="col">URL</th>
+                <th scope="col">Tagit</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            #foreach ($note in $noteList)
+            <tr class="table-active">
+                <th scope="row">$note.getHeader()</th>
+                <td><a href="https://$note.getUrl()">$note.getUrl()</a></td>
+                <td>$note.getTagsAsString()</td>
+                <td><a type="button" class="btn btn-primary" href="/notes/$note.getId()">Lisätiedot</a></td>
+            </tr>
+            #end
+        </tbody>
+    </table> 
+
+
 </body>
 
 
 <script>
-    
+
     function tagToFilterField(tag) {
         tagsString = document.getElementById("tag_filters").value
         tagsArr = tagsString.split(" ")
@@ -68,5 +82,5 @@
         tagsString = tagsString.concat(" " + tag)
         document.getElementById("tag_filters").value = tagsString
     }
-    
+
 </script>

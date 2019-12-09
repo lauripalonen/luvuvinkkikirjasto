@@ -1,48 +1,56 @@
 
 
 <body>
-    <h1>Lukuvinkkikirjasto</h1>
+    <h1>Tallennettu lukuvinkki</h1>
 
-    <a href="/">Takaisin etusivulle</a>
-    <a href="/listnotes">Kaikki muistiinpanot</a>
-    <br>
-    <h4>$note.getHeader()</h4>
-    <p>Linkki: $note.getUrl()</p>
-    #if ($note_type.equals("Book"))
-    <p>Kirjoittaja: $note.getAuthor()</p>
-    <p>ISBN: $note.getIsbn()</p>
-    #end
-    <p>Lisätiedot: $note.getInfo()</p>
-    <p>Tagit: #foreach ($tag in $tags) $tag #end</p>
+    <div class="card mb-3">
+        <h3 class="card-header">$note.getHeader()</h3>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="https://$note.getUrl()" class="card-link">$note.getUrl()</a></li>
+            #if ($note_type.equals("Book"))
+            <li class="list-group-item">Kirjoittaja: $note.getAuthor()</li>
+            <li class="list-group-item">ISBN: $note.getIsbn()</li>
+            #end
+            <li class="list-group-item">Tagit: #foreach ($tag in $tags) $tag #end</li>    
+        </ul>
+
+        <div class="card-body">
+            <p>Lisätiedot: $note.getInfo()</p>
+        </div>
+    </div>
+
+    <form>
+        <input type="button" class="btn btn-secondary" value="Takaisin listaukseen" onclick="history.back()">
+    </form>
 </body>
 
 <script type="text/javascript">
-  function getBookInfo() {
+    function getBookInfo() {
 
-    const ISBN = document.getElementById("bookISBN").value.replace("-", "")
-    document.getElementById("bookISBN").value = ISBN
-    fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`)
-        .then(res => res.json())
-        .then(data => {
-            data = data[`ISBN:${ISBN}`]
-            if (data == null) {
-                document.getElementById("ISBNInfo").innerHTML = "ISBN-numerolla ei löytynyt teoksia."
-                return
-            }
-            document.getElementById("ISBNInfo").innerHTML = ""
-            document.getElementById("bookHeader").value = data.title
-            authorsStr = ""
-            data.authors.forEach(author => {
-                authorsStr = authorsStr.concat(author["name"])
-                if (data.authors[data.authors.length-1] !== author) {
-                    authorsStr = authorsStr.concat(", ")
-                }
-            })
-            document.getElementById("bookAuthor").value = authorsStr
-            document.getElementById("bookUrl").value = data.url
-        })
-        .catch(err => {
-            console.log(err)
-        })
-  }
-  </script>
+        const ISBN = document.getElementById("bookISBN").value.replace("-", "")
+        document.getElementById("bookISBN").value = ISBN
+        fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${ISBN}&jscmd=data&format=json`)
+                .then(res => res.json())
+                .then(data => {
+                    data = data[`ISBN:${ISBN}`]
+                    if (data == null) {
+                        document.getElementById("ISBNInfo").innerHTML = "ISBN-numerolla ei löytynyt teoksia."
+                        return
+                    }
+                    document.getElementById("ISBNInfo").innerHTML = ""
+                    document.getElementById("bookHeader").value = data.title
+                    authorsStr = ""
+                    data.authors.forEach(author => {
+                        authorsStr = authorsStr.concat(author["name"])
+                        if (data.authors[data.authors.length - 1] !== author) {
+                            authorsStr = authorsStr.concat(", ")
+                        }
+                    })
+                    document.getElementById("bookAuthor").value = authorsStr
+                    document.getElementById("bookUrl").value = data.url
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+    }
+</script>
