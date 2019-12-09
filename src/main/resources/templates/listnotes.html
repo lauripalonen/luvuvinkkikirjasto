@@ -1,24 +1,25 @@
 
 <body>
-    <h1>Tallennetut lukuvinkit</h1>    
-    
-    <br></br>
+    <h1>Tallennetut lukuvinkit</h1>        
 
     <form method="GET" action="/listnotes">
-        <label>Valitse näytettävät muistiinpanot:</label>
+        <label>Valitse näytettävien lukuvinkkien tyyppi...</label>
         <select name="type_filter">
             <option selected="selected" value="1">Kaikki</option>
             <option value="2">Linkit</option>
             <option value="3">Kirjat</option>
         </select>
+        
+        
+        <br></br>
         <div name="all-tags">
             #foreach ($tag in $all_tags)
             <a href="#" onClick=tagToFilterField("${tag}")>$tag</a>
             #end
         </div>
-        <label for="tag_filters">Suodata tagien perusteella:</label>
+        <label for="tag_filters">...ja suodata halutessasi tagien perusteella:</label>
         <input id="tag_filters" name="tag_filters" type="text" value="">
-        
+            
         #if (!$tag_filters.isEmpty())
         <p>Aktiiviset tagit: </p>
             <div class="filter-form-tags">
@@ -28,9 +29,11 @@
             </div>
         #end
         
-        <input type="submit" value="Filter">
+        <input type="submit" value="Hae">
     </form>
 
+    
+    
     <h5>Kaikki lukuvinkkisi:</h5>
 <!--
     <table id="note_list">

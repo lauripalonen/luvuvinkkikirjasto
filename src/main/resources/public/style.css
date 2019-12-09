@@ -5,13 +5,17 @@
 
 label {
     display: block;
-    min-width: 200px;
+    min-width: 300px;
 }
 
 .noteformfield {
-    margin-bottom: 7px;
+    margin-bottom: 10px;
 }
 
+select {
+    font-size: 20px;
+    min-width: 200px;
+}
 
 th {
     font-size: 25px;
