@@ -56,7 +56,7 @@
             #foreach ($note in $noteList)
             <tr class="table-active">
                 <th scope="row">$note.getHeader()</th>
-                <td><a href="//$note.getUrl()">$note.getUrl()</a></td>
+                <td><a href="$note.getUrl()">$note.getUrl()</a></td>
                 <td>$note.getTagsAsString()</td>
                 <td><a type="button" class="btn btn-primary" href="/notes/$note.getId()">Lisätiedot</a></td>
             </tr>

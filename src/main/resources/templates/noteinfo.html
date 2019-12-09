@@ -23,10 +23,12 @@
                onClick='return confirm("Oletko varma että haluat poistaa muistiinpanon?")'>Poista lukuvinkki</a>
         </div>
     </div>
-
-    <form>
-        <input type="button" class="btn btn-secondary" value="Takaisin listaukseen" onclick="history.back()">
+    <form action="/listnotes">
+        <input type="submit" class="btn btn-secondary" value="Takaisin listaukseen" />
     </form>
+    <!--<form>
+        <input type="button" class="btn btn-secondary" value="Takaisin listaukseen" href="/listnotes">
+    </form>!-->
 </body>
 
 <script type="text/javascript">
