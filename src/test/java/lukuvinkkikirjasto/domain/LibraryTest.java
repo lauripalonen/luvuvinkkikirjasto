@@ -150,6 +150,19 @@ public class LibraryTest {
         assertFalse(library.containsNote(l1));
     }
     
+    @Test
+    public void infoCanBeModified() {
+        Note l1 = new Link("Link", "link.com", 1, "great info");
+        Note l2 = new Link("Link", "link.com", 2, "interesting information");
+        library.addLink("Link", "link.com", "great info");
+        library.modifyNote(l1, l2);
+        for(Note n : library.listLinks()) {
+            if(n.equals(l2)) {
+                assertEquals("interesting information", n.getInfo());
+            }
+        }
+    }
+    
     @After
     public void after() {
         library.deleteAllRecords();
