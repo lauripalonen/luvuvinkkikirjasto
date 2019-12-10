@@ -130,6 +130,17 @@ public class LibraryTest {
         assertEquals(tags, tagsFromLibrary);
     }
     
+    @Test
+    public void bookCanBeModified() {
+        Note b1 = new Book("Book", "url.com", "Author", "12345", 1, "great info"); 
+        Note b2 = new Book("A Farewell To Arms", "google.fi", "Ernest Hemingway", "123456", 1, "info");
+        library.addBook("Book", "url.com", "Author", "12345", "great info");
+        library.modifyNote(b1, b2);
+        assertTrue(library.containsNote(b2));
+        assertFalse(library.containsNote(b1));
+    }
+    
+    
     @After
     public void after() {
         library.deleteAllRecords();
