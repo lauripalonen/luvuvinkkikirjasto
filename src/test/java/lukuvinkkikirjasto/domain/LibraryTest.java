@@ -150,7 +150,6 @@ public class LibraryTest {
         assertFalse(library.containsNote(l1));
     }
     
-    
     @After
     public void after() {
         library.deleteAllRecords();
