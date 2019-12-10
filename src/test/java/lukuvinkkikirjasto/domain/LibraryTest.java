@@ -132,12 +132,22 @@ public class LibraryTest {
     
     @Test
     public void bookCanBeModified() {
-        Note b1 = new Book("Book", "url.com", "Author", "12345", 1, "great info"); 
+        Note b1 = new Book("Book", "link.com", "Author", "12345", 1, "great info"); 
         Note b2 = new Book("A Farewell To Arms", "google.fi", "Ernest Hemingway", "123456", 1, "info");
-        library.addBook("Book", "url.com", "Author", "12345", "great info");
+        library.addBook("Book", "link.com", "Author", "12345", "great info");
         library.modifyNote(b1, b2);
         assertTrue(library.containsNote(b2));
         assertFalse(library.containsNote(b1));
+    }
+    
+    @Test
+    public void linkCanBeModified() {
+        Note l1 = new Link("Link", "link.com", 1, "great info"); 
+        Note l2 = new Link("Google", "google.fi", 1, "info");
+        library.addLink("Link", "link.com", "great info");
+        library.modifyNote(l1, l2);
+        assertTrue(library.containsNote(l2));
+        assertFalse(library.containsNote(l1));
     }
     
     
