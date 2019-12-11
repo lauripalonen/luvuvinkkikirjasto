@@ -162,9 +162,10 @@ public class Stepdefs {
         pageHasContent(tag);
     }
     
-    @When("a link named {string} with url {string} and tag {string} is added") 
-    public void addLinkWithTag(String header, String url, String tag) {
-        addLink(header, url, tag);
+    @When("links named {string} and {string} with urls {string} and {string} and tags {string} and {string} are added ") 
+    public void addLinkWithTag(String header1, String header2, String url1, String url2, String tag1, String tag2) {
+        addLink(header1, url1, tag1);
+        addLink(header2, url2, tag2);
     }
     
     @And("tallennetut lukuvinkit is selected") 
@@ -181,9 +182,26 @@ public class Stepdefs {
     
     @Then("list all menu should have a link named {string}")
     public void rightNotesDisplayed(String header) {
-        pageHasContent(header);
+        boolean contained = false;
+        for(Note n : outputs) {
+            if(n.getHeader().equals(header)) {
+                contained = true;
+            }
+        }
+        assertTrue(contained);
     }
 
+    @Then("list all menu should not have a link named {string}")
+    public void noteWithAnotherTagIsNotDisplayed(String header) {
+        boolean contained = false;
+        for(Note n : outputs) {
+            if(n.getHeader().equals(header)) {
+                contained = true;
+            }
+        }
+        assertFalse(contained);
+    }
+    
     @After
     public void after() {
         library.deleteAllRecords();
@@ -225,7 +243,6 @@ public class Stepdefs {
         pageHasContent("Tallennetut lukuvinkit");
         WebElement element = driver.findElement(By.name("tag_filters"));
         element.sendKeys(tag);
-        //element = driver.findElement(By.name("Hae"));
         element.submit();
     }
 
