@@ -162,10 +162,9 @@ public class Stepdefs {
         pageHasContent(tag);
     }
     
-    @When("links named {string} and {string} with urls {string} and {string} and tags {string} and {string} are added ") 
-    public void addLinkWithTag(String header1, String header2, String url1, String url2, String tag1, String tag2) {
+    @When("link named {string} with url {string} and tag {string} is added") 
+    public void addLinkWithTag(String header1, String url1, String tag1) {
         addLink(header1, url1, tag1);
-        addLink(header2, url2, tag2);
     }
     
     @And("tallennetut lukuvinkit is selected") 
@@ -182,19 +181,20 @@ public class Stepdefs {
     
     @Then("list all menu should have a link named {string}")
     public void rightNotesDisplayed(String header) {
-        boolean contained = false;
-        for(Note n : outputs) {
+        /*boolean contained = false;
+        for(Note n : library.listAll()) {
             if(n.getHeader().equals(header)) {
                 contained = true;
             }
         }
-        assertTrue(contained);
+        assertTrue(contained);*/
+        assertTrue(driver.getPageSource().contains(header));
     }
 
     @Then("list all menu should not have a link named {string}")
     public void noteWithAnotherTagIsNotDisplayed(String header) {
         boolean contained = false;
-        for(Note n : outputs) {
+        for(Note n : library.listAll()) {
             if(n.getHeader().equals(header)) {
                 contained = true;
             }
