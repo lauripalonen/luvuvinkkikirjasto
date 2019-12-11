@@ -1,6 +1,6 @@
 # Lukuvinkkikirjasto
 
-Helsingin yliopisto, Ohjelmistotuotanto-kurssi. Miniprojektin repositorio, ryhmä Rebel Scrum.
+Helsingin yliopisto, kurssi TKT20006 Ohjelmistotuotanto. Miniprojektin repositorio, ryhmä Rebel Scrum.
 
 ## Ohjelma
 
@@ -8,33 +8,25 @@ Yksinkertainen kirjasto lukuvinkkien tallentamiseen, löytyy osoitteesta [lukuvi
 
 ### Käyttöohjeet
 
-Pääsivulta voit käyttäjänä valita haluatko tarkastella vanhoja muistiinpanoja vai tallentaa uuden muistiinpanon.
+Pääsivulta löydät tietoa projektista.
 
 #### Tallennettujen lukuvinkkien tarkasteleminen
 
-Ohjelma listaa automaattisesti kaikki aiemmin tallentamasi lukuvinkit. Voit rajata valikosta tarkasteltavaksi pelkät linkit tai kirjat.
+Ohjelma listaa kaikki aiemmin tallentamasi lukuvinkit tiivistetyssä muodossa, lisätiedot saa esiin nappia painamalla. Voit hakutoiminnon avulla rajata valikosta tarkasteltavaksi pelkät linkit tai kirjat sekä suodattaa hakutuloksia tagien avulla. Useamman tagin syöttäminen onnistuu erottamalla sanat välilyönnillä. 
 
 #### Uuden lukuvinkin tallentaminen
 
-Lukuvinkin tyypiksi voit valita linkin tai kirjan, oletuksena tyyppinä on linkki. Syöttämällä tiedot tarjottuihin kenttiin, ja painamalla "Lisää" lukuvinkki tallentuu. Kenttään "Tags" voit halutessasi syöttää tunnisteen, välilyönnillä erotettuna voit syöttää useamman tagin. Painamalla "Takaisin etusivulle", voit siirtyä takaisin pääsivulle tallentamatta mitään. 
+Lukuvinkin tyypiksi voit valita linkin tai kirjan, oletuksena tyyppinä on kirja. Sivustolta [https://openlibrary.org/](https://openlibrary.org/) löytyvien kirjojen tiedot on mahdollista täydentää automaattisesti isbn-numeron avulla. Välilyönnillä erotettuna voit syöttää useamman tagin. Lukuvinkki tallentuu vasta nappia painamalla, tallennuksen voi keskeyttää siirtymällä pois lisäys-sivulta. 
 
 ### Testaus 
 
 Ohjelma on testattu automatisoiduilla testeillä sekä manuaalisesti. Automaattiset testit käyttävät JUnitia. Manuaalinen testaus on koskenut lähinnä käyttöliittymää. Hyväksymätestit on toteutettu Cucumberilla. 
 
-#### Yksikkötestaus ja integraatiotestaus
-
 Luokkien yksikkötestit löytyvät omista kansioistaan [täältä](https://github.com/lauripalonen/lukuvinkkikirjasto/tree/master/src/test/java/lukuvinkkikirjasto).
-
-Testikattavuusraportti nähtävissä: [CodeCov](https://codecov.io/gh/lauripalonen/lukuvinkkikirjasto).
-
-#### Hyväksymätestit
 
 User storyjen [Cucumber-featuret](https://github.com/lauripalonen/lukuvinkkikirjasto/tree/master/src/test/resources/lukuvinkkikirjasto).
 
-User storylla "As a user I can save writer and title of book to note" ei ole omia hyväksymätestejä, koska sen scenaariot on testattu muiden featurejen yhteydessä. 
-
-#### Raportit
+#### CI ja testikattavuus
 
 Raportteja voi tarkastella badgeja klikkaamalla
 
