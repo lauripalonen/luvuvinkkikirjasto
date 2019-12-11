@@ -40,7 +40,7 @@ public class Stepdefs {
 
     }
 
-    @And("lisää uusi muistiinpano is selected")
+    @And("lisää uusi is selected")
     public void addNewNoteThroughWebUi() {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("Lisää uusi"));
@@ -49,7 +49,7 @@ public class Stepdefs {
 
     @When("a link named {string} with url {string} is added through web UI")
     public void aLinkNamedWithUrlIsAddedThroughWebUi(String name, String url) {
-        addLink(name, url);
+        addLink(name, url, "");
     }
 
 //    @When("a book named {string} found on {string} authored by {string} with isbn {string} is added through web UI")
@@ -161,6 +161,28 @@ public class Stepdefs {
         pageHasContent(url);
         pageHasContent(tag);
     }
+    
+    @When("a link named {string} with url {string} and tag {string} is added") 
+    public void addLinkWithTag(String header, String url, String tag) {
+        addLink(header, url, tag);
+    }
+    
+    @And("tallennetut lukuvinkit is selected") 
+    public void listedNotes() {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("Tallennetut lukuvinkit"));
+        element.click();
+    }
+    
+    @And("tag {string} is chosen") 
+    public void chooseTag(String tag) {
+        findTag(tag);
+    }
+    
+    @Then("list all menu should have a link named {string}")
+    public void rightNotesDisplayed(String header) {
+        pageHasContent(header);
+    }
 
     @After
     public void after() {
@@ -172,12 +194,14 @@ public class Stepdefs {
         assertTrue(driver.getPageSource().contains(content));
     }
 
-    private void addLink(String header, String url) {
+    private void addLink(String header, String url, String tag) {
         pageHasContent("Uuden lukuvinkin lisääminen");
         WebElement element = driver.findElement(By.name("header"));
         element.sendKeys(header);
         element = driver.findElement(By.name("url"));
         element.sendKeys(url);
+        element = driver.findElement(By.name("tags"));
+        element.sendKeys(tag);
         element = driver.findElement(By.name("add"));
         element.submit();
     }
@@ -194,6 +218,14 @@ public class Stepdefs {
         element = driver.findElement(By.name("tags"));
         element.sendKeys(tag);
         element = driver.findElement(By.name("add"));
+        element.submit();
+    }
+    
+    public void findTag(String tag) {
+        pageHasContent("Tallennetut lukuvinkit");
+        WebElement element = driver.findElement(By.name("tag_filters"));
+        element.sendKeys(tag);
+        //element = driver.findElement(By.name("Hae"));
         element.submit();
     }
 
