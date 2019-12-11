@@ -58,3 +58,7 @@ Raportteja voi tarkastella badgeja klikkaamalla
 
 [Burndown chart](https://docs.google.com/spreadsheets/d/11KAIe0QhRNov_tW5voyq-2GYSEpaymTBXAMnGlPEDLc/edit#gid=1273086550)
 
+### Loppuraportti
+
+[Raportti](https://docs.google.com/document/d/1lIpLWLNGi72i6FHXeSCzzsI__V0TEB7zl6bZEi9D0bE/edit)
+
