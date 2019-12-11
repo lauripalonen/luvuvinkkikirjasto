@@ -181,13 +181,6 @@ public class Stepdefs {
     
     @Then("list all menu should have a link named {string}")
     public void rightNotesDisplayed(String header) {
-        /*boolean contained = false;
-        for(Note n : library.listAll()) {
-            if(n.getHeader().equals(header)) {
-                contained = true;
-            }
-        }
-        assertTrue(contained);*/
         assertTrue(driver.getPageSource().contains(header));
     }
 
