@@ -60,5 +60,5 @@ Raportteja voi tarkastella badgeja klikkaamalla
 
 ### Loppuraportti
 
-[Raportti](https://docs.google.com/document/d/1lIpLWLNGi72i6FHXeSCzzsI__V0TEB7zl6bZEi9D0bE/edit)
+[Raportti](https://drive.google.com/open?id=17dvmIDjo84tI4GuKn6jvB0HYMaUOkf8xAoN0q-W8vyQ)
 
