@@ -62,3 +62,4 @@ Raportteja voi tarkastella badgeja klikkaamalla
 
 [Raportti](https://drive.google.com/open?id=17dvmIDjo84tI4GuKn6jvB0HYMaUOkf8xAoN0q-W8vyQ)
 
+
